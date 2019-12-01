@@ -1,0 +1,133 @@
+/* Default Application Page Style (Copied form app.component.ts page) */
+/* Modifying default bootstrap CSS */
+.table {
+    margin-bottom: 0rem !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #76d7c4 !important;
+    font-weight: bold;
+    border-radius: 0px !important;
+}
+
+.card, .alert, .modal-content, .btn, .form-control {
+    border-radius: 0px !important;
+}
+
+
+/* Custom CSS */
+.has-error {
+  color: red;
+}
+
+.status {
+  padding: 5px;
+}
+
+.is-agent {
+    padding: 2px 5px; color: #6610f2;
+}
+
+.hmtrading-text-center {
+    text-align: center !important;
+}
+
+.hmtrading-text-right {
+    text-align: right !important;
+}
+
+.hmtrading-vertical-text-center {
+    margin-top: 5% !important;
+    position: relative;
+}
+
+.hmtrading-imp-info {
+    margin: 0 auto;
+    padding: 10px 15px;
+    background-color: #17a2b8 ;
+    color: white;
+    clear: both;
+}
+
+
+/* Print Page CSS */
+.print-footer, .print-header {
+    border: 1px solid #76d7c4;
+}
+
+.header-trapezoid {
+	border-bottom: 175px solid #76d7c4;
+    height: 175px;
+	border-left: 60px solid transparent;
+	width: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.header-trapezoid > h1 {
+    line-height: 175px;
+}
+
+.footer-trapezoid {
+    border-bottom: 60px solid #76d7c4;
+    height: 60px;
+	border-left: 25px solid transparent;
+	width: 50%;
+    display: inline-block;
+    color: white;
+}
+
+.footer-trapezoid > p {
+    color: white;
+    line-height: 50px;
+}
+
+.print-terms {
+    padding-left: 15px;
+    width: 50%;
+    height: 60px;
+    text-align: left;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+.biller-info {
+    padding: 5px 0 0 15px;
+    width: 50%;
+    height: 175px;
+    text-align: left;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+.print-page {
+    width: 100%;
+    /* overflow-y:scroll; */
+    padding: 25px;
+    /* overflow-x: auto; */
+}
+
+.modal-lg {
+    /* max-width: 1000px !important; */
+    max-width: 80% !important;
+}
+
+
+.page-header-message > span {
+    display: inline-block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: bold;
+    background: #76d7c4;
+    vertical-align: middle;
+}
+
+.hm-trading-message {
+    color: #76d7c4;
+}
+
+.home-card {
+    cursor: pointer;
+}

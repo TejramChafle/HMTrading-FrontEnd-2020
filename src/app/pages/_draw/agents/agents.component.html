@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 page-header-message">
+                    <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Agents ({{pagination?.size}})</span>
+                    <span *ngIf="!loading && _appService.agent">Showing agent under agent {{_appService.agent.name}}</span></div>
+                <div class="col col-lg-6 col-md-6" align="right">
+                    <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" style="padding: 0px;">
+            <!-- Table -->
+            <table class="table table-hover table-sm table-bordered table-striped" *ngIf="agents && agents.length">
+                <tr>
+                    <!-- <th>#</th> -->
+                    <th>Name</th>
+                    <!-- <th>Card Number</th> -->
+                    <th>Agent</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <!-- <th>Email</th> -->
+                    <!-- <th>Status</th> -->
+                    <!-- <th>Customers</th>
+                    <th>Installments</th>
+                    <th>Agents</th>
+                    <th>Edit</th>
+                    <th>Delete</th> -->
+                    <th colspan="6" class="hmtrading-text-center">Actions</th>
+                </tr>
+
+                <tr *ngFor="let agent of agents;">
+                    <!-- <td>{{agent.customer_id}}</td> -->
+                    <td>{{agent.name}}</td>
+                    <!-- <td>{{agent.card_number}}</td> -->
+                    <td>{{agent.agent ? agent.agent.name : ''}}</td>
+                    <td>{{agent.address}}</td>
+                    <td>{{agent.mobile_number}}</td>
+                    <!-- <td>{{agent.email}}</td> -->
+                    <!-- <td><span [class]="agent.status === 'Active' ? 'bg-success' : 'bg-danger'">{{agent.status}}</span></td> -->
+
+                    <td  align="center"><button class="btn btn-secondary btn-sm" (click)="viewCustomers(agent)" > <span class="glyphicon glyphicon-user"></span> Customers</button></td>
+                    <td  align="center"><button class="btn btn-primary btn-sm" (click)="viewInstallments(agent)" > <span class="glyphicon glyphicon-user"></span> Installments</button></td>
+                    <td  align="center"><button class="btn btn-secondary btn-sm" (click)="viewPayment(agent)" > <!-- <b>&#8377;</b> --> Payments</button></td>
+                    <td  align="center"><button class="btn btn-success btn-sm" (click)="viewAgents(agent)" > <span class="glyphicon glyphicon-user"></span> Agents</button></td>
+                    <!-- <td  align="center"><button class="btn btn-info btn-sm" (click)="editAgent(agent.customer_id)" > <span class="glyphicon glyphicon-edit"></span> Edit</button> </td> -->
+                    <td  align="center"><button class="btn btn-info btn-sm" (click)="addAgent(agent)" >Edit</button> </td>
+                    <td  align="center"><button class="btn btn-danger btn-sm" (click)="deleteAgent(agent)" > <span class="glyphicon glyphicon-trash"></span> Delete</button></td>
+                </tr>
+            </table>
+
+            <!-- Pagination & page size -->
+            <div class="card-footer" *ngIf="agents && agents.length">
+                <div class="row">
+                    <div class="col col-lg-6 col-md-6">
+                        <!-- Pagination & page size -->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <!-- Pagination -->
+                            <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add Agent -->
+                    <div class="col col-lg-6 col-md-6" align="right">
+                        <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
+                        <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+    <!-- No result found message -->
+    <div class="alert alert-danger" role="alert" *ngIf="agents && !agents.length">
+        <strong>No result found!</strong>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

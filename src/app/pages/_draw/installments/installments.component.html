@@ -1,0 +1,244 @@
+<div class="container-fluid">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-4 col-md-4 page-header-message">
+                    <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Installments ({{pagination?.size}})</span>
+                    <span *ngIf="showingForAgent && !loading">showing for agent <strong>{{_appService.agent.name}}</strong></span>
+                </div>
+
+                <!-- Actions -->
+                <div class="col col-lg-8 col-md-8" align="right">
+
+                    <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button> -->
+                    <!-- <span *ngIf="selectCustomer"><button type="button" class="btn btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button></span> -->
+
+                    <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
+                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
+                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>
+                    <button type="submit" class="btn btn-info" (click)="search=!search" *ngIf="!selectCustomer">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()" *ngIf="!selectCustomer">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" style="padding:0px">
+
+            <!-- Search -->
+            <div *ngIf="search" style="padding:16px">
+                <form name="form" (ngSubmit)="f.form.valid && searchCustomer()" #f="ngForm" novalidate>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cardNumber.valid }">
+                                <label for="cardNumber">Card</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
+                                    <input type="text" class="form-control" name="cardNumber" [(ngModel)]="data.card_number" #cardNumber="ngModel" maxlength="10"  />
+                                </div>
+                                <div *ngIf="f.submitted && !cardNumber.valid" class="help-block">Card number is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                                <label for="name">Name</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" name="name" [(ngModel)]="data.name" #name="ngModel" maxlength="50"  />
+                                </div>
+                                <div *ngIf="f.submitted && !name.valid" class="help-block">Name is </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+                                <label for="address">Address</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                                    <input type="text" class="form-control" name="address" [(ngModel)]="data.address" #address="ngModel" maxlength="100"  />
+                                </div>
+                                <div *ngIf="f.submitted && !address.valid" class="help-block">Address is </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!phone.valid)}">
+                                <label for="phone">Phone</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                                    <input type="tel" class="form-control" name="phone" [(ngModel)]="data.mobile_number" #phone="ngModel" maxlength="10" />
+                                </div>
+                                <div *ngIf="f.submitted && !phone.valid" class="help-block">Phone is </div>
+                                <!-- <div *ngIf="f.submitted && isPhoneInvalid" class="help-block">Phone is invalid</div> -->
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!email.valid || isEmailInvalid) }">
+                                <label for="name">Email</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                    <input type="email" class="form-control" name="email" [(ngModel)]="data.email" #email="ngModel" />
+                                </div>
+                                <div *ngIf="f.submitted && !email.valid" class="help-block">Email is </div>
+                                <div *ngIf="f.submitted && isEmailInvalid" class="help-block">Email is invalid</div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !item.valid }">
+                                <label for="item">Item</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-list"></span></div>
+                                    <select class="form-control" id="item" name="item" [(ngModel)]="data.item_id" #item="ngModel" >
+                                        <option *ngFor="let item of items" value= {{item.item_id}}>
+                                            {{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div *ngIf="f.submitted && !item.valid" class="help-block">Item is </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6"></div>
+                        <div class="col-lg-3 col-md-4 col-sm-6"></div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()"><span class="glyphicon glyphicon-refresh"></span> Reset</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success form-control" ><span class="glyphicon glyphicon-search"></span> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Responsive Table -->
+            <div id="installment_table" class="table-responsive" *ngIf="installments && installments.length">
+                <table class="table table-bordered table-hover table-sm table-striped" >
+                    <tr>
+                        <!-- <th *ngIf="!selectCustomer" [hidden]="printing">#</th> -->
+                        <!-- <th *ngIf="selectCustomer">Check</th> -->
+                        <th *ngIf="selectCustomer"><input type="checkbox" [(ngModel)]="selectAll" (change)="onChangeSelection()"></th>
+                        <th>Card</th>
+                        <th>Customer</th>
+                        <th *ngIf="!showingForAgent" [hidden]="printing">Mobile </th>
+                        <th>Item</th>
+
+                        <th class="hmtrading-text-center">Dec</th>
+                        <th class="hmtrading-text-center">Jan</th>
+                        <th class="hmtrading-text-center">Feb</th>
+                        <th class="hmtrading-text-center">Mar</th>
+                        <th class="hmtrading-text-center">Apr</th>
+                        <th class="hmtrading-text-center">May</th>
+                        <th class="hmtrading-text-center">Jun</th>
+                        <th class="hmtrading-text-center">Jul</th>
+                        <th class="hmtrading-text-center">Aug</th>
+                        <th class="hmtrading-text-center">Sep</th>
+                        <th class="hmtrading-text-center">Oct</th>
+
+                        <th class="hmtrading-text-right">Total</th>
+                        <th class="hmtrading-text-right">Balance</th>
+
+                        <th *ngIf="!showingForAgent">Agent</th>
+                        <!-- <th [hidden]="printing">Status</th> -->
+                        <th *ngIf="selectCustomer">Next Installment Amount</th>
+                        <th class="hmtrading-text-center" [hidden]="printing">Action</th>
+                    </tr>
+
+                    <tr *ngFor="let inst of installments" [class]="inst.checked ? 'success' : ''">
+                        <!-- <td *ngIf="!selectCustomer" [hidden]="printing">{{inst.customer_id}}</td> -->
+                        <td *ngIf="selectCustomer"><span *ngIf="inst.item && !inst.installment[10]"><input type="checkbox" [(ngModel)]="inst.checked"></span></td>
+
+                        <td>{{inst.card_number}}</td>
+                        <td>{{inst.name}}</td>
+
+                        <td *ngIf="!showingForAgent" [hidden]="printing">{{inst.mobile_number}}</td>
+                        <td>{{inst.item ? inst.item.name : ''}}</td>
+
+                        <td align="center"> {{inst.installment[0] && inst.installment[0].amount ? (inst.installment[0].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[1] && inst.installment[1].amount ? (inst.installment[1].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[2] && inst.installment[2].amount ? (inst.installment[2].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[3] && inst.installment[3].amount ? (inst.installment[3].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[4] && inst.installment[4].amount ? (inst.installment[4].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[5] && inst.installment[5].amount ? (inst.installment[5].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[6] && inst.installment[6].amount ? (inst.installment[6].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[7] && inst.installment[7].amount ? (inst.installment[7].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[8] && inst.installment[8].amount ? (inst.installment[8].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[9] && inst.installment[9].amount ? (inst.installment[9].amount | number) : ''}}</td>
+                        <td align="center"> {{inst.installment[10] && inst.installment[10].amount ? (inst.installment[10].amount | number) : ''}}</td>
+
+                        <!-- <td>{{inst.total ? '&#8377; ' +inst.total : ''}}</td>
+                        <td>{{inst.balance ? '&#8377; ' +inst.balance : ''}}</td> -->
+                        <td align="right">{{inst.total ? inst.total : ''}}</td>
+                        <td align="right">{{inst.balance ? inst.balance : ''}}</td>
+
+                        <td *ngIf="!showingForAgent">{{inst.agent ? inst.agent.name : ''}}</td>
+                        <!-- <td [hidden]="printing"><span [class]="inst.status === 'Paid' ? 'bg-success' : 'bg-danger'">{{inst.status}}</span></td> -->
+
+                        <td *ngIf="selectCustomer"><span *ngIf="inst.item && !inst.installment[10]">
+                            <input type="number" class="form-control" [(ngModel)]="inst.nextInstAmt">
+                        </span></td>
+
+                        <td  align="center" [hidden]="printing"><button class="btn btn-info btn-sm" (click)="editInstallment(inst.customer_id)">Detail</button></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-footer" *ngIf="installments && installments.length">
+                <div class="row">
+                    <div class="col col-lg-6 col-md-6">
+                      <!-- Pagination & page size -->
+                      <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <!-- Pagination -->
+                              <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                  <option value="10">10</option>
+                                  <option value="20">20</option>
+                                  <option value="50">50</option>
+                                  <option value="100">100</option>
+                              </select>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- Add customer -->
+                    <div class="col col-lg-6 col-md-6" align="right">
+                        <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button>
+
+                        <span *ngIf="selectCustomer">
+                            <button type="button" class="btn btn-secondary" (click)="print()">
+                            <span class="glyphicon glyphicon-print"></span>
+                            Print
+                        </button></span> -->
+
+                    <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
+                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
+                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>
+                    <button type="submit" class="btn btn-info" (click)="search=!search" *ngIf="!selectCustomer">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()" *ngIf="!selectCustomer">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- No result found message -->
+    <div class="alert alert-danger" role="alert" *ngIf="installments && !installments.length">
+        <strong>No result found!</strong>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

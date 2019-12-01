@@ -1,0 +1,96 @@
+<div class="print-page" id="print-page">
+    <div class="print-header">
+        <div class="biller-info">
+            <!--<img src="assets/images/hmtrading-logo.png">
+            <b>Invoice from:</b><br> <h1>INVOICE</h1>-->
+            <h3>H.M. TRADING</h3>
+            House No. 1, Behind Petrol Pump, Kandri- 441401<br>
+            Pro: Pramod Ingole<br>
+            Office: 8806091880, 9960566547 <br>
+            Email: contact@hmtrading.biz<br>
+            www.hmtrading.biz
+        </div>
+        <div class="header-trapezoid text-center" style="float:right">
+            <h1>INVOICE</h1>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-lg-3 col-md-3 col-sm-3">
+            <strong>Invoice to:</strong>
+        </div>
+        <div class="col col-lg-3 col-md-3 col-sm-3" >
+            <!-- <div *ngIf="isAgentPrint">
+                <b>Id: {{agent.customer_id}}</b><br>
+                <b>{{agent.name}}</b> <br>
+                {{agent.address}}, <br>
+                Phone: {{agent.mobile_number}} <br>
+                {{agent.email ? 'Email: '+agent.email : ''}}
+                <b>Total Customers : {{count}}</b>
+            </div> -->
+            <div>
+                <b>Id: {{customer.customer_id}}</b><br>
+                <b>{{customer.name}}</b> <br>
+                {{customer.address}}, <br>
+                Phone: {{customer.mobile_number}} <br>
+                {{customer.email ? 'Email: '+customer.email : ''}}
+                <!-- <b>Agent : {{agent ? agent.name : ''}}</b> -->
+            </div>
+        </div>
+        <div class="col col-lg-3 col-md-3 col-sm-3">
+            <strong>Invoice #</strong><br>
+            <strong>Date</strong>
+        </div>
+        <div class="col col-lg-3 col-md-3 col-sm-3">
+            {{receiptNo}}<br>
+            {{billingDate}}<br/><br>
+            <strong><span *ngIf="isAgentPrint">AGENT</span><span *ngIf="!isAgentPrint">CUSTOMER</span> COPY</strong>
+        </div>
+    </div>
+    <br>
+
+    <div id="installment_table">
+        <table class="table table-bordered table-hover table-sm table-striped" >
+            <tr >
+                <th>Date</th>
+                <th>Type</th>
+                <th class="hmtrading-text-right">Previous Balance</th>
+                <th class="hmtrading-text-right">Amount Paid</th>
+                <th class="hmtrading-text-right">Interest Paid</th>
+                <th class="hmtrading-text-right">Fine Paid</th>
+                <th class="hmtrading-text-right">Balance</th>
+                <th class="hmtrading-text-right">Total</th>
+            </tr>
+            <!-- *ngFor="let inst of paidInstallments" -->
+            <tr >
+                <td>{{inst.created_date | date: 'dd MMM, yyyy'}}</td>
+                <td>{{inst.type}}</td>
+                <td align="right">&#8377;{{inst.previous_balance | number : '1.2-2'}}</td>
+                <td align="right">&#8377;{{inst.amount | number : '1.2-2'}}</td>
+                <td align="right">&#8377;{{inst.interest_paid | number : '1.2-2'}}</td>
+                <td align="right">&#8377;{{inst.fine_paid | number : '1.2-2'}}</td>
+                <td align="right">&#8377;{{inst.balance | number : '1.2-2'}}</td>
+                <td align="right">&#8377;{{inst.total | number : '1.2-2'}}</td>
+            </tr>
+            <tr>
+                <td colspan="7" align="right"><b><h4>{{totalInWords}}</h4></b></td>
+                <td align="right"><h4>&#8377;{{totalPaid | number : '1.2-2'}}</h4></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 text-right">
+            <br><br>RECIPIENT SIGNATURE -----------------------------<br><br>
+        </div>
+    </div>
+    <br>
+    <div class="print-footer">
+        <div class="print-terms" align="right">
+        <small><b>Terms & Condititions</b><br>Late installment payment may impose the fine amount of Rs.5/- for each month.</small>
+        </div>
+        <div class="footer-trapezoid text-center" align="center" style="float:right">
+            <p>Thank you for your business</p>
+        </div>
+    </div>
+</div>

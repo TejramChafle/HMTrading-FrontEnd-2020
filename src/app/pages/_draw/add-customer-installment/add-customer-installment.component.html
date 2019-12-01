@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-5 col-md-5 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Installments Summary Customer : <b>{{customer.name}}</b> Card : <b>{{customer.card_number}}</b></span></div>
+                <!-- Add scheme -->
+                <div class="col col-lg-7 col-md-7" align="right">
+                    <span *ngIf="hasMoreInstallments"><button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal"> <span class="glyphicon glyphicon-plus-sign"></span> Add Installment</button></span>
+                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-secondary" (click)="print(true)"> <span class="glyphicon glyphicon-print"></span> Print</button></span>
+                    <span *ngIf="!selectingMonth"><button type="button" class="btn btn-info" (click)="selectMonth()" > <span class="glyphicon glyphicon-plus-sign"></span> Select Month</button></span>
+                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-warning" (click)="cancelSelect()" > <span class="glyphicon glyphicon-remove-circle"></span> Cancel</button></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body" style="padding: 0px;">
+            <!-- Customer information -->
+            <!-- <div class="row">
+                <div class="col col-lg-4 col-md-4 col-sm-6">
+                    <span class="glyphicon glyphicon-barcode"></span> {{customer.card_number}} <br>
+                    <span class="glyphicon glyphicon-user"></span> {{customer.name}} <br>
+                    <span class="glyphicon glyphicon-home"></span> {{customer.address}} <br>
+                </div>
+
+                <div class="col col-lg-4 col-md-4 col-sm-6">
+                </div>
+
+                <div class="col col-lg-4 col-md-4 col-sm-6">
+                </div>
+            </div> -->
+
+            <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="warn">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Please complete last installment.
+            </div>
+        </div>
+            <!-- Table -->
+            <table class="table table-bordered table-hover table-sm table-striped">
+                <tr>
+                    <th>#</th>
+
+                    <th>Month</th>
+                    <th>Installment Date </th>
+                    <!-- <th>Installment Price</th> -->
+                    <!-- <th>Fine</th> -->
+
+                    <th>Installment Paid</th>
+                    <th>Fine Paid</th>
+                    <th>Paid Date</th>
+
+                    <!-- <th>Comment</th> -->
+
+                    <!-- <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Print</th> -->
+                    <th colspan="2" class="hmtrading-text-center">Invoice</th>
+                </tr>
+
+                <tr *ngFor="let inst of customerInstallments; let index = index">
+                    <td *ngIf="!selectingMonth">{{index + 1}}</td>
+                    <td *ngIf="selectingMonth"><input type="checkbox" [(ngModel)]="inst.checked"></td>
+
+                    <td>{{inst.month}}</td>
+                    <td>{{inst.installment_date | date}}</td>
+                    <!-- <td >&#8377; {{inst.installment_price}}</td> -->
+                    <!-- <td >&#8377; {{inst.fine}}</td> -->
+
+                    <td *ngIf="!inst.edit">{{inst.amount ? '&#8377; ' + inst.amount : ''}}</td>
+                    <td *ngIf="inst.edit"><input type="number" class="form-control" [(ngModel)]="inst.amount"></td>
+
+                    <td *ngIf="!inst.edit">{{inst.paid_fine ? '&#8377; ' + inst.paid_fine : ''}}</td>
+                    <td *ngIf="inst.edit"><input type="number" class="form-control" [(ngModel)]="inst.paid_fine"></td>
+
+                    <td>{{inst.paid_date | date}}</td>
+
+                    <!-- <td *ngIf="!inst.edit">{{inst.comment}}</td> -->
+                    <!-- <td *ngIf="inst.edit"><input type="text" class="form-control" [(ngModel)]="inst.comment"></td> -->
+
+                    <!-- Edit/Save installment -->
+                    <!-- <td  align="center" *ngIf="inst.status == 'Paid' && !inst.edit">
+                        <button class="btn btn-info btn-sm" (click)="editInstallment(inst)" > <span class="glyphicon glyphicon-edit">Edit</span></button>
+                    </td>
+                    <td  align="center" *ngIf="inst.status !== 'Paid' && !inst.edit">
+                        <button class="btn btn-info btn-sm" (click)="editInstallment(inst)" > <span class="glyphicon glyphicon-plus">Edit</span></button>
+                    </td>
+                    <td  align="center" *ngIf="inst.edit">
+                        <button class="btn btn-info btn-sm" (click)="saveInstallment(inst)" > <span class="glyphicon glyphicon-ok">Save</span></button>
+                    </td> -->
+
+                    <!-- Save/Cancel edit installment -->
+                    <!-- <td  align="center" *ngIf="inst.status == 'Paid' && !inst.edit" >
+                        <button class="btn btn-danger btn-sm" (click)="deleteInstallment(inst)" > <span class="glyphicon glyphicon-trash"></span>Delete</button>
+                    </td> -->
+                    <td  align="center" *ngIf="inst.status == 'Paid' && inst.edit">
+                        <button class="btn btn-danger btn-sm" (click)="cancelEditInstallment(inst)" > <span class="glyphicon glyphicon-remove">Cancel</span></button>
+                    </td>
+                    <td  align="center" *ngIf="inst.status !== 'Paid'&& !inst.edit"></td>
+                    <td  align="center" *ngIf="inst.status !== 'Paid' && inst.edit">
+                        <button class="btn btn-danger btn-sm" (click)="cancelEditInstallment(inst)" > <span class="glyphicon glyphicon-remove">Remove</span></button>
+                    </td>
+
+                    <td  align="center" *ngIf="inst.status == 'Paid'">
+                        <button class="btn btn-info btn-sm" (click)="inst.checked = true;print(false)" >Preview</button>
+                    </td>
+                    <td  align="center" *ngIf="inst.status == 'Paid'">
+                        <button class="btn btn-secondary btn-sm" (click)="inst.checked = true;print(true)" >Print</button>
+                    </td>
+
+                    <td  align="center" *ngIf="inst.status !== 'Paid'"></td>
+                </tr>
+            </table>
+
+            <!-- <div align="center" >
+                <ul class="pagination" style="margin: 0px;">
+                    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">Previous</span></a></li>
+                    <li ><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="#">2 <span class="sr-only">(current)</span></a></li>
+                    <li ><a href="#">3 <span class="sr-only">(current)</span></a></li>
+                    <li ><a href="#">4 <span class="sr-only">(current)</span></a></li>
+                    <li ><a href="#">5 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
+                </ul>
+            </div> -->
+    </div>
+
+
+    <!-- Add installment modal -->
+    <div class="modal fade" id="addInstallmentModal" tabindex="-1" role="dialog" aria-labelledby="addInstallmentModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addInstallmentModalLabel">Add Installment</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="installment">Installment Amount</label>
+                        <input type="number" class="form-control" id="installment" [(ngModel)]="data.amount">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addIntallment()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

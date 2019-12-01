@@ -1,0 +1,174 @@
+<div class="container">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-4 col-md-4 page-header-message">
+                    <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Bill Payments
+                        ({{pagination?.size}})
+                    </span>
+                    <span *ngIf="!loading && _appService.agent"> under the agent {{_appService.agent.name}}</span>
+                </div>
+                <div class="col col-lg-8 col-md-8" align="right">
+                    <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card-body" style="padding: 0px;" id="payment_table">
+
+            <!-- Search form -->
+            <form name="form" (ngSubmit)="f.form.valid && searchTransactions()" #f="ngForm" novalidate *ngIf="search">
+                <div class="row" style="padding: 16px;">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !transactionNumber.valid }">
+                            <label for="transactionNumber">Receipt No.</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
+                                <input type="text" class="form-control" name="transactionNumber"
+                                    [(ngModel)]="data.receipt_id" #transactionNumber="ngModel" maxlength="10" />
+                            </div>
+                            <div *ngIf="f.submitted && !transactionNumber.valid" class="help-block">Receipt number is
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cardNumber.valid }">
+                            <label for="cardNumber">Card No.</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
+                                <input type="text" class="form-control" name="cardNumber" [(ngModel)]="data.card_number"
+                                    #cardNumber="ngModel" maxlength="10" />
+                            </div>
+                            <div *ngIf="f.submitted && !cardNumber.valid" class="help-block">Card number is </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                            <label for="name">Name</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <input type="text" class="form-control" name="name" [(ngModel)]="data.name"
+                                    #name="ngModel" maxlength="50" />
+                            </div>
+                            <div *ngIf="f.submitted && !name.valid" class="help-block">Name is </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="form-group"
+                            [ngClass]="{ 'has-error': f.submitted && !paymentDate.valid}">
+                            <label for="paymentDate">Date</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+                                <input type="date" class="form-control" name="paymentDate"
+                                    [(ngModel)]="data.created_date" #paymentDate="ngModel" maxlength="10" />
+                            </div>
+                            <div *ngIf="f.submitted && !paymentDate.valid" class="help-block">Phone is </div>
+                            <!-- <div *ngIf="f.submitted && isPhoneInvalid" class="help-block">Phone is invalid</div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!email.valid || isEmailInvalid) }">
+                            <label for="name">Email</label>
+                            <div class="input-group" >
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                <input type="email" class="form-control" name="email" [(ngModel)]="data.email" #email="ngModel" />
+                            </div>
+                            <div *ngIf="f.submitted && !email.valid" class="help-block">Email is </div>
+                            <div *ngIf="f.submitted && isEmailInvalid" class="help-block">Email is invalid</div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-3 col-md-3 col-sm-6"></div>
+                    <div class="col-lg-3 col-md-3 col-sm-6"></div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <!-- <label></label> -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success form-control"><span
+                                    class="glyphicon glyphicon-search"></span> Search</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <!-- <label></label> -->
+                        <div class="form-group">
+                            <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()"><span
+                                    class="glyphicon glyphicon-refresh"></span> Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- Table -->
+            <table class="table table-hover table-bordered table-sm table-striped" *ngIf="payments && payments.length">
+                <tr>
+                    <!-- <th>#</th> -->
+                    <th>Receipt No.</th>
+                    <th class="hmtrading-text-right">Paid On</th>
+                    <th class="hmtrading-text-right">Card</th>
+                    <th>Received From</th>
+                    <th class="hmtrading-text-right">Amount</th>
+                    <th class="hmtrading-text-center" colspan="2">Invoice</th>
+                </tr>
+
+                <tr *ngFor="let pay of payments; let index = index;">
+                    <!-- <td>{{index+1}}</td> -->
+                    <td>{{pay.receipt_id}}</td>
+                    <td align="right">{{pay.receipt_date | date}}</td>
+                    <td align="right">{{pay.customer?.card_number}}</td>
+                    <td>{{pay.customer?.name}}</td>
+                    <td align="right">&#8377; {{pay.amount | number : '1.2-2'}}</td>
+                    <td align="center"><button class="btn btn-sm btn-info" (click)="printReady(pay, false)">Preview</button></td>
+                    <td align="center"><button class="btn btn-sm btn-secondary" (click)="printReady(pay, true)">Print</button></td>
+                </tr>
+            </table>
+        </div>
+        <!-- Pagination & page size -->
+        <div class="card-footer" *ngIf="payments && payments.length">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6">
+                    <!-- Pagination & page size -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <!-- Pagination -->
+                            <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5"
+                                [pageSize]="limit" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                (pageChange)="pageChange($event)"></ngb-pagination>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add customer -->
+                <div class="col col-lg-6 col-md-6" align="right">
+                    <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- No result found message -->
+    <div class="alert alert-danger" role="alert" *ngIf="payments && !payments.length">
+        <strong>No result found!</strong>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

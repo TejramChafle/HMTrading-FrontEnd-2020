@@ -1,0 +1,125 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-default">
+                <!-- Default card contents -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-lg-9 col-md-9 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Draw</span></div>
+                        <!-- Add scheme -->
+                        <div class="col col-lg-3 col-md-3" align="right">
+                            <!-- <button type="button" class="btn btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="alert alert-dark" role="alert" *ngIf="customerSelected">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Name</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.name}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Card</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.card_number}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Item</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.item ? customer.item.name : ''}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Mobile</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.mobile_number}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Address</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.address}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-6">Agent</div>
+                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.agent ? customer.agent.name : ''}}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
+                        <div class="form-group">
+                            <select class="form-control" name="month" [(ngModel)]="data.month" #month="ngModel" required (change)="onMonthChange()">
+                                <option *ngFor="let month of monthNames" value= {{month}}>
+                                    {{month}}
+                                </option>
+                            </select>
+                        </div>
+                        <!-- </div> -->
+                        <span *ngIf="!customerSelected">
+                            <button type="button" class="btn btn-secondary form-control" (click)="luckDraw()">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                Select lucky customer
+                            </button>
+                        </span>
+
+                        <span *ngIf="customerSelected"><button type="button" class="btn btn-secondary form-control" (click)="refreshDraw()">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                            Select again
+                            </button>
+                        </span>
+                    </div>
+                    <div *ngIf="customerSelected" class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <select class="form-control" id="item" name="item" [(ngModel)]="data.item_id" #item="ngModel" required>
+                                    <option *ngFor="let item of items" value= {{item.item_id}}>
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <button type="button" class="btn btn-success form-control" (click)="saveLuckyCustomer()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-default">
+                <!-- Default card contents -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-lg-9 col-md-9 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Customers</span></div>
+                        <!-- Add scheme -->
+                        <div class="col col-lg-3 col-md-3" align="right">
+                            <button type="button" class="btn btn-sm btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding:0px">
+                    <table class="table table-bordered table-hover table-sm table-striped" *ngIf="customers && customers.length" id="lucky_draw_table">
+                        <tr>
+                            <th>#</th>
+                            <th>Month</th>
+                            <th>Winner</th>
+                            <th>Card</th>
+                            <th>Item</th>
+                        </tr>
+                        <tr *ngFor="let draw of customers; let index = index">
+                            <td>{{index + 1}}</td>
+                            <td>{{draw.lucky_draw_month}}</td>
+                            <td>{{draw.name}}</td>
+                            <td>{{draw.card_number}}</td>
+                            <td>{{draw.lucky_draw_item.name}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>
+
+

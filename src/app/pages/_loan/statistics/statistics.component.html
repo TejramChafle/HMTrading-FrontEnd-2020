@@ -1,0 +1,149 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card card-default">
+                <div class="card-header" >
+                    <div class="row">
+                        <div class="col col-lg-8 col-md-8 page-header-message">
+                            <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Loan Disbursement</span>
+                        </div>
+
+                        <!-- Print -->
+                        <div class="col col-lg-4 col-md-4" align="right">
+                            <button type="button" class="btn btn-secondary" (click)="print('laon_disbursement')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding: 0px;">
+
+                    <!-- Responsive Table -->
+                    <div id="laon_disbursement" class="table-responsive" *ngIf="disbursement && disbursement.length">
+                        <table class="table table-hover table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Month</th>
+                                <th class="hmtrading-text-right">Amount</th>
+                                <!-- <th [hidden]="printing">Detail</th> -->
+                            </tr>
+
+                            <tr *ngFor="let dis of disbursement; let index = index">
+                                <td>{{index + 1}}</td>
+                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td align="right">&#8377; {{dis.loan_disbursed | number: '1.2-2'}}</td>
+                                <!-- <td [hidden]="printing" align="center"><button class="btn btn-secondary btn-sm" (click)="viewInstallments(cust.saving_account_id)"> <span class="glyphicon glyphicon-eye-open"></span></button></td> -->
+                            </tr>
+                            <tr>
+                                <td colspan="2">Total</td>
+                                <td align="right">&#8377; {{total_loan_disbursed | number: '1.2-2'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Loan Statistics -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card card-default ">
+                <!-- Default card contents -->
+                <div class="card-header" >
+                    <div class="row">
+                        <div class="col col-lg-8 col-md-8 page-header-message">
+                            <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Loan Statistics</span>
+                        </div>
+
+                        <!-- Print -->
+                        <div class="col col-lg-4 col-md-4" align="right">
+                            <button type="button" class="btn btn-secondary" (click)="print('laon_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding: 0px;">
+                    <!-- Responsive Table -->
+                    <div id="laon_statistics" class="table-responsive" *ngIf="loan && loan.length">
+                        <table class="table table-hover table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Month</th>
+                                <th class="hmtrading-text-right">Installment Received</th>
+                                <th class="hmtrading-text-right">Interest Received</th>
+                                <th class="hmtrading-text-right">Fine Received</th>
+                                <!-- <th [hidden]="printing">Detail</th> -->
+                            </tr>
+
+                            <tr *ngFor="let dis of loan; let index = index">
+                                <td>{{index+1}}</td>
+                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td align="right">&#8377; {{dis.installment_received | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{dis.interest_paid | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{dis.fine_paid | number: '1.2-2'}}</td>
+                                <!-- <td [hidden]="printing" align="center"><button class="btn btn-secondary btn-sm" (click)="viewInstallments(cust.saving_account_id)"> <span class="glyphicon glyphicon-eye-open"></span></button></td> -->
+                            </tr>
+                            <tr>
+                                <td colspan="2">Total</td>
+                                <td align="right">&#8377; {{total_installment_received | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{total_interest_paid | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{total_loan_fine_paid | number: '1.2-2'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Lucky Draw Statistics -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card card-default ">
+                <!-- Default card contents -->
+                <div class="card-header" >
+                    <div class="row">
+                        <div class="col col-lg-8 col-md-8 page-header-message">
+                            <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Saving Statistics</span>
+                        </div>
+
+                        <!-- Print -->
+                        <div class="col col-lg-4 col-md-4" align="right">
+                            <button type="button" class="btn btn-secondary" (click)="print('saving_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding: 0px;">
+
+                    <!-- Responsive Table -->
+                    <div id="saving_statistics" class="table-responsive" *ngIf="savings && savings.length">
+                        <table class="table table-hover table-bordered table-sm table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Month</th>
+                                <th class="hmtrading-text-right">Saving Received</th>
+                                <th class="hmtrading-text-right">Fine Received</th>
+                                <!-- <th [hidden]="printing">Detail</th> -->
+                            </tr>
+
+                            <tr *ngFor="let dis of savings; let index = index">
+                                <td>{{index+1}}</td>
+                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td align="right">&#8377; {{dis.saving_received | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{dis.fine_paid | number: '1.2-2'}}</td>
+                                <!-- <td [hidden]="printing" align="center"><button class="btn btn-secondary btn-sm" (click)="viewInstallments(cust.saving_account_id)"> <span class="glyphicon glyphicon-eye-open"></span></button></td> -->
+                            </tr>
+                            <tr>
+                                <td colspan="2">Total</td>
+                                <td align="right">&#8377; {{total_saving_received | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{total_saving_fine_paid | number: '1.2-2'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- Loader -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

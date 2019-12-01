@@ -1,0 +1,116 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{formdata.customer_id ? 'Edit': 'Add'}} Customer</h4>
+    <button type="button" class="close" aria-label="Close" (click)="_activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    <div class="modal-body">
+        <form name="form" (ngSubmit)="f.form.valid && addCustomer()" #f="ngForm" novalidate>
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !accountNo.valid }">
+                        <label for="accountNo">Account Number</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <input type="text" class="form-control" name="accountNo" [(ngModel)]="formdata.account_number" #accountNo="ngModel" maxlength="50" required />
+                        </div>
+                        <div *ngIf="f.submitted && !accountNo.valid" class="help-block">Account number is required</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                        <label for="name">Name</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <input type="text" class="form-control" name="name" [(ngModel)]="formdata.name" #name="ngModel" maxlength="50" required />
+                        </div>
+                        <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+                        <label for="address">Address</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                            <input type="text" class="form-control" name="address" [(ngModel)]="formdata.address" #address="ngModel" maxlength="100" required />
+                        </div>
+                        <div *ngIf="f.submitted && !address.valid" class="help-block">Address is required</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!phone.valid || isPhoneInvalid)}">
+                        <label for="phone">Phone</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                            <input type="tel" class="form-control" name="phone" [(ngModel)]="formdata.phone" #phone="ngModel" maxlength="10" />
+                        </div>
+                        <div *ngIf="f.submitted && !phone.valid" class="help-block">Phone is required</div>
+                        <div *ngIf="f.submitted && isPhoneInvalid" class="help-block">Phone is invalid</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !type.valid }">
+                        <label for="type">Account</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <select class="form-control" id="type" name="type" [(ngModel)]="formdata.type" #type="ngModel" required>
+                                <option *ngFor="let item of accounts" value= {{item.name}}>
+                                    {{item.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div *ngIf="f.submitted && !type.valid" class="help-block">Account is required</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!email.valid || isEmailInvalid) }">
+                        <label for="name">Email</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                            <input type="email" class="form-control" name="email" [(ngModel)]="formdata.email" #email="ngModel" />
+                        </div>
+                        <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
+                        <div *ngIf="f.submitted && isEmailInvalid" class="help-block">Email is invalid</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6" [hidden]="formdata.customer_id">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!downPayment.valid || isPriceInvalid) }">
+                        <label for="downPayment">First Payment</label>
+                        <div class="input-group" >
+                            <div class="input-group-addon">
+                                <!-- <b>&#x20B9;</b> -->
+                            </div>
+                            <input type="number" class="form-control" name="downPayment" [(ngModel)]="formdata.amount" #downPayment="ngModel" />
+                        </div>
+                        <div *ngIf="f.submitted && !downPayment.valid" class="help-block">First payment is required</div>
+                        <div *ngIf="f.submitted && isPriceInvalid" class="help-block">Please enter first payment in numbers only</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success form-control" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<!-- Loader -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>

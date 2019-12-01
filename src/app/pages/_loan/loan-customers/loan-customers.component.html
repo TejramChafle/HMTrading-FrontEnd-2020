@@ -1,0 +1,243 @@
+<div class="container-fluid">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-xm-12 page-header-message">
+                    <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Loan Customers ({{pagination.size}})</span>
+                </div>
+                <!-- Add customer -->
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-xm-12" align="right">
+                    <!-- <a routerLink="/add-loan-customer">
+                        <button class="btn btn-success" >Add Customer</button>
+                    </a> -->
+                    <button class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
+                    <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="print()">
+                      <span class="glyphicon glyphicon-print"></span> Print
+                    </button> -->
+                    <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" style="padding: 0px;">
+            <div *ngIf="search">
+                <form name="form" (ngSubmit)="f.form.valid && searchCustomer()" #f="ngForm" novalidate>
+                    <div class="row" style="padding: 16px;">
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !accountNumber.valid }">
+                                <label for="accountNumber">Account No.</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></div>
+                                    <input type="text" class="form-control" name="accountNumber" [(ngModel)]="data.account_number" #accountNumber="ngModel" maxlength="10"  />
+                                </div>
+                                <div *ngIf="f.submitted && !accountNumber.valid" class="help-block">Card number is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                                <label for="name">Name</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input type="text" class="form-control" name="name" [(ngModel)]="data.name" #name="ngModel" maxlength="50"  />
+                                </div>
+                                <div *ngIf="f.submitted && !name.valid" class="help-block">Name is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+                                <label for="address">Address</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-home"></span></div>
+                                    <input type="text" class="form-control" name="address" [(ngModel)]="data.address" #address="ngModel" maxlength="100"  />
+                                </div>
+                                <div *ngIf="f.submitted && !address.valid" class="help-block">Address is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid}">
+                                <label for="phone">Phone</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
+                                    <input type="tel" class="form-control" name="phone" [(ngModel)]="data.phone" #phone="ngModel" maxlength="10" />
+                                </div>
+                                <div *ngIf="f.submitted && !phone.valid" class="help-block">Phone is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                                <label for="name">Email</label>
+                                <div class="input-group" >
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                    <input type="email" class="form-control" name="email" [(ngModel)]="data.email" #email="ngModel" />
+                                </div>
+                                <div *ngIf="f.submitted && !email.valid" class="help-block">Email is </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label></label>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success form-control" >
+                                  <span class="glyphicon glyphicon-search"></span> Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label></label>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()">
+                                  <span class="glyphicon glyphicon-refresh"></span> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Responsive Table -->
+            <div id="customer_table" class="table-responsive" *ngIf="customers && customers.length">
+                <table class="table table-hover table-bordered table-sm">
+                    <tr>
+                        <!-- <th>#</th> -->
+                        <th>AN.</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <!-- <th>Email</th> -->
+                        <!-- <th class="hmtrading-text-center">Savings</th>
+                        <th class="hmtrading-text-center">Loans</th> -->
+                        <th class="hmtrading-text-center">Installments</th>
+                        <th class="hmtrading-text-center">Transactions</th>
+                        <th colspan="3" class="hmtrading-text-center">Actions</th>
+                    </tr>
+
+                    <tr *ngFor="let customer of customers">
+                        <!-- <td>{{customer.customer_id}}</td> -->
+                        <td>{{customer.account_number}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.phone}}</td>
+                        <!-- <td>{{customer.email}}</td> -->
+
+                        <!-- Savings -->
+                        <!-- <td align="center">
+                            <button class="btn btn-secondary btn-sm" (click)="viewInstallments(customer, 'saving')">
+                                <span class="glyphicon glyphicon-calendar"></span> View
+                            </button>
+                        </td> -->
+
+                        <!-- Loans -->
+                        <!-- <td align="center">
+                            <button class="btn btn-secondary btn-sm" (click)="viewInstallments(customer, 'loan')">
+                                <span class="glyphicon glyphicon-calendar"></span> View
+                            </button>
+                        </td> -->
+
+                        <td align="center">
+                            <button class="btn btn-secondary btn-sm" (click)="viewInstallments(customer, 'loan')">
+                                <span class="glyphicon glyphicon-calendar"></span> View
+                            </button>
+                        </td>
+
+                        <!-- Transactions -->
+                        <td align="center">
+                          <button class="btn btn-secondary btn-sm" (click)="transactions(customer.customer_id)">
+                            <span class="glyphicon glyphicon-calendar"></span> View
+                          </button>
+                        </td>
+
+                        <!-- Actions -->
+                        <td align="center">
+                          <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addLoanModal" (click)="selectedCustomer=customer">
+                            <span class="glyphicon glyphicon-plus"></span> Create Loan
+                          </button>
+                        </td>
+                        <td align="center">
+                          <button class="btn btn-info btn-sm" (click)="addCustomer(customer)" >Edit</button>
+                        </td>
+                        <td align="center">
+                          <button class="btn btn-danger btn-sm" (click)="deleteCustomer(customer.customer_id)" >
+                            <span class="glyphicon glyphicon-trash"></span> Delete
+                          </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer" *ngIf="customers && customers.length">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <!-- Pagination -->
+                      <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
+                      [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col col-lg-6 col-md-6" align="right">
+                    <button class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
+                    <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="print()">Print</button> -->
+                    <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Add Loan amount -->
+        <div class="modal fade" id="addLoanModal" tabindex="-1" role="dialog" aria-labelledby="addLoanModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addLoanModalLabel">Add Loan Amount</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label >Loan Amount</label><br>
+                            <input type="number" class="form-control" name="amount" [(ngModel)]="data.amount" #amount="ngModel" >
+                        </div>
+
+                        <div class="form-group">
+                            <label >Date</label><br>
+                            <input type="date" class="form-control" name="date" [(ngModel)]="data.created_date" #date="ngModel" >
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" (click)="createLoanAccount()">Create Loan Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- No result found message -->
+    <div class="alert alert-danger" role="alert" *ngIf="customers && !customers.length">
+        <strong>No result found!</strong>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

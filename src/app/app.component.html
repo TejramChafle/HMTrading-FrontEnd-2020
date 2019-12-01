@@ -1,0 +1,46 @@
+<!-- *ngIf="isLoggedIn$ | async" -->
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light" *ngIf="_appService.isLoggedIn">
+  <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#hmtrading-navbar" aria-controls="hmtrading-navbar" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+              <span>
+              <img src="/assets/images/hmtrading-copy.png" width="36" height="36" class="d-inline-block align-top" alt="">
+              HM Trading
+              </span>
+          </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="hmtrading-navbar">
+          <ul class="nav nav-pills navbar-nav mr-auto" >
+              <li><a class="nav-link" routerLink="home" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+              <li class="nav-item"><a class="nav-link" routerLink="agents" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Agents</a></li>
+              <li class="nav-item"><a class="nav-link" routerLink="customers" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Customers</a></li>
+              <li><a class="nav-link" routerLink="installments" routerLinkActive="active"><span class="glyphicon glyphicon-calendar"></span> Installments</a></li>
+              <li><a class="nav-link" routerLink="payments" routerLinkActive="active">Billings</a></li>
+              <li><a class="nav-link" routerLink="schemes" routerLinkActive="active"><span class="glyphicon glyphicon-star"></span> Schemes</a></li>
+              <li><a class="nav-link" routerLink="items" routerLinkActive="active"><span class="glyphicon glyphicon-cutlery"></span> Items</a></li>
+              <li><a class="nav-link" routerLink="lucky-draw" routerLinkActive="active"><span class="glyphicon glyphicon-bullhorn"></span> Lucky Draw</a></li>
+          </ul>
+
+          <ul class="nav nav-pills navbar-nav mr-auto" >
+              <li><a class="nav-link" routerLink="loan-customers" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Customers</a></li>
+              <li><a class="nav-link" routerLink="transactions" routerLinkActive="active"><span class="glyphicon glyphicon-calendar"></span> Billings</a></li>
+              <li><a class="nav-link" routerLink="statistics" routerLinkActive="active"><span class="glyphicon glyphicon-stats"></span> Statistic</a></li>
+          </ul>
+
+          <ul class="nav justify-content-end">
+              <li>
+                  <!-- <a class="nav-link" (click)="onLogout()" ><span class="glyphicon glyphicon-log-out"></span><strong>Logout</strong></a> -->
+                  <button type="button" class="btn btn-outline-dark" (click)="onLogout()"><strong>Logout</strong></button>
+              </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+<br>
+<router-outlet></router-outlet>

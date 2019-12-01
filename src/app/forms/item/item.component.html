@@ -1,0 +1,97 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{formdata.item_id ? 'Edit' : 'Add'}} Item</h4>
+    <button type="button" class="close" aria-label="Close" (click)="_activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form name="form" (ngSubmit)="f.form.valid && addItem()" #f="ngForm" novalidate >
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                    <label for="name">Name</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-cutlery"></span></div>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="formdata.name" #name="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !name.valid" class="help-block">Item name is required</div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !scheme.valid }">
+                    <label for="scheme">Scheme</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-star"></span></div>
+                        <select class="form-control" name="scheme" [(ngModel)]="formdata.scheme_id" #scheme="ngModel" required>
+                            <option *ngFor="let item of schemesSrv.schemes" value= {{item.scheme_id}}>
+                                {{item.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="f.submitted && !scheme.valid" class="help-block">Scheme is required</div>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !price.valid }">
+                    <label for="price">Price</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><b>&#x20B9;</b></div>
+                        <input type="text" class="form-control" name="price" [(ngModel)]="formdata.price" #price="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !price.valid" class="help-block">Price is required</div>
+                </div>
+            </div> -->
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !exchangeable.valid }">
+                    <label for="price">Is Exchangeable?</label>
+                    <!-- <div class="input-group" >
+                        <input type="checkbox" name="exchangeable" [(ngModel)]="formdata.is_exchangeable" #exchangeable="ngModel" />
+                        Check this box to allow for item exchange
+                    </div> -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" class="form-control" name="exchangeable" [(ngModel)]="formdata.is_exchangeable" #exchangeable="ngModel" aria-label="Checkbox for following text input">
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Check this box to allow for item exchange" disabled/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                    <label for="description">Description</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>
+                        <textarea type="text" class="form-control" name="description" [(ngModel)]="formdata.description" #description="ngModel" ></textarea>
+                    </div>
+                    <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</button>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success form-control" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="_activeModal.close('Close click')">Close</button>
+</div> -->
+<!-- Loader -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
