@@ -29,25 +29,17 @@ export class CustomersComponent implements OnInit {
     sub
     id
 
-    // Form fields
-    formdata: any = {};
-    isPhoneInvalid: Boolean = false;
-    isEmailInvalid: Boolean = false;
-    isPriceInvalid: Boolean = false;
-    statuses: Array<any>;
-    agents: Array<any>;
-
     constructor(
         private _drawService: DrawService,
         private _modalService: NgbModal,
         public _appService: AppService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
-        this.statuses = [
-            { id: 1, name: 'Yes' },
-            { id: 0, name: 'No' }
-        ];
-        this.formdata.is_agent_too = 0;
+        console.log('AGENTS:', this._appService.agents);
+        // Get the agents from server
+        if (!this._appService.agents) {
+            this._drawService.agents();
+        }
     }
 
     ngOnInit() {
@@ -58,7 +50,7 @@ export class CustomersComponent implements OnInit {
             if (this.agent) {
                 console.log('Get all the customers of agent id : ' + this.agent.customer_id);
                 // this.getCustomers({agent_id : this.id});
-                this.printing = true;
+                // this.printing = true;
                 this.getInstallments({ agent_id: this.agent.customer_id, limit: this.limit, offset: 0, page: 1 });
                 // this.getItems();
             } else {
@@ -68,7 +60,6 @@ export class CustomersComponent implements OnInit {
                 // this.getItems();
             }
         });
-
     }
 
     getCustomers(params) {
@@ -276,16 +267,9 @@ export class CustomersComponent implements OnInit {
     }
 
     addCustomer(customer?: any) {
+        console.log('this._appService.agents : ', this._appService.agents);
         const modalRef = this._modalService.open(CustomerComponent, { size: 'lg' });
         modalRef.componentInstance.formdata = customer || {};
-
-        if (this.agent && this._appService.agent) {
-            console.log('this._appService.agents : ', this._appService.agents);
-            this._appService.agents = [];
-            this._appService.agents.push(this._appService.agent);
-            modalRef.componentInstance.formdata.agent_id = this._appService.agent.agent_id;
-        }
-
         modalRef.componentInstance.agents = this._appService.agents || [];
         modalRef.componentInstance.items = this._appService.items || [];
         modalRef.result.then((data) => {

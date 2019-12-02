@@ -22,9 +22,22 @@ export class DrawService {
     // tslint:disable-next-line:variable-name
     constructor(private _http: HttpClient, private _appService: AppService) { }
 
+    // Get the agents in silent/background
+    agents() {
+        this.getCustomers({ is_agent_too: 1, limit: 1000, offset: 0, page: 1).subscribe(
+            data => {
+                console.log(data);
+                this._appService.agents = data.records;
+            },
+            error => {
+                this._appService.notify('Oops! Unable to get the agents information.', 'Error!');
+                console.log(error);
+            });
+    }
+
     addCustomer(data): Observable<any> {
         return this._http.post(baseUrl + 'Customer/add_customer', data, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }), catchError(error => {

@@ -55,26 +55,22 @@
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!phone.valid || isPhoneInvalid)}">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
                                 <label for="phone">Phone</label>
                                 <div class="input-group" >
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></div>
                                     <input type="tel" class="form-control" name="phone" [(ngModel)]="data.mobile_number" #phone="ngModel" maxlength="10" />
                                 </div>
-                                <div *ngIf="f.submitted && !phone.valid" class="help-block">Phone is </div>
-                                <div *ngIf="f.submitted && isPhoneInvalid" class="help-block">Phone is invalid</div>
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!email.valid || isEmailInvalid) }">
+                            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                                 <label for="name">Email</label>
                                 <div class="input-group" >
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
                                     <input type="email" class="form-control" name="email" [(ngModel)]="data.email" #email="ngModel" />
                                 </div>
-                                <div *ngIf="f.submitted && !email.valid" class="help-block">Email is </div>
-                                <div *ngIf="f.submitted && isEmailInvalid" class="help-block">Email is invalid</div>
                             </div>
                         </div>
 
@@ -89,7 +85,6 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div *ngIf="f.submitted && !item.valid" class="help-block">Item is </div>
                             </div>
                         </div>
                     </div>

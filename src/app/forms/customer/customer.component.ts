@@ -30,6 +30,12 @@ export class CustomerComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.formdata.customer_id) {
+            this.formdata.agent_id = this.formdata.agent.customer_id;
+            this.formdata.item_id = this.formdata.item.item_id;
+        } else if (this._appService.agent) {
+            this.formdata.agent_id = this._appService.agent.customer_id;
+        }
     }
 
     addCustomer() {
@@ -37,6 +43,16 @@ export class CustomerComponent implements OnInit {
         console.log('---------------------------------------------------------------');
         console.log(this.formdata);
         console.log('---------------------------------------------------------------');
+
+        if (this.formdata.customer_id) {
+            delete this.formdata.installment;
+            delete this.formdata.item;
+            delete this.formdata.agent;
+            delete this.formdata.total;
+            delete this.formdata.balance;
+            delete this.formdata.totalInstPrice;
+            this.formdata.down_payment = parseInt(this.formdata.down_payment, 10);
+        }
 
         const phone = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
         if (this.formdata.mobile_number && !phone.test(this.formdata.mobile_number.toLowerCase())) {

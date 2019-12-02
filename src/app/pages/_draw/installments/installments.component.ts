@@ -293,7 +293,7 @@ export class InstallmentsComponent implements OnInit {
                 this.loading = false;
                 console.log(data);
                 this.selectCustomer = false;
-
+                this.ngOnInit();
                 // Print the recently added installments
                 // this.printPaidInstallments(insta_params, data);
                 this.print(params, data, total);
