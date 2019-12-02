@@ -24,7 +24,7 @@ export class DrawService {
 
     // Get the agents in silent/background
     agents() {
-        this.getCustomers({ is_agent_too: 1, limit: 1000, offset: 0, page: 1).subscribe(
+        this.getCustomers({ is_agent_too: 1, limit: 1000, offset: 0, page: 1}).subscribe(
             data => {
                 console.log(data);
                 this._appService.agents = data.records;
