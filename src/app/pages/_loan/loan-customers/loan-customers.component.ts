@@ -122,11 +122,11 @@ export class LoanCustomersComponent implements OnInit {
         console.log('SEARCH FORM DATA');
 
         const params: any = {};
-        params.name = this.data.name && this.data.name.length ? this.data.name : null;
-        params.email = this.data.email && this.data.email.length ? this.data.email : null;
-        params.address = this.data.address && this.data.address.length ? this.data.address : null;
-        params.account_number = this.data.account_number && this.data.account_number.length ? this.data.account_number : null;
-        params.phone = this.data.phone && this.data.phone.length ? this.data.phone : null;
+        params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+        params.email = this.data.email && this.data.email.length ? this.data.email : undefined;
+        params.address = this.data.address && this.data.address.length ? this.data.address : undefined;
+        params.account_number = this.data.account_number && this.data.account_number.length ? this.data.account_number : undefined;
+        params.phone = this.data.phone && this.data.phone.length ? this.data.phone : undefined;
 
         params.limit = 10;
         params.offset = 0;
@@ -246,11 +246,11 @@ export class LoanCustomersComponent implements OnInit {
         params.page = page;
 
         if (this.search) {
-            params.name = this.data.name && this.data.name.length ? this.data.name : null;
-            params.email = this.data.email && this.data.email.length ? this.data.email : null;
-            params.address = this.data.address && this.data.address.length ? this.data.address : null;
-            params.account_number = this.data.account_number && this.data.account_number.length ? this.data.account_number : null;
-            params.phone = this.data.phone && this.data.phone.length ? this.data.phone : null;
+            params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+            params.email = this.data.email && this.data.email.length ? this.data.email : undefined;
+            params.address = this.data.address && this.data.address.length ? this.data.address : undefined;
+            params.account_number = this.data.account_number && this.data.account_number.length ? this.data.account_number : undefined;
+            params.phone = this.data.phone && this.data.phone.length ? this.data.phone : undefined;
         }
         this.getCustomers(params);
     }

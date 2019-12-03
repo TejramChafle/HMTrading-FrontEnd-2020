@@ -312,9 +312,10 @@ export class InstallmentsComponent implements OnInit {
 
         const params: any = {};
 
-        params.name = this.data.name && this.data.name.length ? this.data.name : null;
-        params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-        params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : null;
+        params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+        params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+        params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
+        params.item_id = this.data.item_id;
 
         params.limit = 10;
         params.offset = 0;
@@ -449,9 +450,9 @@ export class InstallmentsComponent implements OnInit {
             params.agent_id = this.id;
         }
         if (this.search) {
-            params.name = this.data.name && this.data.name.length ? this.data.name : null;
-            params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-            params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : null;
+            params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+            params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+            params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
             params.item_id = this.data.item_id;
         }
         this.getInstallments(params);

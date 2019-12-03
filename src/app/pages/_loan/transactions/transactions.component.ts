@@ -82,10 +82,10 @@ export class TransactionsComponent implements OnInit {
         console.log('SEARCH FORM DATA');
 
         const params: any = {};
-        params.transaction_id = this.data.transaction_id && this.data.transaction_id.length ? this.data.transaction_id : null;
-        params.created_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : null;
-        params.account_id = this.data.account_number && this.data.account_number.length ? this.data.account_number : null;
-        params.type = this.data.type || null;
+        params.transaction_id = this.data.transaction_id && this.data.transaction_id.length ? this.data.transaction_id : undefined;
+        params.created_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : undefined;
+        params.account_id = this.data.account_number && this.data.account_number.length ? this.data.account_number : undefined;
+        params.type = this.data.type || undefined;
         if (this.id) {
             params.customer_id = this.id;
         }
@@ -134,10 +134,10 @@ export class TransactionsComponent implements OnInit {
             params.customer_id = this.id;
         }
         if (this.search) {
-            params.transaction_id = this.data.transaction_id && this.data.transaction_id.length ? this.data.transaction_id : null;
-            params.created_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : null;
-            params.account_id = this.data.account_number && this.data.account_number.length ? this.data.account_number : null;
-            params.type = this.data.type || null;
+            params.transaction_id = this.data.transaction_id && this.data.transaction_id.length ? this.data.transaction_id : undefined;
+            params.created_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : undefined;
+            params.account_id = this.data.account_number && this.data.account_number.length ? this.data.account_number : undefined;
+            params.type = this.data.type || undefined;
         }
         this.getTransactions(params);
     }

@@ -203,9 +203,9 @@ export class PaymentsComponent implements OnInit {
 
         const params: any = {};
 
-        // params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-        params.receipt_id = this.data.receipt_id && this.data.receipt_id.length ? this.data.receipt_id : null;
-        params.receipt_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : null;
+        // params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+        params.receipt_id = this.data.receipt_id && this.data.receipt_id.length ? this.data.receipt_id : undefined;
+        params.receipt_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : undefined;
 
         if (this.id) {
             params.customer_id = this.id;
@@ -231,9 +231,9 @@ export class PaymentsComponent implements OnInit {
             params.customer_id = this.id;
         }
         if (this.search) {
-            // params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-            params.receipt_id = this.data.receipt_id && this.data.receipt_id.length ? this.data.receipt_id : null;
-            params.receipt_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : null;
+            // params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+            params.receipt_id = this.data.receipt_id && this.data.receipt_id.length ? this.data.receipt_id : undefined;
+            params.receipt_date = this.data.created_date && this.data.created_date.length ? this.data.created_date : undefined;
         }
         this.getPayments(params);
     }

@@ -1,11 +1,30 @@
 <div class="container">
     <div class="row">
         <div class="col col-lg-4 col-md-12 col-sm-12 col-xs-12">
-            <div class="card text-center mb-3 home-card" >
-                <div class="card-header">Pending Loan Installments</div>
-                <div class="card-body">
-                    <img src="/assets/images/hmtrading.png" class="d-inline-block align-top" alt="">
-                    <font class="hm-trading-message"><h1>Work under progress!</h1></font>
+            <div class="card mb-3 home-card" >
+                <div class="card-header">
+                    <div class="page-header-message">
+                        <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Item Distribution</span>
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0px;" *ngIf="distribution && distribution.length">
+                    <!-- Table -->
+                    <table class="table table-hover table-bordered table-sm table-striped">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <!-- <th>Exchangeable</th> -->
+                            <th>Count</th>
+                        </tr>
+
+                        <tr *ngFor="let record of distribution; let index = index;">
+                            <td>{{index + 1}}</td>
+                            <td>{{record.item.name}}</td>
+                            <td>{{record.item.description}}</td>
+                            <td class="text-center">{{record.total}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

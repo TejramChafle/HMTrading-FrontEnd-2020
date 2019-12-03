@@ -175,13 +175,12 @@ export class CustomersComponent implements OnInit {
         console.log('SEARCH FORM DATA');
 
         const params: any = {};
-
-        this.data.name = this.data.name && this.data.name.length ? this.data.name : null;
-        this.data.email = this.data.email && this.data.email.length ? this.data.email : null;
-        this.data.address = this.data.address && this.data.address.length ? this.data.address : null;
-        this.data.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-        this.data.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : null;
-        this.data.item_id = this.data.item_id || null;
+        params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+        params.email = this.data.email && this.data.email.length ? this.data.email : undefined;
+        params.address = this.data.address && this.data.address.length ? this.data.address : undefined;
+        params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+        params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
+        params.item_id = this.data.item_id || undefined;
 
         params.limit = 10;
         params.offset = 0;
@@ -255,12 +254,12 @@ export class CustomersComponent implements OnInit {
         params.page = page;
 
         if (this.search) {
-            this.data.name = this.data.name && this.data.name.length ? this.data.name : null;
-            this.data.email = this.data.email && this.data.email.length ? this.data.email : null;
-            this.data.address = this.data.address && this.data.address.length ? this.data.address : null;
-            this.data.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : null;
-            this.data.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : null;
-            this.data.item_id = this.data.item_id || null;
+            params.name = this.data.name && this.data.name.length ? this.data.name : undefined;
+            params.email = this.data.email && this.data.email.length ? this.data.email : undefined;
+            params.address = this.data.address && this.data.address.length ? this.data.address : undefined;
+            params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
+            params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
+            params.item_id = this.data.item_id || undefined;
         }
         // this.getCustomers(params);
         this.getInstallments(params);
