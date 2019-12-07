@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+// import { Router, ActivatedRoute } from '@angular/router';
 
 import { LoanService } from './../../../services/loan.service';
 import { AppService } from 'src/app/app.service';
@@ -28,12 +28,12 @@ export class StatisticsComponent implements OnInit {
     savings: Array<any>;
     loan: Array<any>;
 
-    total_loan_disbursed;
-    total_saving_received
-    total_installment_received
-    total_interest_paid
-    total_saving_fine_paid
-    total_loan_fine_paid
+    totalLoanDisbursed;
+    totalSavingReceived;
+    totalInstallmentReceived;
+    totalInterestPaid;
+    totalSavingFinePaid;
+    totalLoanFinePaid;
 
     // Router
     sub
@@ -42,8 +42,8 @@ export class StatisticsComponent implements OnInit {
     constructor(
         public _loanService: LoanService,
         public _appService: AppService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute ) {
+        // private router: Router
+        ) {
             this.data.interest = 3;
     }
 
@@ -65,27 +65,27 @@ export class StatisticsComponent implements OnInit {
                 this.loan = data.loan.loan;
 
                 // Disbursment
-                this.total_loan_disbursed = 0;
+                this.totalLoanDisbursed = 0;
                 this.disbursement.forEach((data)=> {
-                    this.total_loan_disbursed += parseInt(data.loan_disbursed);
+                    this.totalLoanDisbursed += parseInt(data.loan_disbursed);
                 });
 
                 // Loan
-                this.total_installment_received = 0;
-                this.total_interest_paid = 0;
-                this.total_loan_fine_paid = 0;
+                this.totalInstallmentReceived = 0;
+                this.totalInterestPaid = 0;
+                this.totalLoanFinePaid = 0;
                 this.loan.forEach((data)=> {
-                    this.total_installment_received += parseInt(data.installment_received);
-                    this.total_interest_paid += parseInt(data.interest_paid);
-                    this.total_loan_fine_paid += parseInt(data.fine_paid);
+                    this.totalInstallmentReceived += parseInt(data.installment_received);
+                    this.totalInterestPaid += parseInt(data.interest_paid);
+                    this.totalLoanFinePaid += parseInt(data.fine_paid);
                 });
 
                 // Savings
-                this.total_saving_received  = 0;
-                this.total_saving_fine_paid = 0;
+                this.totalSavingReceived  = 0;
+                this.totalSavingFinePaid = 0;
                 this.savings.forEach((data)=> {
-                    this.total_saving_received  += parseInt(data.saving_received);
-                    this.total_saving_fine_paid += parseInt(data.fine_paid);
+                    this.totalSavingReceived  += parseInt(data.saving_received);
+                    this.totalSavingFinePaid += parseInt(data.fine_paid);
                 });
 
                 console.log('--------------------------------------------------------');
@@ -149,8 +149,8 @@ export class StatisticsComponent implements OnInit {
         popupWin.document.close();
     }
 
-    viewInstallments(id) {
+    /* viewInstallments(id) {
         this.router.navigate(['loan-installments', id]);
-    }
+    } */
 
 }

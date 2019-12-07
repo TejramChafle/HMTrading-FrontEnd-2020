@@ -18,6 +18,7 @@ export class ItemsComponent implements OnInit {
     items: any[];
     pagination: any = {};
     limit: number = limit;
+    distribution: Array<any>;
 
     constructor(
         public _drawService: DrawService, private _modalService: NgbModal, public _appService: AppService,
@@ -26,6 +27,7 @@ export class ItemsComponent implements OnInit {
 
     ngOnInit() {
         this.getItems({ limit: this.limit, offset: 0, page: 1 });
+        this.itemDistribution({ limit: 100, offset: 0, page: 1 });
     }
 
     getItems(params) {
@@ -93,5 +95,23 @@ export class ItemsComponent implements OnInit {
             console.log(error);
             // this._appService.notify('Failed to perform operation.', 'Error!');
         });
+    }
+
+
+    itemDistribution(params) {
+        this.loading = true;
+        this._drawService.itemDistribution(params).subscribe(
+            data => {
+                this.loading = false;
+                console.log(data);
+                this.distribution = data.records;
+                localStorage.setItem('distribution', JSON.stringify(this.distribution));
+            },
+            error => {
+                this.loading = false;
+                this._appService.notify('Oops! Unable to get the item distribution information.', 'Error!');
+                console.log(error);
+            }
+        );
     }
 }

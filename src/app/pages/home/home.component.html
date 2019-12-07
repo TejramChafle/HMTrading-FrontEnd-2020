@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col col-lg-4 col-md-12 col-sm-12 col-xs-12">
             <div class="card mb-3 home-card" >
@@ -30,85 +30,117 @@
         </div>
         <div class="col col-lg-8 col-md-12 col-sm-12 col-xs-12">
             <div class="row ">
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card text-white text-center bg-primary mb-3 home-card" (click)="navigate('agents')">
+                <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card text-white bg-info text-center mb-3 home-card" (click)="navigate('agents')">
                         <div class="card-body">
-                            <h1>07</h1>
+                            <h1>{{dashboard.draw_agent}}</h1>
                         </div>
-                        <div class="card-footer">Agents</div>
+                        <div class="card-footer"><b>AGENTS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card text-white text-center bg-primary mb-3 home-card" (click)="navigate('customers')">
+                <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card text-white bg-danger text-center mb-3 home-card" (click)="navigate('customers')">
                         <div class="card-body">
-                            <!-- <h2 class="card-title">59</!-->
-                            <h1>59</h1>
+                            <h1>{{dashboard.draw_customer}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Customer</div>
+                        <div class="card-footer"><b>FATAKA FUND CUSTOMERS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('installments')">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('payments')">
                         <div class="card-body">
-                            <!-- <h3 class="card-title">59</h3> -->
-                            <h1>59</h1>
+                            <h1>{{dashboard.draw_transaction}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Installments</div>
+                        <div class="card-footer"><b>FATAKA FUND INVOICES</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card text-white text-center bg-info mb-3 home-card" (click)="navigate('billings')">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-info mb-3 home-card" (click)="navigate('items')">
                         <div class="card-body">
-                            <!-- <h5 class="card-title">27</h5> -->
-                            <h1>27</h1>
+                            <h1>{{dashboard.draw_item}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Invoices</div>
+                        <div class="card-footer"><b>ITEMS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('items')">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('loan-customers')">
                         <!-- <div class="card-header">Items</div> -->
                         <div class="card-body">
-                            <!-- <h5 class="card-title">23</h5> -->
-                            <h1>23</h1>
+                            <h1>{{dashboard.saving_account}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Items</div>
+                        <div class="card-footer"><b>SAVING ACCOUNTS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('loan-customers')">
                         <!-- <div class="card-header">Loan Customers</div> -->
                         <div class="card-body">
-                            <!-- <h3 class="card-title">45</h3> -->
-                            <h1>45</h1>
+                            <h1>{{dashboard.loan_account}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Loan Customers</div>
+                        <div class="card-footer"><b>LOAN ACCOUNTS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-info mb-3 home-card" (click)="navigate('transactions')">
                         <!-- <div class="card-header">Loan Billings</div> -->
                         <div class="card-body">
-                            <!-- <h5 class="card-title">167</h5> -->
-                            <h1>167</h1>
+                            <h1>{{dashboard.loan_transaction}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Loan Billings</div>
+                        <div class="card-footer"><b>LOAN TRANSACTIONS</b></div>
                     </div>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('statistics')">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('transactions')">
                         <!-- <div class="card-header">Loan Statistics</div> -->
                         <div class="card-body">
-                            <h1 class="card-title">₹ 296,070</h1>
+                            <h1 class="card-title">{{dashboard.saving_transaction}}</h1>
                             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
-                        <div class="card-footer">Loan Statistics</div>
+                        <div class="card-footer"><b>SAVING TRANSACTIONS</b></div>
+                    </div>
+                </div>
+
+
+
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('transactions')">
+                        <div class="card-body">
+                            <h1 class="card-title">&#8377; {{statistics.totalLoanDisbursed | number}}</h1>
+                        </div>
+                        <div class="card-footer"><b>LOAN DISRBUSTMENT</b></div>
+                    </div>
+                </div>
+
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-danger mb-3 home-card" (click)="navigate('transactions')">
+                        <div class="card-body">
+                            <h1 class="card-title">&#8377; {{statistics.totalSavingReceived | number}}</h1>
+                        </div>
+                        <div class="card-footer"><b>SAVING RECEIVED</b></div>
+                    </div>
+                </div>
+
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-danger mb-3 home-card" (click)="navigate('transactions')">
+                        <div class="card-body">
+                            <h1 class="card-title">&#8377; {{statistics.totalInstallmentReceived | number}}</h1>
+                        </div>
+                        <div class="card-footer"><b>LOAN INSTALLMENT RECEIVED</b></div>
+                    </div>
+                </div>
+
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card text-white text-center bg-danger mb-3 home-card" (click)="navigate('transactions')">
+                        <div class="card-body">
+                            <h1 class="card-title">&#8377; {{statistics.totalInterestPaid | number}}</h1>
+                        </div>
+                        <div class="card-footer"><b>LOAN INTEREST RECEIVED</b></div>
                     </div>
                 </div>
             </div>

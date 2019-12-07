@@ -10,7 +10,7 @@
 
                         <!-- Print -->
                         <div class="col col-lg-4 col-md-4" align="right">
-                            <button type="button" class="btn btn-secondary" (click)="print('laon_disbursement')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                            <!-- <button type="button" class="btn btn-secondary" (click)="print('laon_disbursement')"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">Total</td>
-                                <td align="right">&#8377; {{total_loan_disbursed | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalLoanDisbursed | number: '1.2-2'}}</td>
                             </tr>
                         </table>
                     </div>
@@ -56,7 +56,7 @@
 
                         <!-- Print -->
                         <div class="col col-lg-4 col-md-4" align="right">
-                            <button type="button" class="btn btn-secondary" (click)="print('laon_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                            <!-- <button type="button" class="btn btn-secondary" (click)="print('laon_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
                         </div>
                     </div>
                 </div>
@@ -84,9 +84,9 @@
                             </tr>
                             <tr>
                                 <td colspan="2">Total</td>
-                                <td align="right">&#8377; {{total_installment_received | number: '1.2-2'}}</td>
-                                <td align="right">&#8377; {{total_interest_paid | number: '1.2-2'}}</td>
-                                <td align="right">&#8377; {{total_loan_fine_paid | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalInstallmentReceived | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalInterestPaid | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalLoanFinePaid | number: '1.2-2'}}</td>
                             </tr>
                         </table>
                     </div>
@@ -107,7 +107,7 @@
 
                         <!-- Print -->
                         <div class="col col-lg-4 col-md-4" align="right">
-                            <button type="button" class="btn btn-secondary" (click)="print('saving_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button>
+                            <!-- <button type="button" class="btn btn-secondary" (click)="print('saving_statistics')"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
                         </div>
                     </div>
                 </div>
@@ -134,8 +134,8 @@
                             </tr>
                             <tr>
                                 <td colspan="2">Total</td>
-                                <td align="right">&#8377; {{total_saving_received | number: '1.2-2'}}</td>
-                                <td align="right">&#8377; {{total_saving_fine_paid | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalSavingReceived | number: '1.2-2'}}</td>
+                                <td align="right">&#8377; {{totalSavingFinePaid | number: '1.2-2'}}</td>
                             </tr>
                         </table>
                     </div>

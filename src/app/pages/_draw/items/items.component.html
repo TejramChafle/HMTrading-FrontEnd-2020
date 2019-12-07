@@ -1,94 +1,134 @@
-<div class="container">
-    <div class="card card-default">
-        <!-- Default card contents -->
-        <div class="card-header">
-            <div class="row">
-                <div class="col col-lg-6 col-md-6 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Items ({{pagination?.size}})</span></div>
-                <!-- Add item -->
-                <div class="col col-lg-6 col-md-6" align="right">
-                    <!-- <a routerLink="/add-item">
-                        <button class="btn btn-secondary" > <span class="glyphicon glyphicon-plus-sign"></span> Add Item</button>
-                    </a> -->
-                    <button class="btn btn-success" (click)="addItem()" >Add Item</button>
-                </div>
-                <!-- Search item -->
-                <!-- <div class="col col-lg-4 col-md-4" align="right">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-secondary"> <span class="glyphicon glyphicon-search"></span> Search</button>
-                    </form>
-                </div> -->
-            </div>
-
-        </div>
-        <div class="card-body" style="padding: 0px;" *ngIf="items && items.length">
-            <!-- Table -->
-            <table class="table table-hover table-bordered table-sm table-striped">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <!-- <th>Scheme</th> -->
-                    <th>Description</th>
-                    <!-- <th>Price</th> -->
-                    <th>Exchangeable</th>
-                    <!-- <th>Status</th> -->
-                    <th colspan="2" class="hmtrading-text-center">Actions</th>
-                </tr>
-
-                <tr *ngFor="let item of items;">
-                    <td>{{item.item_id}}</td>
-                    <td>{{item.name}}</td>
-                    <!-- <td>{{item.scheme ? item.scheme.name : ''}}</td> -->
-                    <td>{{item.description}}</td>
-                    <!-- <td>{{item.price}}</td> -->
-                    <td>{{item.is_exchangeable  == 1 ? 'Yes' : 'No'}}</td>
-                    <!-- <td><span [class]="item.status === 'Available' ? 'bg-success' : 'bg-danger'" style="padding: 2px 5px; color:whitesmoke;">{{item.status}}</span></td> -->
-                    <!-- <td align="center"><button class="btn btn-info btn-sm" (click)="editItem(item)" >Edit</button></td> -->
-                    <td align="center"><button class="btn btn-info btn-sm" (click)="addItem(item)" >Edit</button></td>
-                    <td align="center"><button class="btn btn-danger btn-sm" (click)="deleteItem(item.item_id)" >Delete</button></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Pagination & page size -->
-        <div class="card-footer" *ngIf="items && items.length">
-            <div class="row">
-                <div class="col col-lg-6 col-md-6">
-                  <!-- Pagination & page size -->
-                  <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6">
-                        <!-- Pagination -->
-                        <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
-                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
-                      </div>
-
-                      <div class="col-lg-6 col-md-6 col-sm-6">
-                          <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
-                              <option value="10">10</option>
-                              <option value="20">20</option>
-                              <option value="50">50</option>
-                              <option value="100">100</option>
-                          </select>
-                      </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card mb-3 home-card">
+                <div class="card-header">
+                    <div class="page-header-message">
+                        <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Item Distribution</span>
                     </div>
                 </div>
-                <!-- Add Item -->
-                <div class="col col-lg-6 col-md-6" align="right">
-                    <a routerLink="/add-item">
-                      <button class="btn btn-secondary" > <span class="glyphicon glyphicon-plus-sign"></span> Add Item</button>
-                  </a>
+                <div class="card-body" style="padding: 0px;" *ngIf="distribution && distribution.length">
+                    <!-- Table -->
+                    <table class="table table-hover table-bordered table-sm table-striped">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <!-- <th>Exchangeable</th> -->
+                            <th>Count</th>
+                        </tr>
+
+                        <tr *ngFor="let record of distribution; let index = index;">
+                            <td>{{index + 1}}</td>
+                            <td>{{record.item.name}}</td>
+                            <td>{{record.item.description}}</td>
+                            <td class="text-center">{{record.total}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <!-- No result found message -->
+                <div class="alert alert-danger" role="alert" *ngIf="items && !items.length">
+                    <strong>No result found!</strong>
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card card-default">
+                <!-- Default card contents -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 page-header-message"><span *ngIf="loading">Loading..</span>
+                            <span *ngIf="!loading">Items ({{pagination?.size}})</span></div>
+                        <!-- Add item -->
+                        <div class="col col-lg-6 col-md-6" align="right">
+                            <!-- <a routerLink="/add-item">
+                                <button class="btn btn-secondary" > <span class="glyphicon glyphicon-plus-sign"></span> Add Item</button>
+                            </a> -->
+                            <button class="btn btn-success" (click)="addItem()">Add Item</button>
+                        </div>
+                        <!-- Search item -->
+                        <!-- <div class="col col-lg-4 col-md-4" align="right">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-secondary"> <span class="glyphicon glyphicon-search"></span> Search</button>
+                            </form>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0px;" *ngIf="items && items.length">
+                    <!-- Table -->
+                    <table class="table table-hover table-bordered table-sm table-striped">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <!-- <th>Scheme</th> -->
+                            <th>Description</th>
+                            <!-- <th>Price</th> -->
+                            <th>Exchangeable</th>
+                            <!-- <th>Status</th> -->
+                            <th colspan="2" class="hmtrading-text-center">Actions</th>
+                        </tr>
 
-    <br>
-    <!-- No result found message -->
-    <div class="alert alert-danger" role="alert" *ngIf="items && !items.length">
-        <strong>No result found!</strong>
+                        <tr *ngFor="let item of items;">
+                            <td>{{item.item_id}}</td>
+                            <td>{{item.name}}</td>
+                            <!-- <td>{{item.scheme ? item.scheme.name : ''}}</td> -->
+                            <td>{{item.description}}</td>
+                            <!-- <td>{{item.price}}</td> -->
+                            <td>{{item.is_exchangeable == 1 ? 'Yes' : 'No'}}</td>
+                            <!-- <td><span [class]="item.status === 'Available' ? 'bg-success' : 'bg-danger'" style="padding: 2px 5px; color:whitesmoke;">{{item.status}}</span></td> -->
+                            <!-- <td align="center"><button class="btn btn-info btn-sm" (click)="editItem(item)" >Edit</button></td> -->
+                            <td align="center"><button class="btn btn-info btn-sm" (click)="addItem(item)">Edit</button>
+                            </td>
+                            <td align="center"><button class="btn btn-danger btn-sm"
+                                    (click)="deleteItem(item.item_id)">Delete</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <!-- No result found message -->
+                <div class="alert alert-danger" role="alert" *ngIf="items && !items.length">
+                    <strong>No result found!</strong>
+                </div>
+
+                <!-- Pagination & page size -->
+                <div class="card-footer" *ngIf="items && items.length">
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6">
+                            <!-- Pagination & page size -->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <!-- Pagination -->
+                                    <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page"
+                                        [maxSize]="5" [pageSize]="limit" [rotate]="true" [ellipses]="false"
+                                        [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add Item -->
+                        <div class="col col-lg-6 col-md-6" align="right">
+                            <a routerLink="/add-item">
+                                <button class="btn btn-secondary"> <span class="glyphicon glyphicon-plus-sign"></span>
+                                    Add Item</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Loader -->

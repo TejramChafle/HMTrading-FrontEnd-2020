@@ -118,9 +118,9 @@
                         <th>Phone Number</th>
                         <!-- <th>Email</th> -->
                         <th>Item</th>
-                        <th [hidden]="printing">First Payment</th>
-                        <th>Total</th>
-                        <th>Balance</th>
+                        <th class="hmtrading-text-right" [hidden]="printing">First Payment</th>
+                        <th class="hmtrading-text-right" >Total</th>
+                        <th class="hmtrading-text-right" >Balance</th>
                         <!-- <th>Is Agent?</th> -->
                         <!-- <th [hidden]="printing" >Status</th> -->
                         <th [hidden]="printing" colspan="3" class="hmtrading-text-center">Actions</th>
@@ -136,9 +136,9 @@
                         <!-- <td>{{customer.email}}</td> -->
                         <td>{{customer.item ? customer.item.name : ''}}</td>
 
-                        <td [hidden]="printing">{{customer.down_payment && customer.item ? '&#8377; ' +customer.down_payment : ''}}</td>
-                        <td>{{customer.total ? '&#8377; ' +customer.total : ''}}</td>
-                        <td>{{customer.balance ? '&#8377; ' +customer.balance : ''}}</td>
+                        <td align="right" [hidden]="printing">{{customer.down_payment && customer.item ? '&#8377; ' +customer.down_payment : ''}}</td>
+                        <td align="right" >{{customer.total ? '&#8377; ' +customer.total : ''}}</td>
+                        <td align="right" >{{customer.balance ? '&#8377; ' +customer.balance : ''}}</td>
 
                         <!-- <td>{{customer.is_agent_too == 1 ? 'Yes' : 'No'}}</td> -->
                         <!-- <td [hidden]="printing"><span [class]="customer.status === 'Active' ? 'bg-success' : 'bg-danger'">{{customer.status}}</span></td> -->

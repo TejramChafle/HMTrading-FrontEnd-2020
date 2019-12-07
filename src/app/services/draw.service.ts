@@ -367,4 +367,19 @@ export class DrawService {
             })
         );
     }
+
+
+    // Get the items distribution count
+    public initDashboard(): Observable<any> {
+        return this._http.post(baseUrl + 'Schemes/db_summaries', options).pipe(
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
 }
