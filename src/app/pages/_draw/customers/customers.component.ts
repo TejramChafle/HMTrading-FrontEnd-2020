@@ -6,6 +6,7 @@ import { AppService } from 'src/app/app.service';
 import { CustomerComponent } from './../../../forms/customer/customer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DrawCustomersPrintComponent } from '../../../components/draw-customers-print/draw-customers-print.component';
+import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 
 @Component({
     selector: 'app-customers',
@@ -151,23 +152,25 @@ export class CustomersComponent implements OnInit {
         this.router.navigate(['add-installment', id]);
     }
 
-    deleteCustomer(id) {
-        var conf = confirm('Are you sure you want to delete this customer?');
-        if (!conf) {
-            return false;
-        }
-
-        this.loading = true;
-        this._drawService.deleteCustomer(id).subscribe(
-            data => {
-                this._appService.notify('Customer deleted successfully.', 'Success!');
-                this.loading = false;
-                // Refresh the customer list
-                this.ngOnInit();
-            }, error => {
-                this.loading = false;
-                this._appService.notify('Sorry, we cannot process your request.', 'Error!');
-            });
+    deleteCustomer(customer) {
+        const modalRef = this._modalService.open(ConfirmComponent, { centered: true, size: 'sm' });
+        modalRef.componentInstance.type = 'Delete?';
+        modalRef.componentInstance.message = 'Are you sure you want to delete customer ' + customer.name + '?';
+        modalRef.result.then((data) => {
+            if (data) {
+                this.loading = true;
+                this._drawService.deleteCustomer(customer.customer_id).subscribe(
+                data => {
+                    this._appService.notify('Customer deleted successfully.', 'Success!');
+                    this.loading = false;
+                    // Refresh the customer list
+                    this.ngOnInit();
+                }, error => {
+                    this.loading = false;
+                    this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+                });
+            }
+        });
     }
 
     searchCustomer() {

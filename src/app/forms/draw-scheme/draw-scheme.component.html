@@ -1,0 +1,86 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{formdata.scheme_id ? 'Edit': 'Add'}} Scheme</h4>
+    <button type="button" class="close" aria-label="Close" (click)="_activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form name="form" (ngSubmit)="f.form.valid && addScheme()" #f="ngForm" novalidate >
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+                    <label for="name">Name</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-star"></span></div>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="formdata.name" #name="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                    <label for="description">Description</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>
+                        <input type="text" class="form-control" name="description" [(ngModel)]="formdata.description" #description="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !year.valid }">
+                    <label for="year">Year</label>
+                    <div class="input-group" >
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>
+                        <input type="number" class="form-control" name="year" [(ngModel)]="formdata.year" #year="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !year.valid" class="help-block">Year is required</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!totalPrice.valid || isPriceInvalid) }">
+                    <label for="totalPrice">Price</label>
+                    <div class="input-group" >
+                        <!-- <div class="input-group-addon"><b>&#x20B9;</b></div> -->
+                        <input type="number" class="form-control" name="totalPrice" [(ngModel)]="formdata.total_price" #totalPrice="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !totalPrice.valid" class="help-block">Total price is required</div>
+                    <div *ngIf="f.submitted && isPriceInvalid" class="help-block">Please valid total price</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && (!fine.valid || isFineInvalid)}">
+                    <label for="fine">Fine</label>
+                    <div class="input-group" >
+                        <!-- <div class="input-group-addon"><b>&#x20B9;</b></div> -->
+                        <input type="number" class="form-control" name="fine" [(ngModel)]="formdata.fine" #fine="ngModel" required />
+                    </div>
+                    <div *ngIf="f.submitted && !fine.valid" class="help-block">Fine is required</div>
+                    <div *ngIf="f.submitted && isFineInvalid" class="help-block">Please valid fine</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <button type="button" class="btn btn-warning form-control" (click)="f.form.reset()"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</button>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success form-control" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Loader -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>

@@ -3,13 +3,16 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-5 col-md-5 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Installments Summary Customer : <b>{{customer.name}}</b> Card : <b>{{customer.card_number}}</b></span></div>
+                <div class="col col-lg-5 col-md-5 page-header-message">
+                    <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Installments Summary Customer : <b>{{customer.name}}</b></span>
+                    <button class="btn btn-warning page-header-button" disabled>Card : <b>{{customer.card_number}}</b></button>
+                </div>
                 <!-- Add scheme -->
                 <div class="col col-lg-7 col-md-7" align="right">
-                    <span *ngIf="hasMoreInstallments"><button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal"> <span class="glyphicon glyphicon-plus-sign"></span> Add Installment</button></span>
-                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-secondary" (click)="print(true)"> <span class="glyphicon glyphicon-print"></span> Print</button></span>
-                    <span *ngIf="!selectingMonth"><button type="button" class="btn btn-info" (click)="selectMonth()" > <span class="glyphicon glyphicon-plus-sign"></span> Select Month</button></span>
-                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-warning" (click)="cancelSelect()" > <span class="glyphicon glyphicon-remove-circle"></span> Cancel</button></span>
+                    <span *ngIf="hasMoreInstallments"><button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal">Add Installment</button>&nbsp;</span>
+                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-secondary" (click)="print(true)">Print</button>&nbsp;</span>
+                    <span *ngIf="!selectingMonth"><button type="button" class="btn btn-info" (click)="selectMonth()" >Select Month</button></span>
+                    <span *ngIf="selectingMonth"><button type="button" class="btn btn-warning" (click)="cancelSelect()" >Cancel</button></span>
                 </div>
             </div>
 

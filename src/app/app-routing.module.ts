@@ -12,6 +12,7 @@ import { ItemsComponent } from './pages/_draw/items/items.component';
 import { LuckDrawComponent } from './pages/_draw/luck-draw/luck-draw.component';
 import { PaymentsComponent } from './pages/_draw/payments/payments.component';
 import { AddCustomerInstallmentComponent } from './pages/_draw/add-customer-installment/add-customer-installment.component';
+import { SchemeComponent } from './pages/_draw/scheme/scheme.component';
 
 import { LoanCustomersComponent } from './pages/_loan/loan-customers/loan-customers.component';
 import { TransactionsComponent } from './pages/_loan/transactions/transactions.component';
@@ -43,6 +44,7 @@ const routes: Routes = [
     { path: 'payments/:id', component: PaymentsComponent, canActivate: [AuthGuard] },
 
     { path: 'add-installment/:id', component: AddCustomerInstallmentComponent, canActivate: [AuthGuard] },
+    { path: 'schemes', component: SchemeComponent, canActivate: [AuthGuard] },
 
     // Loan
     { path: 'loan-customers', component: LoanCustomersComponent, canActivate: [AuthGuard] },
@@ -71,6 +73,8 @@ export const routingComponents = [
     LuckDrawComponent,
     PaymentsComponent,
     AddCustomerInstallmentComponent,
+    SchemeComponent,
+
     // Loan routing
     LoanCustomersComponent,
     // AddLoanCustomersComponent,

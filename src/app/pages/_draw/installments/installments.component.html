@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col col-lg-4 col-md-4 page-header-message">
                     <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Installments ({{pagination?.size}})</span>
-                    <span *ngIf="showingForAgent && !loading">showing for agent <strong>{{_appService.agent.name}}</strong></span>
+                    <span *ngIf="showingForAgent && !loading">showing for agent <strong>{{_appService.agent?.name}}</strong></span>
                 </div>
 
                 <!-- Actions -->
@@ -13,7 +13,7 @@
 
                     <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button> -->
                     <!-- <span *ngIf="selectCustomer"><button type="button" class="btn btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button></span> -->
-
+                    <span *ngIf="showingForAgent"><button type="button" class="btn btn-secondary" (click)="agentCustomerPrint()">Print</button>&nbsp;</span>
                     <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
                     <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
                     <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>
@@ -214,14 +214,9 @@
                     </div>
                     <!-- Add customer -->
                     <div class="col col-lg-6 col-md-6" align="right">
-                        <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button>
+                        <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button>-->
 
-                        <span *ngIf="selectCustomer">
-                            <button type="button" class="btn btn-secondary" (click)="print()">
-                            <span class="glyphicon glyphicon-print"></span>
-                            Print
-                        </button></span> -->
-
+                    <span *ngIf="showingForAgent"><button type="button" class="btn btn-secondary" (click)="agentCustomerPrint()">Print</button>&nbsp;</span>
                     <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
                     <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
                     <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>

@@ -17,10 +17,19 @@ export class ItemComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.formdata && this.formdata.is_exchangeable == 1) {
+            this.formdata.is_exchangeable = true;
+        } else if (this.formdata && this.formdata.is_exchangeable == 0) {
+            this.formdata.is_exchangeable = false;
+        }
     }
 
     addItem() {
-        this.formdata.is_exchangeable === true ? this.formdata.is_exchangeable = 1 : this.formdata.is_exchangeable = 0;
+        if (this.formdata.is_exchangeable === true || this.formdata.is_exchangeable == 1) {
+            this.formdata.is_exchangeable = 1;
+        } else {
+            this.formdata.is_exchangeable = 0;
+        }
         console.log('-----------------------------------------------------------------');
         console.log('FORM DATA');
         console.log(this.formdata);

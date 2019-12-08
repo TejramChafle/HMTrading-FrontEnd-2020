@@ -4,6 +4,7 @@ import { LoanService } from './../../../services/loan.service';
 import { LoanPrintComponent } from '../../../components/loan-print/loan-print.component';
 import { AppService } from 'src/app/app.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { limit } from 'src/app/app.config';
 
 @Component({
     selector: 'app-transactions',
@@ -21,7 +22,7 @@ export class TransactionsComponent implements OnInit {
     accounts: Array<any>;
     search: Boolean = false;
     pagination: any = {};
-    limit: number = 10;
+    limit: number = limit;
     // Router
     sub
     id

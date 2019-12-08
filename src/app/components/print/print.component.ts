@@ -177,6 +177,9 @@ export class PrintComponent implements OnInit, AfterViewInit {
                                 word-wrap: break-word;
                                 display: inline-block;
                             }
+                            .hmtrading-text-right {
+                                text-align: right !important;
+                            }
                         }
                     </style>
                 </head>

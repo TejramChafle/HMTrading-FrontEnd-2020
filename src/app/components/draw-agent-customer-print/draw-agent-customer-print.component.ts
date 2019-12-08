@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-customer-installment-print',
-    styleUrls: ['./customer-installment-print.component.css'],
-    templateUrl: './customer-installment-print.component.html'
+    selector: 'app-draw-agent-customer-print',
+    styleUrls: ['./draw-agent-customer-print.component.css'],
+    templateUrl: './draw-agent-customer-print.component.html'
 })
 
-export class CustomerInstallmentPrintComponent implements OnInit, AfterViewInit {
+export class DrawAgentCustomerPrintComponent implements OnInit, AfterViewInit {
     @Input()
     paidInstallments: any[] = [];
-    agent: String;
+    agent: any = {};
     count: String;
     customer: any = {};
     paymentDate: any;
@@ -27,15 +27,14 @@ export class CustomerInstallmentPrintComponent implements OnInit, AfterViewInit 
         this.paidInstallments = JSON.parse(localStorage.getItem('printContent'));
         this.customer = JSON.parse(localStorage.getItem('customer'));
         this.agent = JSON.parse(localStorage.getItem('agent'));
+        this.receiptNo = localStorage.getItem('receipt');
 
         this.total = 0;
         this.paidInstallments.forEach((inst) => {
-            inst.paid_fine ? inst.paid_fine : inst.paid_fine = 0;
-            inst.total = parseInt(inst.amount, 10) + parseInt(inst.paid_fine, 10);
-            inst.paymentDate = this._appService.GetFormattedDate(inst.paid_date);
-            // this.receiptNo = inst.installment_id;
-            this.receiptNo = localStorage.getItem('receipt');
-            this.total = parseInt(this.total, 10) + parseInt(inst.amount, 10) + parseInt(inst.paid_fine, 10);
+            // inst.paid_fine = inst.paid_fine || 0;
+            // inst.total = parseInt(inst.amount, 10) + parseInt(inst.paid_fine, 10);
+            // inst.paymentDate = this._appService.GetFormattedDate(inst.paid_date);
+            this.total = parseInt(this.total, 10) + parseInt(inst.total, 10);
         });
 
         this.totalInWords = this._appService.inWords(this.total);
@@ -44,7 +43,7 @@ export class CustomerInstallmentPrintComponent implements OnInit, AfterViewInit 
         console.log(this.paidInstallments);
         console.log(this.customer);
 
-        let today = new Date();
+        const today = new Date();
         this.billingDate = this._appService.GetFormattedDate(today);
     }
 
@@ -53,7 +52,7 @@ export class CustomerInstallmentPrintComponent implements OnInit, AfterViewInit 
     }
 
     open(isPrint: Boolean) {
-        this.modalRef = this._modalService.open(CustomerInstallmentPrintComponent, { centered: true, size: 'lg' });
+        this.modalRef = this._modalService.open(DrawAgentCustomerPrintComponent, { centered: true, size: 'lg' });
         if (isPrint) {
             setTimeout(() => {
                 this.print();
@@ -136,6 +135,10 @@ export class CustomerInstallmentPrintComponent implements OnInit, AfterViewInit 
                                 word-wrap: break-word;
                                 display: inline-block;
                             }
+                            .hmtrading-text-center {
+                                text-align: center !important;
+                            }
+
                             .hmtrading-text-right {
                                 text-align: right !important;
                             }

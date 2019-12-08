@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card card-default">
+                <!-- Default card contents -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 page-header-message">
+                            <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Schemes</span></div>
+                        <!-- Add Scheme -->
+                        <div class="col col-lg-6 col-md-6" align="right">
+                            <button class="btn btn-success" (click)="addScheme()">Add Scheme</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body" style="padding: 0px;" *ngIf="schemes && schemes.length">
+                    <!-- Table -->
+                    <table class="table table-bordered table-hover table-sm table-striped">
+                        <tr>
+                            <!-- <th>#</th> -->
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Fine</th>
+                            <!-- <th>Status</th> -->
+                            <!-- <th class="hmtrading-text-center">Installments</th> -->
+                            <th colspan="2" class="hmtrading-text-center">Actions</th>
+                        </tr>
+
+                        <tr *ngFor="let scheme of schemes; let index = index;">
+                            <!-- <td>{{index+1}}</td> -->
+                            <!-- <td>{{scheme.scheme_id}}</td> -->
+                            <td>{{scheme.name}}</td>
+                            <td>{{scheme.description}}</td>
+                            <td>&#8377;{{scheme.total_price}}</td>
+                            <td>&#8377;{{scheme.fine}}</td>
+                            <!-- <td><span [class]="scheme.isActive === '1' ? 'bg-success' : 'bg-danger'" style="padding: 2px 5px; color:whitesmoke;">{{scheme.isActive == 1? 'Active' : 'Inactive' }}</span></td> -->
+                            <!-- <td  align="center"><button class="btn btn-info btn-sm" (click)="schemeInstallments(scheme.scheme_id)" > <span class="glyphicon glyphicon-calendar"></span>Detail</button></td> -->
+                            <td align="center"><button class="btn btn-info btn-sm" (click)="addScheme(scheme)"> <span
+                                        class="glyphicon glyphicon-edit"></span>Edit</button></td>
+                            <td align="center"><button class="btn btn-danger btn-sm" (click)="deleteScheme(scheme)">
+                                    <span class="glyphicon glyphicon-trash"></span>Delete</button></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <br>
+                <!-- No result found message -->
+                <div class="alert alert-danger" role="alert" *ngIf="schemes && !schemes.length">
+                    <strong>No result found!</strong>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card card-default">
+                <!-- Default card contents -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-lg-9 col-md-9 page-header-message">
+                            <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Scheme Installments</span>
+                        </div>
+                        <!-- Add scheme -->
+                        <div class="col col-lg-3 col-md-3" align="right">
+                            <!-- <button class="btn btn-success" (click)="addScheme()">Add Scheme</button>&nbsp; -->
+                            <button type="button" class="btn btn-secondary" (click)="print()">Print</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body" style="padding: 0px;" id="scheme_table">
+                    <!-- Table -->
+                    <table class="table table-bordered table-hover table-sm table-striped">
+                        <tr>
+                            <th>#</th>
+                            <!-- <th>Scheme</th> -->
+                            <th>Month</th>
+                            <th>Installment Date </th>
+                            <th>Installment Price</th>
+                            <th>Fine</th>
+                            <!-- <th>Comment</th> -->
+                        </tr>
+
+                        <tr *ngFor="let inst of installments;  let index = index;">
+                            <!-- <td>{{inst.scheme_installment_id}}</td> -->
+                            <td>{{index+1}}</td>
+                            <!-- <td>{{inst.scheme.name}}</td> -->
+                            <td>{{inst.month}}</td>
+                            <td>{{inst.installment_date | date}}</td>
+                            <td>&#8377; {{inst.installment_price}}</td>
+                            <td>&#8377; {{inst.fine}}</td>
+                            <!-- <td>{{inst.comment}}</td> -->
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

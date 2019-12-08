@@ -77,7 +77,7 @@ export class AddCustomerInstallmentComponent implements OnInit {
                 size === 11 ? this.hasMoreInstallments = false : this.hasMoreInstallments = true;
                 this.loading = false;
                 // Hardcoded since there is only one scheme and it's id is 1
-                // this.getSchemeInstallments(1);
+                this.getSchemeInstallments(1);
             },
             error => {
                 this.loading = false;
@@ -87,7 +87,7 @@ export class AddCustomerInstallmentComponent implements OnInit {
     }
 
     getSchemeInstallments(params) {
-        this.loading = true;
+        this.loading = false;
         this._drawService.getSchemeInstallments(params).subscribe(
             data => {
                 this.loading = false;
@@ -197,6 +197,10 @@ export class AddCustomerInstallmentComponent implements OnInit {
             return false;
         } else {
 
+            console.log('INSTALLMENT FORM');
+            console.log('this.customer : ', this.customer);
+            console.log('this.data : ', this.data);
+
             if (this.data.amount > this.customer.installment_price) {
                 let nextInstAmt = this.data.amount;
                 let temp = [];
@@ -240,12 +244,13 @@ export class AddCustomerInstallmentComponent implements OnInit {
 
             } else {
                 if (this.data.amount < parseInt(this.customer['installment_price'], 10)) {
+                    // tslint:disable-next-line:max-line-length
                     this._appService.notify('The entered installment amount for customer ' + this.customer.name + ' is incorrect! The expected amount for ' + this.customer.installment_month + ' is ' + this.customer.installment_price);
                     return false;
                 }
                 const par = {
                     scheme_installment_id: this.customer['scheme_installment_id']
-                }
+                };
 
                 if (this.data.amount > 0) {
                     par['amount'] = this.customer['installment_price'];
@@ -279,6 +284,7 @@ export class AddCustomerInstallmentComponent implements OnInit {
 
         this._drawService.addInstallment(params).subscribe(
             data => {
+                this.loading = false;
                 console.log(data);
                 // Refresh the installment list
                 this.printBill(params, data);

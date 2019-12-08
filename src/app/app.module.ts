@@ -15,6 +15,7 @@ import { CustomerComponent } from './forms/customer/customer.component';
 import { ItemComponent } from './forms/item/item.component';
 import { AgentComponent } from './forms/agent/agent.component';
 import { LoanCustomerComponent } from './forms/loan-customer/loan-customer.component';
+import { DrawSchemeComponent } from './forms/draw-scheme/draw-scheme.component';
 
 import { AlertComponent } from './components/alert/alert.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
@@ -22,6 +23,7 @@ import { PrintComponent } from './components/print/print.component';
 import { LoanPrintComponent } from './components/loan-print/loan-print.component';
 import { CustomerInstallmentPrintComponent } from './components/customer-installment-print/customer-installment-print.component';
 import { DrawCustomersPrintComponent } from './components/draw-customers-print/draw-customers-print.component';
+import { DrawAgentCustomerPrintComponent } from './components/draw-agent-customer-print/draw-agent-customer-print.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,9 @@ import { DrawCustomersPrintComponent } from './components/draw-customers-print/d
         routingComponents,
         LoanPrintComponent,
         CustomerInstallmentPrintComponent,
-        DrawCustomersPrintComponent
+        DrawCustomersPrintComponent,
+        DrawAgentCustomerPrintComponent,
+        DrawSchemeComponent
     ],
     imports: [
         BrowserModule,
@@ -56,7 +60,9 @@ import { DrawCustomersPrintComponent } from './components/draw-customers-print/d
         PrintComponent,
         LoanPrintComponent,
         CustomerInstallmentPrintComponent,
-        DrawCustomersPrintComponent
+        DrawCustomersPrintComponent,
+        DrawAgentCustomerPrintComponent,
+        DrawSchemeComponent
     ],
     providers: [NgbActiveModal],
     bootstrap: [AppComponent]

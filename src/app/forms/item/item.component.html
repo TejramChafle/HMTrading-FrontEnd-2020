@@ -51,16 +51,24 @@
                         <input type="checkbox" name="exchangeable" [(ngModel)]="formdata.is_exchangeable" #exchangeable="ngModel" />
                         Check this box to allow for item exchange
                     </div> -->
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="checkbox" class="form-control" name="exchangeable" [(ngModel)]="formdata.is_exchangeable" #exchangeable="ngModel" aria-label="Checkbox for following text input">
                             </div>
                         </div>
                         <input type="text" class="form-control" placeholder="Check this box to allow for item exchange" disabled/>
+                    </div> -->
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                            <input type="checkbox" name="exchangeable" [(ngModel)]="formdata.is_exchangeable" #exchangeable="ngModel">
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Check this box to allow for item exchange" disabled>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">

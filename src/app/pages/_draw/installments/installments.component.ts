@@ -5,6 +5,7 @@ import { DrawService } from '../../../services/draw.service';
 import { AppService } from 'src/app/app.service';
 import { PrintComponent } from 'src/app/components/print/print.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DrawAgentCustomerPrintComponent } from '../../../components/draw-agent-customer-print/draw-agent-customer-print.component';
 
 @Component({
     selector: 'app-installments',
@@ -267,7 +268,7 @@ export class InstallmentsComponent implements OnInit {
                             item: element.item,
                             installments: [par],
                             agent: element.agent
-                        })
+                        });
                     }
                 }
             });
@@ -470,6 +471,15 @@ export class InstallmentsComponent implements OnInit {
             });
         }
         this.selectCustomer = true;
+    }
+
+
+    agentCustomerPrint() {
+        localStorage.setItem('printContent', JSON.stringify(this.installments));
+        localStorage.setItem('isAgent', '1');
+        localStorage.setItem('agent', JSON.stringify(this._appService.agent));
+        const print = new DrawAgentCustomerPrintComponent(this._appService, this._modalService);
+        print.open(true);
     }
 
 }

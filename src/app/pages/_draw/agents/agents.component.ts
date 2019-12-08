@@ -5,6 +5,7 @@ import { AppService } from '../../../app.service';
 import { DrawService } from '../../../services/draw.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
+import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 
 @Component({
     selector: 'app-agents',
@@ -92,29 +93,31 @@ export class AgentsComponent implements OnInit {
     }
 
     deleteAgent(agent) {
-        var conf = confirm('Are you sure you want to delete agent ' + agent.name + '?');
-        if (!conf) {
-            return false;
-        }
-
-        this.loading = true;
-        this._drawService.deleteCustomer(agent.customer_id).subscribe(
-            data => {
-                this._appService.notify('Agent deleted successfully.', 'Success!');
-                this.loading = false;
-                // Refresh the customer list
-                this.getAgents({
-                    is_agent_too: 1,
-                    limit: this.limit,
-                    offset: 0,
-                    page: 1
-                });
-            },
-            error => {
-                this.loading = false;
-                this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+        const modalRef = this._modalService.open(ConfirmComponent, { centered: true, size: 'sm' });
+        modalRef.componentInstance.type = 'Delete?';
+        modalRef.componentInstance.message = 'Are you sure you want to delete agent ' + agent.name + '?';
+        modalRef.result.then((data) => {
+            if (data) {
+                this.loading = true;
+                this._drawService.deleteCustomer(agent.customer_id).subscribe(
+                    data => {
+                        this._appService.notify('Agent deleted successfully.', 'Success!');
+                        this.loading = false;
+                        // Refresh the customer list
+                        this.getAgents({
+                            is_agent_too: 1,
+                            limit: this.limit,
+                            offset: 0,
+                            page: 1
+                        });
+                    },
+                    error => {
+                        this.loading = false;
+                        this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+                    }
+                );
             }
-        );
+        });
     }
 
     pageChange(page) {

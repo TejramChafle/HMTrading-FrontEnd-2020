@@ -5,6 +5,7 @@ import { LoanService } from './../../../services/loan.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from 'src/app/app.service';
 import { LoanCustomerComponent } from 'src/app/forms/loan-customer/loan-customer.component';
+import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 
 @Component({
     selector: 'app-loan-customers',
@@ -96,25 +97,27 @@ export class LoanCustomersComponent implements OnInit {
         this.router.navigate(['transactions', id]);
     }
 
-    deleteCustomer(id) {
-        var conf = confirm('Are you sure you want to delete this customer?');
-        if (!conf) {
-            return false;
-        }
-
-        this.loading = true;
-        this._loanService.deleteLoanCustomer({ customer_id: id }).subscribe(
-            data => {
-                console.log(data);
-                this._appService.notify('Customer deleted successfully.', 'Success!');
-                this.loading = false;
-                // Refresh the customer list
-                this.ngOnInit();
-            }, error => {
-                console.log(error);
-                this.loading = false;
-                this._appService.notify('Sorry, we cannot process your request.', 'Error!');
-            });
+    deleteCustomer(customer) {
+        const modalRef = this._modalService.open(ConfirmComponent, { centered: true, size: 'sm' });
+        modalRef.componentInstance.type = 'Delete?';
+        modalRef.componentInstance.message = 'Are you sure you want to delete the account of customer ' + customer.name + '?';
+        modalRef.result.then((data) => {
+            if (data) {
+                this.loading = true;
+                this._loanService.deleteLoanCustomer({ customer_id: customer.customer_id }).subscribe(
+                    data => {
+                        console.log(data);
+                        this._appService.notify('Customer deleted successfully.', 'Success!');
+                        this.loading = false;
+                        // Refresh the customer list
+                        this.ngOnInit();
+                    }, error => {
+                        console.log(error);
+                        this.loading = false;
+                        this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+                    });
+            }
+        });
     }
 
     searchCustomer() {

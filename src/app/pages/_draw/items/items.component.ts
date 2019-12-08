@@ -5,6 +5,7 @@ import { limit } from 'src/app/app.config';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemComponent } from './../../../forms/item/item.component';
 import { AppService } from 'src/app/app.service';
+import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 
 @Component({
     selector: 'app-items',
@@ -54,23 +55,25 @@ export class ItemsComponent implements OnInit {
         this.router.navigate(['items', item.item_id]);
     }
 
-    deleteItem(id) {
-        const conf = confirm('Are you sure you want to delete this item?');
-        if (!conf) {
-            return false;
-        }
-
-        this.loading = true;
-        this._drawService.deleteItem(id).subscribe(
-            data => {
-                this._appService.notify('Item deleted successfully.', 'Success!');
-                this.loading = false;
-                // Refresh the customer list
-                this.ngOnInit();
-            }, error => {
-                this.loading = false;
-                this._appService.notify('Sorry, we cannot process your request.', 'Error!');
-            });
+    deleteItem(item) {
+        const modalRef = this._modalService.open(ConfirmComponent, { centered: true, size: 'sm' });
+        modalRef.componentInstance.type = 'Delete?';
+        modalRef.componentInstance.message = 'Are you sure you want to delete item ' + item.name + '?';
+        modalRef.result.then((data) => {
+            if (data) {
+                this.loading = true;
+                this._drawService.deleteItem(item.item_id).subscribe(
+                    data => {
+                        this._appService.notify('Item deleted successfully.', 'Success!');
+                        this.loading = false;
+                        // Refresh the customer list
+                        this.ngOnInit();
+                    }, error => {
+                        this.loading = false;
+                        this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+                    });
+            }
+        });
     }
 
     pageChange(page) {
