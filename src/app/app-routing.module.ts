@@ -44,7 +44,7 @@ const routes: Routes = [
     { path: 'payments/:id', component: PaymentsComponent, canActivate: [AuthGuard] },
 
     { path: 'add-installment/:id', component: AddCustomerInstallmentComponent, canActivate: [AuthGuard] },
-    { path: 'schemes', component: SchemeComponent, canActivate: [AuthGuard] },
+    { path: 'scheme', component: SchemeComponent, canActivate: [AuthGuard] },
 
     // Loan
     { path: 'loan-customers', component: LoanCustomersComponent, canActivate: [AuthGuard] },

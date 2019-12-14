@@ -9,7 +9,7 @@
                             <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Schemes</span></div>
                         <!-- Add Scheme -->
                         <div class="col col-lg-6 col-md-6" align="right">
-                            <button class="btn btn-success" (click)="addScheme()">Add Scheme</button>
+                            <button class="btn btn-success" (click)="addScheme()" [hidden]="schemes && schemes.length">Add Scheme</button>
                         </div>
                     </div>
 
@@ -65,7 +65,7 @@
                         <!-- Add scheme -->
                         <div class="col col-lg-3 col-md-3" align="right">
                             <!-- <button class="btn btn-success" (click)="addScheme()">Add Scheme</button>&nbsp; -->
-                            <button type="button" class="btn btn-secondary" (click)="print()">Print</button>
+                            <!-- <button type="button" class="btn btn-secondary" (click)="print()">Print</button> -->
                         </div>
                     </div>
 
