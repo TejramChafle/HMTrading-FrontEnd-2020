@@ -19,12 +19,17 @@ const options = {
 })
 
 export class DrawService {
+    // Save the scheme installments
+    schemeInstallments: any;
+
     // tslint:disable-next-line:variable-name
-    constructor(private _http: HttpClient, private _appService: AppService) { }
+    constructor(private _http: HttpClient, private _appService: AppService) {
+        console.log('saved installments', JSON.parse(localStorage.getItem('schemeInstallments')));
+    }
 
     // Get the agents in silent/background
     agents() {
-        this.getCustomers({ is_agent_too: 1, limit: 1000, offset: 0, page: 1}).subscribe(
+        this.getCustomers({ is_agent_too: 1, limit: 1000, offset: 0, page: 1 }).subscribe(
             data => {
                 console.log(data);
                 this._appService.agents = data.records;
@@ -345,6 +350,9 @@ export class DrawService {
         return this._http.get(baseUrl + 'Schemes/get_scheme_installments?scheme_id=' + params, options).pipe(
             retry(3),
             map((response) => {
+                // Save the scheme installment to avoid future requests
+                this.schemeInstallments = response;
+                localStorage.setItem('schemeInstallments', JSON.stringify(this.schemeInstallments));
                 return response;
             }),
             catchError(error => {
@@ -372,6 +380,57 @@ export class DrawService {
     // Get the items distribution count
     public initDashboard(): Observable<any> {
         return this._http.post(baseUrl + 'Schemes/db_summaries', options).pipe(
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
+
+
+    // Get the list of pending installments of the provided month
+    public getPendingInstallments(params): Observable<any> {
+        return this._http.post(baseUrl + 'Installments/get_pending_installments', params, options).pipe(
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
+
+
+
+    /*---------------------------------------------------------------------------------------
+        : GET message deleivery report from text-local server
+    ----------------------------------------------------------------------------------------*/
+    public smsCredit(): Observable<any> {
+        return this._http.get(baseUrl + 'Schemes/check_message_credit', options).pipe(
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
+
+
+
+    /*---------------------------------------------------------------------------------------
+        : GET message credit available from textlocal.in
+    ----------------------------------------------------------------------------------------*/
+    public smsReport(): Observable<any> {
+        return this._http.get(baseUrl + 'Schemes/messages_report', options).pipe(
             retry(3),
             map((response) => {
                 return response;

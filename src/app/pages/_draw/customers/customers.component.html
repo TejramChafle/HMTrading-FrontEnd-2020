@@ -132,7 +132,7 @@
                         <td><p [class]="customer.is_agent_too == 1 ? 'is-agent' : 'not-agent'">{{customer.name}}</p></td>
                         <td [hidden]="printing">{{customer.agent ? customer.agent.name : ''}}</td>
                         <td>{{customer.address}}</td>
-                        <td>{{customer.mobile_number}}</td>
+                        <td><a href="tel:{{customer.mobile_number}}">{{customer.mobile_number}}</a></td>
                         <!-- <td>{{customer.email}}</td> -->
                         <td>{{customer.item ? customer.item.name : ''}}</td>
 

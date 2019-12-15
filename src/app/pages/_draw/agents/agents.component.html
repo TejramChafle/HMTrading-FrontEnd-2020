@@ -39,7 +39,7 @@
                     <!-- <td>{{agent.card_number}}</td> -->
                     <td>{{agent.agent ? agent.agent.name : ''}}</td>
                     <td>{{agent.address}}</td>
-                    <td>{{agent.mobile_number}}</td>
+                    <td><a href="tel:{{agent.mobile_number}}">{{agent.mobile_number}}</a></td>
                     <!-- <td>{{agent.email}}</td> -->
                     <!-- <td><span [class]="agent.status === 'Active' ? 'bg-success' : 'bg-danger'">{{agent.status}}</span></td> -->
 
