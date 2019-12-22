@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DrawService } from './../../../services/draw.service';
 import { AppService } from 'src/app/app.service';
+import { limit } from 'src/app/app.config';
 
 @Component({
     selector: 'app-reports',
@@ -15,34 +16,16 @@ export class ReportsComponent implements OnInit {
     public loading = false;
     customers: Array<any>;
 
-    items: Array<any>;
     formdata: any = {};
     search: Boolean = false;
-    printing: Boolean = false;
-    allowed: Boolean = false;
     agent: any = {};
-    totalCustomers: Number;
-    selectedCustomer: any;
-
-    installments: Array<any>;
-    disbursement: Array<any>;
-    savings: Array<any>;
-    loan: Array<any>;
     schemeInstallments: Array<any>;
-
-    totalLoanDisbursed;
-    totalSavingReceived;
-    totalInstallmentReceived;
-    totalInterestPaid;
-    totalSavingFinePaid;
-    totalLoanFinePaid;
 
     smsbalance;
     deliveries: Array<any>;
 
-    // Router
-    sub
-    id
+    pagination: any = {};
+    limit: number = limit;
 
     constructor(
         public _drawService: DrawService,
@@ -64,7 +47,8 @@ export class ReportsComponent implements OnInit {
         this.getPendingInstallments(params);
 
         this.smsCredit();
-        this.smsReport();
+        this.smsReport({start: 0, limit: this.limit});
+        this.pagination.page = 1;
     }
 
     getPendingInstallments(params) {
@@ -110,7 +94,7 @@ export class ReportsComponent implements OnInit {
     }
 
     smsCredit() {
-        this.loading = false;
+        // this.loading = false;
         this._drawService.smsCredit().subscribe(
             data => {
                 this.loading = false;
@@ -128,9 +112,9 @@ export class ReportsComponent implements OnInit {
             });
     }
 
-    smsReport() {
-        this.loading = false;
-        this._drawService.smsReport().subscribe(
+    smsReport(params: any = {}) {
+        this.loading = true;
+        this._drawService.smsReport(params).subscribe(
             data => {
                 this.loading = false;
                 console.log('-------------------------------------------------------');
@@ -139,6 +123,9 @@ export class ReportsComponent implements OnInit {
                 console.log(data.total);
                 console.log(data.messages);
                 this.deliveries = data.messages;
+                this.pagination.size = data.total;
+                this.pagination.limit = data.limit;
+                console.log('this.pagination', this.pagination);
                 console.log('-------------------------------------------------------');
             },
             error => {
@@ -146,6 +133,36 @@ export class ReportsComponent implements OnInit {
                 console.log(error);
                 this._appService.notify('Oops! Unable to get sms report information', 'Error!');
             });
+    }
+
+
+
+    // SEND NOTIFICATION to the customers for pending installment
+    sendNotification() {
+        this.loading = true;
+        this._drawService.sendNotification({ scheme_installment_id: this.formdata.scheme_installment_id }).subscribe(
+            data => {
+                this.loading = false;
+                console.log('-------------------------------------------------------');
+                console.log('SEND NOTIFICATION');
+                console.log(data);
+                console.log('-------------------------------------------------------');
+            },
+            error => {
+                this.loading = false;
+                console.log(error);
+                this._appService.notify('Oops! Unable to get sms report information', 'Error!');
+            });
+    }
+
+    pageChange(page) {
+        console.log(page);
+        const params: any = {};
+        params.limit = this.limit;
+        params.start = this.limit * (parseInt(page, 10) - 1);
+        this.pagination.page = page;
+        console.log(params);
+        this.smsReport(params);
     }
 
 }

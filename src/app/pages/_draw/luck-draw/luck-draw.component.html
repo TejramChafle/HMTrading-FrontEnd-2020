@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card card-default">
                 <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
-                        <div class="col col-lg-9 col-md-9 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Draw</span></div>
+                        <div class="col col-lg-9 col-md-9 col-12 col-sm-12 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Draw</span></div>
                         <!-- Add scheme -->
-                        <div class="col col-lg-3 col-md-3" align="right">
+                        <div class="col col-lg-3 col-md-3 col-12 col-sm-12" align="right">
                             <!-- <button type="button" class="btn btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
                         </div>
                     </div>
@@ -16,33 +16,33 @@
                 <div class="card-body">
                     <div class="alert alert-dark" role="alert" *ngIf="customerSelected">
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Name</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.name}}</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Name</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">{{customer.name}}</div>
                         </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Card</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.card_number}}</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Card</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">{{customer.card_number}}</div>
                         </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Item</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.item ? customer.item.name : ''}}</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Item</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">{{customer.item ? customer.item.name : ''}}</div>
                         </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Mobile</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6"><a href="tel:{{customer.mobile_number}}">{{customer.mobile_number}}</a></div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Mobile</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6"><a href="tel:{{customer.mobile_number}}">{{customer.mobile_number}}</a></div>
                         </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Address</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.address}}</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Address</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">{{customer.address}}</div>
                         </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-6">Agent</div>
-                            <div class="col col-lg-6 col-md-6 col-sm-6">{{customer.agent ? customer.agent.name : ''}}</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">Agent</div>
+                            <div class="col col-lg-6 col-md-6 col-6 col-sm-6">{{customer.agent ? customer.agent.name : ''}}</div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
+                        <!-- <div class="col-lg-6 col-md-6 col-12 col-sm-12"> -->
                         <div class="form-group">
                             <select class="form-control" name="month" [(ngModel)]="data.month" #month="ngModel" required (change)="onMonthChange()">
                                 <option *ngFor="let month of monthNames" value= {{month}}>
@@ -65,7 +65,7 @@
                         </span>
                     </div>
                     <div *ngIf="customerSelected" class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                             <div class="form-group">
                                 <select class="form-control" id="item" name="item" [(ngModel)]="data.item_id" #item="ngModel" required>
                                     <option *ngFor="let item of items" value= {{item.item_id}}>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                             <button type="button" class="btn btn-success form-control" (click)="saveLuckyCustomer()">Submit</button>
                         </div>
                     </div>
@@ -83,20 +83,20 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card card-default">
                 <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
-                        <div class="col col-lg-9 col-md-9 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Customers</span></div>
+                        <div class="col col-lg-9 col-md-9 col-12 col-sm-12 page-header-message"><span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Lucky Customers</span></div>
                         <!-- Add scheme -->
-                        <div class="col col-lg-3 col-md-3" align="right">
+                        <div class="col col-lg-3 col-md-3 col-12 col-sm-12" align="right">
                             <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="card-body" style="padding:0px">
+                <div class="card-body table-responsive" style="padding:0px">
                     <table class="table table-bordered table-hover table-sm table-striped" *ngIf="customers && customers.length" id="lucky_draw_table">
                         <tr>
                             <th>#</th>

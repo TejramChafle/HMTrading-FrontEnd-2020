@@ -1,15 +1,15 @@
-<div class="container">
+<div class="container-fluid">
     <div class="card card-default">
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-4 col-md-4 page-header-message">
+                <div class="col col-lg-4 col-md-4 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Bill Payments
                         ({{pagination?.size}})
                     </span>
                     <span *ngIf="!loading && _appService.agent"> under the agent {{_appService.agent.name}}</span>
                 </div>
-                <div class="col col-lg-8 col-md-8" align="right">
+                <div class="col col-lg-8 col-md-8 col-12 col-sm-12" align="right">
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>
@@ -18,8 +18,7 @@
         </div>
 
 
-        <div class="card-body" style="padding: 0px;" id="payment_table">
-
+        <div class="card-body table-responsive" style="padding: 0px;" id="payment_table">
             <!-- Search form -->
             <form name="form" (ngSubmit)="f.form.valid && searchTransactions()" #f="ngForm" novalidate *ngIf="search">
                 <div class="row" style="padding: 16px;">
@@ -113,7 +112,7 @@
                     <!-- <th>#</th> -->
                     <th>Receipt No.</th>
                     <th class="hmtrading-text-right">Paid On</th>
-                    <th class="hmtrading-text-right">Card</th>
+                    <th>Paid by</th>
                     <th>Received From</th>
                     <th class="hmtrading-text-right">Amount</th>
                     <th class="hmtrading-text-center" colspan="2">Invoice</th>
@@ -123,7 +122,10 @@
                     <!-- <td>{{index+1}}</td> -->
                     <td>{{pay.receipt_id}}</td>
                     <td align="right">{{pay.receipt_date | date}}</td>
-                    <td align="right">{{pay.customer?.card_number}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" disabled *ngIf="pay.is_agent == '1'">Agent</button>
+                        <button class="btn btn-sm btn-warning" disabled *ngIf="pay.is_agent == '0'">Customer</button>
+                    </td>
                     <td>{{pay.customer?.name}}</td>
                     <td align="right">&#8377; {{pay.amount | number : '1.2-2'}}</td>
                     <td align="center"><button class="btn btn-sm btn-info" (click)="printReady(pay, false)">Preview</button></td>
@@ -134,17 +136,17 @@
         <!-- Pagination & page size -->
         <div class="card-footer" *ngIf="payments && payments.length">
             <div class="row">
-                <div class="col col-lg-6 col-md-6">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                     <!-- Pagination & page size -->
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                             <!-- Pagination -->
                             <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5"
                                 [pageSize]="limit" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
                                 (pageChange)="pageChange($event)"></ngb-pagination>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                             <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
@@ -155,7 +157,7 @@
                     </div>
                 </div>
                 <!-- Add customer -->
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>

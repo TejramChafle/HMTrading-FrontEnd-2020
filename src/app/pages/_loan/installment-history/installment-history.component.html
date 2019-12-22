@@ -12,20 +12,20 @@
             <!-- Default card contents -->
             <div class="card-header">
                 <div class="row">
-                    <div class="col col-lg-8 col-md-8">
-                        <button class="btn btn-sm btn-info" disabled *ngIf="account.account.type == 'Saving'">{{account.account.type}}</button>
-                        <button class="btn btn-sm btn-warning" disabled *ngIf="account.account.type == 'Loan'">{{account.account.type}}</button>
-                        <button class="btn btn-sm btn-secondary" disabled>&#8377; {{account.account.amount | number : '1.2-2'}}</button>
-                        <button class="btn btn-sm btn-secondary" disabled>&#8377; {{account.account.interest_fine | number : '1.2-2'}}</button>
-                        <button class="btn btn-sm btn-secondary" disabled>{{account.account.created_date | date: 'dd MMM, yyyy'}}</button>
+                    <div class="col col-lg-8 col-md-8 col-12 col-sm-12">
+                        <button class="btn btn-info" disabled *ngIf="account.account.type == 'Saving'">{{account.account.type}}</button>
+                        <button class="btn btn-warning" disabled *ngIf="account.account.type == 'Loan'">{{account.account.type}}</button>
+                        <button class="btn btn-secondary" disabled>&#8377; {{account.account.amount | number : '1.2-2'}}</button>
+                        <button class="btn btn-secondary" disabled>&#8377; {{account.account.interest_fine | number : '1.2-2'}}</button>
+                        <button class="btn btn-secondary" disabled>{{account.account.created_date | date: 'dd MMM, yyyy'}}</button>
                     </div>
-                    <div class="col col-lg-4 col-md-4" align="right">
-                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#addInstallmentModal" (click)="calculateEMI(account)"> Add Installment</button>
-                        <span *ngIf="customer"><button class="btn btn-sm btn-secondary" (click)="print(account.account.account_id)"> Print</button></span>
+                    <div class="col col-lg-4 col-md-4 col-12 col-sm-12" align="right">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal" (click)="calculateEMI(account)"> Add Installment</button>
+                        <span *ngIf="customer && account.transactions && account.transactions.length">&nbsp;<button class="btn btn-secondary" (click)="print(account.account.account_id)"> Print</button></span>
                     </div>
                 </div>
             </div>
-            <div class="card-body" [id]="account.account.account_id">
+            <div class="card-body table-responsive" [id]="account.account.account_id">
                 <!-- Table -->
                 <table class="table table-hover table-bordered table-sm table-striped" *ngIf="account.transactions && account.transactions.length">
                     <tr>
@@ -51,7 +51,7 @@
                         <td>&#8377; {{insta.balance | number : '1.2-2'}}</td>
                         <td>{{insta.created_date | date: 'dd MMM, yyyy'}}</td>
                         <!-- <td><a data-toggle="modal" data-target="#accountInfo" (click)="onIdClick(insta.account_id)">{{insta.account_id}}</a></td> -->
-                        <!-- <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#accountInfo" (click)="onIdClick(insta.account_id)" >Detail</button></td> -->
+                        <!-- <td><button class="btn btn-secondary" data-toggle="modal" data-target="#accountInfo" (click)="onIdClick(insta.account_id)" >Detail</button></td> -->
                     </tr>
                 </table>
 

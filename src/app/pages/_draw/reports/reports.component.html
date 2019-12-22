@@ -1,22 +1,22 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 col-12 col-sm-12">
             <div class="card card-default">
                 <div class="card-header" >
                     <div class="row">
-                        <div class="col col-lg-8 col-md-8 page-header-message">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                             <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Pending Installments</span>
                         </div>
 
                         <!-- Print -->
-                        <div class="col col-lg-4 col-md-4" align="right">
-                            <!-- <button type="button" class="btn btn-secondary" (click)="print('laon_disbursement')"> <span class="glyphicon glyphicon-print"></span> Print</button> -->
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12 form-inline" align="right">
                             <select class="form-control" id="item" name="item" [(ngModel)]="formdata.scheme_installment_id" #item="ngModel"
                                 (change)="getPendingInstallments({scheme_installment_id: formdata.scheme_installment_id})">
                                 <option *ngFor="let installment of schemeInstallments" value= {{installment.scheme_installment_id}}>
                                     {{installment.month}}
                                 </option>
                             </select>
+                            &nbsp; <button type="button" class="btn btn-info form-control" (click)="sendNotification()">Send Notification</button>
                         </div>
                     </div>
                 </div>
@@ -51,19 +51,25 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <!-- No result found message -->
+            <div class="alert alert-danger" role="alert" *ngIf="customers && !customers.length">
+                <strong>No result found!</strong>
+            </div>
         </div>
 
+
         <!-- Message Report -->
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 col-12 col-sm-12">
             <div class="card card-default">
                 <div class="card-header" >
                     <div class="row">
-                        <div class="col col-lg-8 col-md-8 page-header-message">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                             <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Message Delivery Report</span>
                         </div>
 
                         <!-- Print -->
-                        <div class="col col-lg-4 col-md-4" align="right">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                             <button type="button" class="btn btn-success" disabled>Remaining Balance <b>{{smsbalance}}</b></button>
                         </div>
                     </div>
@@ -85,8 +91,8 @@
                             <tr *ngFor="let record of deliveries; let index = index;">
                                 <td>{{index+1}}</td>
                                 <td>{{record.datetime | date:'d MMM y, h:mm a '}}</td>
-                                <td>{{record.number}}</td>
-                                <td width="50%">{{record.content}}</td>
+                                <td><a href="tel:+{{record.number}}">+{{record.number}}</a></td>
+                                <td width="35%">{{record.content}}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-success" disabled *ngIf="record.status == 'D'">Delivered</button>
                                     <button type="button" class="btn btn-sm btn-warning" disabled *ngIf="record.status == 'E'">Excluded</button>
@@ -95,6 +101,25 @@
                             </tr>
                         </table>
                     </div>
+                </div>
+
+                <div class="card-footer" *ngIf="deliveries && deliveries.length">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-6 col-12 col-sm-12">
+                          <!-- Pagination -->
+                          <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
+                              [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 col-sm-12">
+                            <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>

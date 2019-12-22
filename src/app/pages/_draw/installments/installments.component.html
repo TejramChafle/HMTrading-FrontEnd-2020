@@ -3,13 +3,13 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-4 col-md-4 page-header-message">
+                <div class="col col-lg-4 col-md-4 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Installments ({{pagination?.size}})</span>
                     <span *ngIf="showingForAgent && !loading">showing for agent <strong>{{_appService.agent?.name}}</strong></span>
                 </div>
 
                 <!-- Actions -->
-                <div class="col col-lg-8 col-md-8" align="right">
+                <div class="col col-lg-8 col-md-8 col-12 col-sm-12" align="right">
 
                     <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button> -->
                     <!-- <span *ngIf="selectCustomer"><button type="button" class="btn btn-secondary" (click)="print()"> <span class="glyphicon glyphicon-print"></span> Print</button></span> -->
@@ -160,7 +160,7 @@
                         <td>{{inst.card_number}}</td>
                         <td>{{inst.name}}</td>
 
-                        <td *ngIf="!showingForAgent" [hidden]="printing">{{inst.mobile_number}}</td>
+                        <td *ngIf="!showingForAgent" [hidden]="printing"><a href="tel:{{inst.mobile_number}}">{{inst.mobile_number}}</a></td>
                         <td>{{inst.item ? inst.item.name : ''}}</td>
 
                         <td align="center"> {{inst.installment[0] && inst.installment[0].amount ? (inst.installment[0].amount | number) : ''}}</td>
@@ -194,15 +194,15 @@
 
             <div class="card-footer" *ngIf="installments && installments.length">
                 <div class="row">
-                    <div class="col col-lg-6 col-md-6">
+                    <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                       <!-- Pagination & page size -->
                       <div class="row">
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                               <!-- Pagination -->
                               <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                           </div>
 
-                          <div class="col-lg-6 col-md-6 col-sm-6">
+                          <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                               <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                                   <option value="10">10</option>
                                   <option value="20">20</option>
@@ -213,15 +213,14 @@
                       </div>
                     </div>
                     <!-- Add customer -->
-                    <div class="col col-lg-6 col-md-6" align="right">
+                    <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                         <!-- <button class="btn btn-secondary" (click)="addCustomer()"> <span class="glyphicon glyphicon-plus-sign"></span> Add Customer</button>-->
-
-                    <span *ngIf="showingForAgent"><button type="button" class="btn btn-secondary" (click)="agentCustomerPrint()">Print</button>&nbsp;</span>
-                    <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
-                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
-                    <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>
-                    <button type="submit" class="btn btn-info" (click)="search=!search" *ngIf="!selectCustomer">Search</button>&nbsp;
-                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()" *ngIf="!selectCustomer">Refresh</button>
+                        <span *ngIf="showingForAgent"><button type="button" class="btn btn-secondary" (click)="agentCustomerPrint()">Print</button>&nbsp;</span>
+                        <span *ngIf="!selectCustomer  && id"><button type="button" class="btn btn-success" (click)="addInstallments()" >Add Installments</button>&nbsp;</span>
+                        <span *ngIf="selectCustomer"><button type="button" class="btn btn-success" (click)="submitInstallments()" >Submit</button>&nbsp;</span>
+                        <span *ngIf="selectCustomer"><button type="button" class="btn btn-danger" (click)="cancelAddInstallments()" >Cancel</button>&nbsp;</span>
+                        <button type="submit" class="btn btn-info" (click)="search=!search" *ngIf="!selectCustomer">Search</button>&nbsp;
+                        <button type="submit" class="btn btn-secondary" (click)="ngOnInit()" *ngIf="!selectCustomer">Refresh</button>
                     </div>
                 </div>
             </div>

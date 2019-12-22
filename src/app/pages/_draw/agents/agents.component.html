@@ -3,17 +3,17 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-6 col-md-6 page-header-message">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Agents ({{pagination?.size}})</span>
                     <span *ngIf="!loading && _appService.agent">Showing agent under agent {{_appService.agent.name}}</span></div>
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                 </div>
             </div>
         </div>
 
-        <div class="card-body" style="padding: 0px;">
+        <div class="card-body table-responsive" style="padding: 0px;">
             <!-- Table -->
             <table class="table table-hover table-sm table-bordered table-striped" *ngIf="agents && agents.length">
                 <tr>
@@ -52,34 +52,33 @@
                     <td  align="center"><button class="btn btn-danger btn-sm" (click)="deleteAgent(agent)" > <span class="glyphicon glyphicon-trash"></span> Delete</button></td>
                 </tr>
             </table>
+        </div>
+        <!-- Pagination & page size -->
+        <div class="card-footer" *ngIf="agents && agents.length">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
+                    <!-- Pagination & page size -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
+                        <!-- Pagination -->
+                        <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
+                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                        </div>
 
-            <!-- Pagination & page size -->
-            <div class="card-footer" *ngIf="agents && agents.length">
-                <div class="row">
-                    <div class="col col-lg-6 col-md-6">
-                        <!-- Pagination & page size -->
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                            <!-- Pagination -->
-                            <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
-                            [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
+                            <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
                         </div>
                     </div>
-                    <!-- Add Agent -->
-                    <div class="col col-lg-6 col-md-6" align="right">
-                        <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
-                        <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                    </div>
+                </div>
+                <!-- Add Agent -->
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
+                    <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                 </div>
             </div>
         </div>

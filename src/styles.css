@@ -172,3 +172,19 @@
 .page-header-button {
     margin-left: 10px !important;
 }
+
+.col-12, .col-md-12, .col-sm-12 {
+    padding-bottom: 10px;
+}
+
+/* .col-12, .col-md-12, .col-sm-12 > * {
+    float: left;
+} */
+
+/* .nav-link {
+    padding-left: 15px !important;
+}
+
+ngb-pagination {
+    margin-bottom: -15px !important;
+} */

@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card mb-3 home-card">
                 <div class="card-header">
                     <div class="page-header-message">
                         <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Item Distribution</span>
                     </div>
                 </div>
-                <div class="card-body" style="padding: 0px;" *ngIf="distribution && distribution.length">
+                <div class="card-body table-responsive" style="padding: 0px;" *ngIf="distribution && distribution.length">
                     <!-- Table -->
                     <table class="table table-hover table-bordered table-sm table-striped">
                         <tr>
@@ -34,15 +34,15 @@
             </div>
         </div>
 
-        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card card-default">
                 <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
-                        <div class="col col-lg-6 col-md-6 page-header-message"><span *ngIf="loading">Loading..</span>
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message"><span *ngIf="loading">Loading..</span>
                             <span *ngIf="!loading">Items ({{pagination?.size}})</span></div>
                         <!-- Add item -->
-                        <div class="col col-lg-6 col-md-6" align="right">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                             <!-- <a routerLink="/add-item">
                                 <button class="btn btn-secondary" > <span class="glyphicon glyphicon-plus-sign"></span> Add Item</button>
                             </a> -->
@@ -59,7 +59,7 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="card-body" style="padding: 0px;" *ngIf="items && items.length">
+                <div class="card-body table-responsive" style="padding: 0px;" *ngIf="items && items.length">
                     <!-- Table -->
                     <table class="table table-hover table-bordered table-sm table-striped">
                         <tr>
@@ -99,17 +99,17 @@
                 <!-- Pagination & page size -->
                 <div class="card-footer" *ngIf="items && items.length">
                     <div class="row">
-                        <div class="col col-lg-6 col-md-6">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                             <!-- Pagination & page size -->
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                                     <!-- Pagination -->
                                     <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page"
                                         [maxSize]="5" [pageSize]="limit" [rotate]="true" [ellipses]="false"
                                         [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                                     <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <!-- Add Item -->
-                        <div class="col col-lg-6 col-md-6" align="right">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                             <!-- <a routerLink="/add-item">
                                 <button class="btn btn-secondary"> <span class="glyphicon glyphicon-plus-sign"></span>
                                     Add Item</button>

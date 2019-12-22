@@ -429,8 +429,25 @@ export class DrawService {
     /*---------------------------------------------------------------------------------------
         : GET message credit available from textlocal.in
     ----------------------------------------------------------------------------------------*/
-    public smsReport(): Observable<any> {
-        return this._http.get(baseUrl + 'Schemes/messages_report', options).pipe(
+    public smsReport(params: any = {}): Observable<any> {
+        return this._http.post(baseUrl + 'Schemes/messages_report', params, options).pipe(
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
+
+
+    /*---------------------------------------------------------------------------------------
+        : SEND NOTIFICATION to the customers for pending installment
+    ----------------------------------------------------------------------------------------*/
+    public sendNotification(params): Observable<any> {
+        return this._http.post(baseUrl + 'Installments/send_notification_to_pending_installments', params, options).pipe(
             retry(3),
             map((response) => {
                 return response;

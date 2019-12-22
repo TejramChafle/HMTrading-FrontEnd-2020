@@ -2,13 +2,13 @@
     <div class="card card-default">
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-6 col-md-6 page-header-message">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span>
                     <span *ngIf="agent && !loading">Showing customers ({{pagination?.size}}) of agent <b>{{agent.name}}</b></span>
                     <span *ngIf="!agent && !loading">Customers ({{pagination?.size}})</span>
                 </div>
                 <!-- Add customer -->
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
                     <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
@@ -165,16 +165,16 @@
 
         <div class="card-footer" *ngIf="customers && customers.length">
             <div class="row">
-                <div class="col col-lg-6 col-md-6">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                   <!-- Pagination & page size -->
                   <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
                         <!-- Pagination -->
                         <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
                             [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                       </div>
 
-                      <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
                           <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                               <option value="10">10</option>
                               <option value="20">20</option>
@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <!-- Add customer -->
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
                     <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;

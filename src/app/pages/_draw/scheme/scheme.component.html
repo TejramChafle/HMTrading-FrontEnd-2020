@@ -1,20 +1,20 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card card-default">
                 <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
-                        <div class="col col-lg-6 col-md-6 page-header-message">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                             <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Schemes</span></div>
                         <!-- Add Scheme -->
-                        <div class="col col-lg-6 col-md-6" align="right">
+                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                             <button class="btn btn-success" (click)="addScheme()" [hidden]="schemes && schemes.length">Add Scheme</button>
                         </div>
                     </div>
 
                 </div>
-                <div class="card-body" style="padding: 0px;" *ngIf="schemes && schemes.length">
+                <div class="card-body table-responsive" style="padding: 0px;" *ngIf="schemes && schemes.length">
                     <!-- Table -->
                     <table class="table table-bordered table-hover table-sm table-striped">
                         <tr>
@@ -54,23 +54,23 @@
             </div>
         </div>
 
-        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
             <div class="card card-default">
                 <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
-                        <div class="col col-lg-9 col-md-9 page-header-message">
+                        <div class="col col-lg-9 col-md-9 col-12 col-sm-12 page-header-message">
                             <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Scheme Installments</span>
                         </div>
                         <!-- Add scheme -->
-                        <div class="col col-lg-3 col-md-3" align="right">
+                        <div class="col col-lg-3 col-md-3 col-12 col-sm-12" align="right">
                             <!-- <button class="btn btn-success" (click)="addScheme()">Add Scheme</button>&nbsp; -->
                             <!-- <button type="button" class="btn btn-secondary" (click)="print()">Print</button> -->
                         </div>
                     </div>
 
                 </div>
-                <div class="card-body" style="padding: 0px;" id="scheme_table">
+                <div class="card-body table-responsive" style="padding: 0px;" id="scheme_table">
                     <!-- Table -->
                     <table class="table table-bordered table-hover table-sm table-striped">
                         <tr>

@@ -3,11 +3,11 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-xm-12 page-header-message">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Loan Customers ({{pagination.size}})</span>
                 </div>
                 <!-- Add customer -->
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-xm-12" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <!-- <a routerLink="/add-loan-customer">
                         <button class="btn btn-success" >Add Customer</button>
                     </a> -->
@@ -174,15 +174,15 @@
 
         <div class="card-footer" *ngIf="customers && customers.length">
             <div class="row">
-                <div class="col col-lg-6 col-md-6">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                   <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                       <!-- Pagination -->
                       <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
                       [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-12 col-sm-12">
                         <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -193,7 +193,7 @@
                   </div>
                 </div>
 
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
                     <!-- <button type="button" class="btn btn-sm btn-secondary" (click)="print()">Print</button> -->
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;

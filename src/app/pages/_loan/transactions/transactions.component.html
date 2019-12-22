@@ -3,7 +3,7 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-6 col-md-6 page-header-message">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span>
                     <span *ngIf="!id && !loading">Transactions ({{pagination?.size}})</span>
                     <span *ngIf="id && !loading">Showing transactions ({{pagination?.size}}) of <b>{{customer.name}}</b></span>
@@ -28,14 +28,14 @@
                     </form>
                 </div> -->
 
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>
             </div>
         </div>
 
-        <div class="card-body" style="padding: 0px;" id="payment_table">
+        <div class="card-body table-responsive" style="padding: 0px;" id="payment_table">
 
             <form name="form" (ngSubmit)="f.form.valid && searchTransactions()" #f="ngForm" novalidate *ngIf="search">
                 <div class="row" style="padding: 16px;">
@@ -160,15 +160,15 @@
         <!-- Footer & Pagination -->
         <div class="card-footer" *ngIf="payments && payments.length">
             <div class="row">
-                <div class="col col-lg-6 col-md-6">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
                   <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
                       <!-- Pagination -->
                       <ngb-pagination *ngIf="pagination" [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
                       [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 col-sm-12">
                         <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()" *ngIf="pagination">
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -179,7 +179,7 @@
                   </div>
                 </div>
 
-                <div class="col col-lg-6 col-md-6" align="right">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>

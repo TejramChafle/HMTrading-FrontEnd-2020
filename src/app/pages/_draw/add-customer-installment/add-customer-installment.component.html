@@ -3,12 +3,12 @@
         <!-- Default card contents -->
         <div class="card-header">
             <div class="row">
-                <div class="col col-lg-5 col-md-5 page-header-message">
+                <div class="col col-lg-5 col-md-5 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Installments Summary Customer : <b>{{customer.name}}</b></span>
                     <button class="btn btn-warning page-header-button" disabled>Card : <b>{{customer.card_number}}</b></button>
                 </div>
                 <!-- Add scheme -->
-                <div class="col col-lg-7 col-md-7" align="right">
+                <div class="col col-lg-7 col-md-7 col-12 col-sm-12" align="right">
                     <span *ngIf="hasMoreInstallments"><button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal">Add Installment</button>&nbsp;</span>
                     <span *ngIf="selectingMonth"><button type="button" class="btn btn-secondary" (click)="print(true)">Print</button>&nbsp;</span>
                     <span *ngIf="!selectingMonth"><button type="button" class="btn btn-info" (click)="selectMonth()" >Select Month</button></span>
@@ -17,7 +17,7 @@
             </div>
 
         </div>
-        <div class="card-body" style="padding: 0px;">
+        <div class="card-body table-responsive" style="padding: 0px;">
             <!-- Customer information -->
             <!-- <div class="row">
                 <div class="col col-lg-4 col-md-4 col-sm-6">
@@ -37,7 +37,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Warning!</strong> Please complete last installment.
             </div>
-        </div>
+
             <!-- Table -->
             <table class="table table-bordered table-hover table-sm table-striped">
                 <tr>
@@ -125,6 +125,7 @@
                     <li><a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
                 </ul>
             </div> -->
+        </div>
     </div>
 
 
