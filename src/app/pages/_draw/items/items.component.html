@@ -99,17 +99,17 @@
                 <!-- Pagination & page size -->
                 <div class="card-footer" *ngIf="items && items.length">
                     <div class="row">
-                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
+                        <div class="col col-lg-9 col-md-9 col-12 col-sm-12">
                             <!-- Pagination & page size -->
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-12 col-sm-12">
+                                <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                                     <!-- Pagination -->
                                     <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page"
                                         [maxSize]="5" [pageSize]="limit" [rotate]="true" [ellipses]="false"
                                         [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-12 col-sm-12">
                                     <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <!-- Add Item -->
-                        <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
+                        <div class="col col-lg-3 col-md-3 col-12 col-sm-12" align="right">
                             <!-- <a routerLink="/add-item">
                                 <button class="btn btn-secondary"> <span class="glyphicon glyphicon-plus-sign"></span>
                                     Add Item</button>

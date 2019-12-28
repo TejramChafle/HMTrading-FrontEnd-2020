@@ -16,7 +16,7 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="hmtrading-navbar">
-          <ul class="nav nav-pills navbar-nav mr-auto" >
+          <ul class="nav nav-pills navbar-nav mr-auto" *ngIf="_appService.isDrawDashboard">
               <li><a class="nav-link" routerLink="home" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Home</a></li>
               <li class="nav-item"><a class="nav-link" routerLink="agents" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Agents</a></li>
               <li class="nav-item"><a class="nav-link" routerLink="customers" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Customers</a></li>
@@ -28,17 +28,21 @@
               <li><a class="nav-link" routerLink="reports" routerLinkActive="active">Reports</a></li>
           </ul>
 
-          <ul class="nav nav-pills navbar-nav mr-auto" >
+          <ul class="nav nav-pills navbar-nav mr-auto" *ngIf="!_appService.isDrawDashboard">
               <li><a class="nav-link" routerLink="loan-customers" routerLinkActive="active">Loan Customers</a></li>
               <li><a class="nav-link" routerLink="transactions" routerLinkActive="active">Loan Billings</a></li>
               <li><a class="nav-link" routerLink="statistics" routerLinkActive="active">Loan Statistic</a></li>
           </ul>
 
-          <ul class="nav justify-content-end">
-              <li>
-                  <!-- <a class="nav-link" (click)="onLogout()" ><span class="glyphicon glyphicon-log-out"></span><strong>Logout</strong></a> -->
-                  <button type="button" class="btn btn-outline-dark" (click)="onLogout()"><strong>Logout</strong></button>
-              </li>
+          <ul class="nav justify-content-end form-inline">
+            <!-- <a class="nav-link" (click)="onLogout()" ><span class="glyphicon glyphicon-log-out"></span><strong>Logout</strong></a> -->
+            <select class="form-control" id="dashboard" name="dashboard" [(ngModel)]="selectedDashboard" #item="ngModel"
+                (change)="onDashboardChange()">
+                <option *ngFor="let dashboard of dashboards" value= {{dashboard}}>
+                    {{dashboard}}
+                </option>
+            </select> &nbsp;
+            <button type="button" class="btn btn-outline-dark" (click)="onLogout()"><strong>Logout</strong></button>
           </ul>
       </div>
   </div>

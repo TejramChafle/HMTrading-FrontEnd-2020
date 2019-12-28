@@ -1,6 +1,8 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-lg-4 col-md-12 col-sm-12 col-xs-12">
+
+        <!-- DRAW DASHBOARD -->
+        <div class="col col-lg-4 col-md-12 col-sm-12 col-xs-12" *ngIf="_appService.isDrawDashboard">
             <div class="card mb-3 home-card" >
                 <div class="card-header">
                     <div class="page-header-message">
@@ -28,7 +30,10 @@
                 </div>
             </div>
         </div>
-        <div class="col col-lg-8 col-md-12 col-sm-12 col-xs-12">
+
+
+        <!-- DRAW DASHBOARD -->
+        <div class="col col-lg-8 col-md-12 col-sm-12 col-xs-12" *ngIf="_appService.isDrawDashboard">
             <div class="row ">
                 <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <div class="card text-white bg-info text-center mb-3 home-card" (click)="navigate('agents')">
@@ -42,7 +47,6 @@
                     <div class="card text-white bg-danger text-center mb-3 home-card" (click)="navigate('customers')">
                         <div class="card-body">
                             <h1>{{dashboard.draw_customer}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>FATAKA FUND CUSTOMERS</b></div>
                     </div>
@@ -51,7 +55,6 @@
                     <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('payments')">
                         <div class="card-body">
                             <h1>{{dashboard.draw_transaction}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>FATAKA FUND INVOICES</b></div>
                     </div>
@@ -60,47 +63,46 @@
                     <div class="card text-white text-center bg-info mb-3 home-card" (click)="navigate('items')">
                         <div class="card-body">
                             <h1>{{dashboard.draw_item}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>ITEMS</b></div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+
+        <!-- LOAN DASHBOARD -->
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!_appService.isDrawDashboard">
+            <div class="row ">
                 <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('loan-customers')">
-                        <!-- <div class="card-header">Items</div> -->
                         <div class="card-body">
                             <h1>{{dashboard.saving_account}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>SAVING ACCOUNTS</b></div>
                     </div>
                 </div>
                 <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('loan-customers')">
-                        <!-- <div class="card-header">Loan Customers</div> -->
                         <div class="card-body">
                             <h1>{{dashboard.loan_account}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>LOAN ACCOUNTS</b></div>
                     </div>
                 </div>
                 <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-info mb-3 home-card" (click)="navigate('transactions')">
-                        <!-- <div class="card-header">Loan Billings</div> -->
                         <div class="card-body">
                             <h1>{{dashboard.loan_transaction}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>LOAN TRANSACTIONS</b></div>
                     </div>
                 </div>
                 <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
                     <div class="card text-white text-center bg-warning mb-3 home-card" (click)="navigate('transactions')">
-                        <!-- <div class="card-header">Loan Statistics</div> -->
                         <div class="card-body">
                             <h1 class="card-title">{{dashboard.saving_transaction}}</h1>
-                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                         </div>
                         <div class="card-footer"><b>SAVING TRANSACTIONS</b></div>
                     </div>

@@ -10,10 +10,21 @@ import { Router } from '@angular/router';
 
 export class AppComponent {
     title = 'HM-Trading';
-    isLoanLoggedIn: Boolean = false;
-    constructor(public _appService: AppService, private router: Router) {
+    dashboards: Array<String>;
+    selectedDashboard: String;
+    constructor(public _appService: AppService, private _router: Router) {
+        this.dashboards = ['Fataka Fund', 'Loan'];
+        this._appService.isDrawDashboard = JSON.parse(localStorage.getItem('isDrawDashboard'));
+        this.selectedDashboard = this._appService.isDrawDashboard ? this.dashboards[0] : this.dashboards[1];
     }
+
     onLogout() {
         this._appService.logout();
+    }
+
+    onDashboardChange() {
+        this._appService.isDrawDashboard = !this._appService.isDrawDashboard;
+        localStorage.setItem('isDrawDashboard', this._appService.isDrawDashboard.toString());
+        this._router.navigate(['home']);
     }
 }

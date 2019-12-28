@@ -25,6 +25,7 @@ export class AppService {
     agent: any;
     agents: Array<any>;
     items: Array<any>;
+    isDrawDashboard: Boolean = true;
 
     // tslint:disable-next-line: variable-name
     constructor(private _http: HttpClient, private _modelService: NgbModal, private _router: Router) {
