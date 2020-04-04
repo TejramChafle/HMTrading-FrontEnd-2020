@@ -29,7 +29,10 @@
 
                             <tr *ngFor="let dis of disbursement; let index = index">
                                 <td>{{index + 1}}</td>
-                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td>
+                                    <!-- {{dis.created_date | date:'MMM, yyyy'}} -->
+                                    {{_appService.GetWordFormattedMonth(dis.created_date)}}
+                                </td>
                                 <td align="right">&#8377; {{dis.loan_disbursed | number: '1.2-2'}}</td>
                                 <!-- <td [hidden]="printing" align="center"><button class="btn btn-secondary btn-sm" (click)="viewInstallments(cust.saving_account_id)"> <span class="glyphicon glyphicon-eye-open"></span></button></td> -->
                             </tr>
@@ -76,7 +79,10 @@
 
                             <tr *ngFor="let dis of loan; let index = index">
                                 <td>{{index+1}}</td>
-                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td>
+                                    <!-- {{dis.created_date | date:'MMM, yyyy'}} -->
+                                    {{_appService.GetWordFormattedMonth(dis.created_date)}}
+                                </td>
                                 <td align="right">&#8377; {{dis.installment_received | number: '1.2-2'}}</td>
                                 <td align="right">&#8377; {{dis.interest_paid | number: '1.2-2'}}</td>
                                 <td align="right">&#8377; {{dis.fine_paid | number: '1.2-2'}}</td>
@@ -127,7 +133,10 @@
 
                             <tr *ngFor="let dis of savings; let index = index">
                                 <td>{{index+1}}</td>
-                                <td>{{dis.created_date | date:'MMM, yyyy'}}</td>
+                                <td>
+                                    <!-- {{dis.created_date | date:'MMM, yyyy'}} -->
+                                    {{_appService.GetWordFormattedMonth(dis.created_date)}}
+                                </td>
                                 <td align="right">&#8377; {{dis.saving_received | number: '1.2-2'}}</td>
                                 <td align="right">&#8377; {{dis.fine_paid | number: '1.2-2'}}</td>
                                 <!-- <td [hidden]="printing" align="center"><button class="btn btn-secondary btn-sm" (click)="viewInstallments(cust.saving_account_id)"> <span class="glyphicon glyphicon-eye-open"></span></button></td> -->

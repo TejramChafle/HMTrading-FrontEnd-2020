@@ -188,3 +188,8 @@
 ngb-pagination {
     margin-bottom: -15px !important;
 } */
+
+
+.print-logo {
+    float: left; height: 150px; margin-right: 20px;
+}

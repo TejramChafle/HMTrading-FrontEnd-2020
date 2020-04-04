@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
-import { LoanService } from './../../../services/loan.service';
+import { LoanService } from 'src/app/services/loan.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from 'src/app/app.service';
 import { LoanCustomerComponent } from 'src/app/forms/loan-customer/loan-customer.component';
-import { ConfirmComponent } from '../../../components/confirm/confirm.component';
+import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
 
 @Component({
     selector: 'app-loan-customers',
@@ -45,21 +45,22 @@ export class LoanCustomersComponent implements OnInit {
 
     ngOnInit() {
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.id = +params['id'];
+            this.id = params['type'];
+            this.data.type = params['type'] || 'Saving';
             if (this.id) {
                 console.log('Edit the user account : ' + this.id);
                 // this.getCustomers({agent_id : this.id});
                 this.printing = true;
                 this.getCustomers({
-                    agent_id: this.id,
+                    type: this.id,
                     limit: this.limit,
                     offset: 1,
                     page: 1
                 });
                 // this.getItems();
             } else {
-                console.log('Get all the loan customers');
-                this.getCustomers({ limit: this.limit, offset: 0, page: 1 });
+                console.log('Get all the loan customers with saving');
+                this.getCustomers({ type: 'Saving', limit: this.limit, offset: 0, page: 1 });
             }
         });
     }
@@ -130,7 +131,7 @@ export class LoanCustomersComponent implements OnInit {
         params.address = this.data.address && this.data.address.length ? this.data.address : undefined;
         params.account_number = this.data.account_number && this.data.account_number.length ? this.data.account_number : undefined;
         params.phone = this.data.phone && this.data.phone.length ? this.data.phone : undefined;
-
+        params.type = this.data.type || 'Saving';
         params.limit = 10;
         params.offset = 0;
         params.page = 1;

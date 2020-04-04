@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoanService } from './../../../services/loan.service';
-import { LoanPrintComponent } from '../../../components/loan-print/loan-print.component';
+import { LoanService } from 'src/app/services/loan.service';
+import { LoanPrintComponent } from 'src/app/components/loan-print/loan-print.component';
 import { AppService } from 'src/app/app.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { limit } from 'src/app/app.config';
@@ -37,19 +37,17 @@ export class TransactionsComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('Checking limit : ' + this.limit);
-
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.id = +params['id'];
             if (this.id) {
-                console.log('show the payments of selected agent/customer : ' + this.id);
                 this.getTransactions({ customer_id: this.id, limit: this.limit, offset: 0, page: 1 });
+            } else if (isNaN(params['id'])) {
+                this.data.type = params['id'];
+                this.getTransactions({ type: params['id'], limit: this.limit, offset: 0, page: 1 });
             } else {
-                console.log('show the all the payments');
                 this.getTransactions({ limit: this.limit, offset: 0, page: 1 });
             }
         });
-
     }
 
     getTransactions(params) {
@@ -106,6 +104,10 @@ export class TransactionsComponent implements OnInit {
         console.log('---------------------------------------------------------');
         console.log('PRINT RECEIPT');
         console.log(params);
+        console.log(params.customer);
+        console.log(params.account);
+        console.log(this.customer);
+        console.log(this.account);
         console.log('---------------------------------------------------------');
 
 
@@ -116,8 +118,8 @@ export class TransactionsComponent implements OnInit {
         } else {
             localStorage.setItem('customer', JSON.stringify(params.customer));
             localStorage.setItem('account', JSON.stringify(params.account));
-            delete params.account;
-            delete params.customer;
+            // delete params.account;
+            // delete params.customer;
             localStorage.setItem('payment', JSON.stringify(params));
         }
         // this.router.navigate(['loan-print']);
@@ -126,13 +128,15 @@ export class TransactionsComponent implements OnInit {
     }
 
     pageChange(page) {
-        console.log(page);
+        console.log(page, this.data.type);
         const params: any = {};
         params.limit    = this.limit;
         params.offset   = this.limit * (parseInt(page, 10) - 1);
         params.page     = page;
         if (this.id) {
             params.customer_id = this.id;
+        } else if (this.data.type) {
+            params.type = this.data.type;
         }
         if (this.search) {
             params.transaction_id = this.data.transaction_id && this.data.transaction_id.length ? this.data.transaction_id : undefined;

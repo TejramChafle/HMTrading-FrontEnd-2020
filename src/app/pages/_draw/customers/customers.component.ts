@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { AppService } from 'src/app/app.service';
-import { CustomerComponent } from './../../../forms/customer/customer.component';
+import { CustomerComponent } from 'src/app/forms/customer/customer.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DrawCustomersPrintComponent } from '../../../components/draw-customers-print/draw-customers-print.component';
-import { ConfirmComponent } from '../../../components/confirm/confirm.component';
+import { DrawCustomersPrintComponent } from 'src/app/components/draw-customers-print/draw-customers-print.component';
+import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
 
 @Component({
     selector: 'app-customers',
@@ -87,8 +87,7 @@ export class CustomersComponent implements OnInit {
         this.loading = true;
         this._drawService.getInstallments(params).subscribe(
             data => {
-                // console.log(data);
-
+                console.log(data);
                 data.records.forEach((cust) => {
                     if (cust.item) {
                         cust.total = 0;
@@ -196,53 +195,8 @@ export class CustomersComponent implements OnInit {
 
 
     print() {
-        /* this.printing = true;
-
-        let popupWin = window.open('_blank');
-        let printContents = document.getElementById('customer_table').innerHTML;
-
-        popupWin.document.open();
-        popupWin.document.write(`
-            <html>
-            <head>
-                <title></title>
-                <!-- Bootstrap 3.0 -->
-                <!-- Latest compiled and minified CSS -->
-                <link rel="stylesheet" type="text/css" media='all' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" media="all">
-                <style>
-                    @media all {
-                        table, td, th {
-                            border: 1px gray;
-                            border-collapse: collapse;
-                        }
-
-                        .bg-dark{ background-color: gray!important; color: #ebdef0 !important}
-                    }
-                </style>
-            </head>
-        <body onload="window.print();window.close()">
-        <br><br>
-        <div align="center">
-            <b><u>H.M. TRADING</u></b><br>
-            House No. 1, Behind Petrol Pump, Kandri- 441401<br>
-            Pro: Pramod Ingole<br>
-            Office: 8806091880, 9960566547 <br>
-            Email: contact@hmtrading.biz<br>
-            www.hmtrading.biz
-        </div>
-        <br>
-        <hr>
-            <strong>Agent : </strong>${this.agent.name} <span style="float:right"><strong>Count:</strong> ${this.totalCustomers}</span>
-        <hr>
-        ${printContents}
-        </body>
-            </html>`
-        );
-
-        popupWin.document.close(); */
-
         localStorage.setItem('printContent', JSON.stringify(this.customers));
-        localStorage.setItem('printContent', JSON.stringify(this.agent));
+        localStorage.setItem('agent', JSON.stringify(this.agent));
         if (this.agent) { localStorage.setItem('isAgent', '1') };
         const page = new DrawCustomersPrintComponent(this._appService, this._modalService);
         page.open(true);

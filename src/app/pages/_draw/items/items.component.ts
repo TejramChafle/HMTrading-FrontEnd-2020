@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ItemComponent } from './../../../forms/item/item.component';
+import { ItemComponent } from 'src/app/forms/item/item.component';
 import { AppService } from 'src/app/app.service';
-import { ConfirmComponent } from '../../../components/confirm/confirm.component';
+import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
 
 @Component({
     selector: 'app-items',
@@ -28,7 +28,7 @@ export class ItemsComponent implements OnInit {
 
     ngOnInit() {
         this.getItems({ limit: this.limit, offset: 0, page: 1 });
-        this.itemDistribution({ limit: 100, offset: 0, page: 1 });
+        // this.itemDistribution({ limit: 100, offset: 0, page: 1 });
     }
 
     getItems(params) {
@@ -39,6 +39,18 @@ export class ItemsComponent implements OnInit {
                 console.log(data);
                 this.items = data.records;
                 this.pagination = data.pagination;
+
+                this.items.forEach((item)=>{
+                    let draw_item = data.lucky_customer_distribution.find((ditem)=>{
+                        return item.item_id == ditem.lucky_draw_item;
+                    });
+                    if (draw_item) {
+                        item.draw_item_total = draw_item.draw_item_total;
+                        item.total = parseInt(item.card_item_total) + parseInt(draw_item.draw_item_total);
+                    } else {
+                        item.total = parseInt(item.card_item_total);
+                    }
+                });
             },
             error => {
                 this.loading = false;
@@ -108,6 +120,14 @@ export class ItemsComponent implements OnInit {
                 this.loading = false;
                 console.log(data);
                 this.distribution = data.records;
+                this.distribution.forEach((item)=>{
+                    let draw_item = data.lucky_customer_distribution.find((ditem)=>{
+                        return item.item_id == ditem.lucky_draw_item;
+                    });
+                    if (draw_item) {
+                        item.draw_item_total = draw_item.draw_item_total;
+                    }
+                });
                 localStorage.setItem('distribution', JSON.stringify(this.distribution));
             },
             error => {

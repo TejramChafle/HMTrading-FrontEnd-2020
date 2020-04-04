@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { LoanService } from './../../../services/loan.service';
+import { LoanService } from 'src/app/services/loan.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LoanPrintComponent } from '../../../components/loan-print/loan-print.component';
+import { LoanPrintComponent } from 'src/app/components/loan-print/loan-print.component';
 
 @Component({
     selector: 'app-installment-history',
@@ -14,24 +14,11 @@ import { LoanPrintComponent } from '../../../components/loan-print/loan-print.co
 export class InstallmentHistoryComponent implements OnInit {
 
     public loading = false;
-
-    items: Array<any>;
+    
     data: any = {};
-    search: Boolean = false;
-    printing: Boolean = false;
     allowed: Boolean = false;
-    addInterest: Boolean = false;
-
     account: any = {};
     customer: any = {};
-    totalCustomers: Number;
-    selectedCustomer: any;
-
-    installments: Array<any>;
-    paidInstallments: Array<any>;
-    selectedInstallments: Array<any>;
-    pendingInstallments: Array<any>;
-    records: Array<any>;
     accounts: Array<any>;
     // Router
     sub
@@ -44,12 +31,8 @@ export class InstallmentHistoryComponent implements OnInit {
 
     ngOnInit() {
         this.sub = this.activatedRoute.params.subscribe(params => {
-            console.log(params);
             this.customer = JSON.parse(params['customer']);
-            console.log(this.customer);
             if (this.customer) {
-                console.log('Get all the installments of : ' + this.customer);
-                this.printing = true;
                 this.getInstallmentHistory(this.customer);
             }
         });
@@ -60,146 +43,48 @@ export class InstallmentHistoryComponent implements OnInit {
         this._loanService.getInstallmentHistory(params).subscribe(
             data => {
                 this.loading = false;
-                console.log(data);
+                // console.log(data);
                 this.accounts = data.records;
 
-                console.log('--------------------------------------------------------');
-                console.log('INSTALLMENTS');
-                console.log(this.customer);
-                console.log(this.records);
-                console.log('--------------------------------------------------------');
+                // console.log('--------------------------------------------------------');
+                // console.log('INSTALLMENTS');
+                // console.log(this.customer);
+                // console.log('--------------------------------------------------------');
                 this.data.months = 1;
                 this.data.fine_paid = 0;
             },
             error => {
                 this.loading = false;
                 this._appService.notify('Oops! Unable to get the installment history.', 'Error!');
-                console.log('--------------------------------------------------------');
-                console.log('ERROR IN INSTALLMENTS');
-                console.log(error);
-                console.log('--------------------------------------------------------');
+                // console.log('--------------------------------------------------------');
+                // console.log('ERROR IN INSTALLMENTS');
+                // console.log(error);
+                // console.log('--------------------------------------------------------');
             });
     }
 
 
     // Previously used for showcasing the loan & saving account information
     onIdClick(accountId) {
-        console.log(accountId);
-        console.log(this.accounts);
+        // console.log(accountId);
+        // console.log(this.accounts);
         const result = this.accounts.find(acnt => {
             return acnt.account.account_id === accountId;
         });
         this.account = result.account;
-        console.log(this.account);
+        // console.log(this.account);
     }
 
 
 
     // Print the loan & saving installment history table
     print(id) {
-        this.printing = true;
 
         const popupWin = window.open('_blank');
         const printContents = document.getElementById(id).innerHTML;
 
         popupWin.document.open();
-        popupWin.document.write(`
-        <html>
-            <head>
-                <title></title>
-                <!-- Bootstrap 3.0 -->
-                <!-- Latest compiled and minified CSS -->
-                <!-- Latest compiled and minified CSS -->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-                <style>
-                    @media all {
-                        table, td, th {
-                            border: 1px gray;
-                            border-collapse: collapse;
-                        }
-
-                        /* Print Page CSS */
-                        .print-footer, .print-header {
-                            border: 1px solid #76d7c4;
-                        }
-
-                        .header-trapezoid {
-                            border-bottom: 175px solid #76d7c4;
-                            height: 175px;
-                            border-left: 60px solid transparent;
-                            width: 50%;
-                            display: inline-block;
-                            color: white;
-                        }
-
-                        .header-trapezoid > h1 {
-                            line-height: 175px;
-                        }
-
-                        .footer-trapezoid {
-                            border-bottom: 60px solid #76d7c4;
-                            height: 60px;
-                            border-left: 25px solid transparent;
-                            width: 50%;
-                            display: inline-block;
-                            color: white;
-                        }
-
-                        .footer-trapezoid > p {
-                            color: white;
-                            line-height: 50px;
-                        }
-
-                        .print-terms {
-                            padding-left: 15px;
-                            width: 50%;
-                            height: 60px;
-                            text-align: left;
-                            word-wrap: break-word;
-                            display: inline-block;
-                        }
-
-                        .biller-info {
-                            padding: 5px 0 0 15px;
-                            width: 50%;
-                            height: 175px;
-                            text-align: left;
-                            word-wrap: break-word;
-                            display: inline-block;
-                        }
-                    }
-                </style>
-            </head>
-            <body onload="window.print();window.close()">
-            <div class="print-header">
-                <div class="biller-info">
-                    <h3>H.M. TRADING</h3>
-                    House No. 1, Behind Petrol Pump, Kandri- 441401<br>
-                    Pro: Pramod Ingole<br>
-                    Office: 8806091880, 9960566547 <br>
-                    Email: contact@hmtrading.biz<br>
-                    www.hmtrading.biz
-                </div>
-                <div class="header-trapezoid text-center" style="float:right">
-                    <h1>INVOICE</h1>
-                </div>
-            </div>
-            <br>
-            ${printContents}
-            <div class="print-footer">
-                <div class="print-terms" align="right">
-                <small><b>Terms & Condititions</b><br>Late installment payment may impose the fine amount of Rs.5/- for each month.</small>
-                </div>
-                <div class="footer-trapezoid text-center" align="center" style="float:right">
-                    <p>Thank you for your business</p>
-                </div>
-            </div>
-            </body>
-        </html>`
-        );
+        popupWin.document.write(this._appService.printContentHeader + printContents + this._appService.printContentFooter);
         popupWin.document.close();
     }
 
@@ -226,16 +111,16 @@ export class InstallmentHistoryComponent implements OnInit {
                 params.balance = 0;
         }
 
-        console.log('--------------------------------------------------------');
-        console.log('params :');
-        console.log(params);
-        console.log('--------------------------------------------------------');
+        // console.log('--------------------------------------------------------');
+        // console.log('params :');
+        // console.log(params);
+        // console.log('--------------------------------------------------------');
 
         this.loading = true;
         this._loanService.addLoanInstallment(params).subscribe(
             data => {
                 this.loading = false;
-                console.log(data);
+                // console.log(data);
                 if (this.data.account == 'Saving') {
                     this._appService.notify('Saving amount added successfully');
                 } else {
@@ -261,29 +146,33 @@ export class InstallmentHistoryComponent implements OnInit {
             error => {
                 this.loading = false;
                 this._appService.notify('Oops! Unable to process your request.');
-                console.log('--------------------------------------------------------');
-                console.log('ERROR IN ADD SAVING SERVICE RESPONSE');
-                console.log(error);
-                console.log('--------------------------------------------------------');
+                // console.log('--------------------------------------------------------');
+                // console.log('ERROR IN ADD SAVING SERVICE RESPONSE');
+                // console.log(error);
+                // console.log('--------------------------------------------------------');
             });
     }
 
 
     calculateEMI(account) {
-        console.log(account);
+        // console.log(account);
         this.account = account;
         // this.data.interest = (parseInt(this.account.balance) - parseInt(this.account.amount)) / 12;
         // this.data.principal = this.account.amount/12;
         this.data.account_type = account.account.type;
         if (account.transactions.length) {
             this.data.principal = account.transactions[account.transactions.length - 1]['balance'];
+
+            // console.log("account.transactions[account.transactions.length - 1]['created_date'] : ", account.transactions[account.transactions.length - 1]['created_date']);
+            // this.data.pending_months = (new Date().getTime())-(new Date(account.transactions[account.transactions.length - 1]['created_date']).getTime());
+            this.data.pending_months = (new Date().getTime())-(new Date(account.transactions[account.transactions.length - 1]['created_date'].replace(' ', 'T')).getTime());
         } else {
             this.data.principal = account.account.amount;
+            // this.data.pending_months = (new Date().getTime())-(new Date(account.account.created_date).getTime());
+            this.data.pending_months = (new Date().getTime())-(new Date(account.account.created_date.replace(' ', 'T')).getTime());
         }
-
-        this.data.interest = (parseInt(this.data.principal) * 3) / 100;
-
-        console.log(this.data.principal);
+        this.data.pending_months = Math.floor(this.data.pending_months/(1000*60*60*24)/30);
+        this.data.interest = ((parseInt(this.data.principal) * 3) / 100) * this.data.pending_months;
         this.data.interest = this.data.interest.toFixed(2);
         // this.data.principal = this.data.principal.toFixed(2);
         this.data.amount = 0;
@@ -293,10 +182,10 @@ export class InstallmentHistoryComponent implements OnInit {
 
     printPayment(customer, payment, transaction_id) {
 
-        console.log('---------------------------------------------------------');
-        console.log('PRINT RECEIPT');
-        console.log(customer);
-        console.log('---------------------------------------------------------');
+        // console.log('---------------------------------------------------------');
+        // console.log('PRINT RECEIPT');
+        // console.log(customer);
+        // console.log('---------------------------------------------------------');
 
         let trans = {
             transaction_id: transaction_id,
@@ -316,6 +205,44 @@ export class InstallmentHistoryComponent implements OnInit {
         // this.router.navigate(['loan-print']);
         const print = new LoanPrintComponent(this._appService, this._modalService);
         print.open(true);
+    }
+
+    createLoanAccount() {
+        if (!this.data.amount) {
+            this.allowed = false;
+            return false;
+        } else {
+            this.allowed = true;
+        }
+
+        // console.log(this.data.amount);
+
+        let params = {
+            customer_id: this.customer.customer_id,
+            amount: this.data.amount,
+            created_date: this.data.created_date
+            // balance: this.data.balance
+        };
+
+        // console.log(params);
+
+        this.loading = true;
+        this._loanService.createLoanAccount(params).subscribe(
+            data => {
+                this.loading = false;
+                if (data.split(':')[0] === 'success') {
+                    this._appService.notify('Loan account created successfully.', 'Success!');
+                    // Refresh the customer list
+                    this.ngOnInit();
+                } else {
+                    this._appService.notify('Failed : ' + data.split(':')[1], 'Error!');
+                }
+            },
+            error => {
+                this.loading = false;
+                this._appService.notify('Sorry, we cannot process your request.', 'Error!');
+            }
+        );
     }
 
 }

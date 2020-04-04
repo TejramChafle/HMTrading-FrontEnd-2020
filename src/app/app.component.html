@@ -25,15 +25,18 @@
               <li><a class="nav-link" routerLink="scheme" routerLinkActive="active"><span class="glyphicon glyphicon-star"></span> Scheme</a></li>
               <li><a class="nav-link" routerLink="items" routerLinkActive="active"><span class="glyphicon glyphicon-cutlery"></span> Items</a></li>
               <li><a class="nav-link" routerLink="lucky-draw" routerLinkActive="active"><span class="glyphicon glyphicon-bullhorn"></span> Lucky Draw</a></li>
-              <li><a class="nav-link" routerLink="reports" routerLinkActive="active">Reports</a></li>
+              <li><a class="nav-link" routerLink="pending-installments" routerLinkActive="active">Pending Installments</a></li>
+              <li><a class="nav-link" routerLink="message-delivery-report" routerLinkActive="active">Message Delivery Report</a></li>
           </ul>
 
           <ul class="nav nav-pills navbar-nav mr-auto" *ngIf="!_appService.isDrawDashboard">
               <li><a class="nav-link" routerLink="loan-customers" routerLinkActive="active">Loan Customers</a></li>
               <li><a class="nav-link" routerLink="transactions" routerLinkActive="active">Loan Billings</a></li>
               <li><a class="nav-link" routerLink="statistics" routerLinkActive="active">Loan Statistic</a></li>
+              <li><a class="nav-link" routerLink="loan-pending-installments" routerLinkActive="active">Pending Installments </a></li>
+              <li><a class="nav-link" routerLink="message-delivery-report" routerLinkActive="active">Message Delivery Report</a></li>
           </ul>
-
+          
           <ul class="nav justify-content-end form-inline">
             <!-- <a class="nav-link" (click)="onLogout()" ><span class="glyphicon glyphicon-log-out"></span><strong>Logout</strong></a> -->
             <select class="form-control" id="dashboard" name="dashboard" [(ngModel)]="selectedDashboard" #item="ngModel"

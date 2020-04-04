@@ -1,0 +1,124 @@
+<div class="container-fluid">
+    <div class="card card-default">
+        <!-- Default card contents -->
+        <div class="card-header">
+            <div class="row">
+                <div class="col col-lg-9 col-md-7 col-12 col-sm-12 page-header-message">
+                    <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">Installment Pending Customers ({{pagination.size}})</span>
+                    &nbsp;
+                    <button class="btn btn-warning" disabled *ngIf="formdata.type=='Loan'">
+                        Loan
+                    </button>
+                    <button class="btn btn-success" disabled *ngIf="formdata.type=='Saving'">
+                        Saving
+                    </button>
+                </div>
+                <!-- Add customer -->
+                <div class="col col-lg-3 col-md-5 col-12 col-sm-12 form-inline" align="right">
+                    <select class="form-control" id="item" name="item" [(ngModel)]="formdata.type" #item="ngModel"
+                        (change)="ngOnInit()">
+                        <option *ngFor="let type of types" value= {{type}}>
+                            {{type}}
+                        </option>
+                    </select>
+                    &nbsp; <button type="button" class="btn btn-info form-control" (click)="sendNotification()">Send Notification</button>
+                    <!-- <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" style="padding: 0px;">
+            <!-- Responsive Table -->
+            <div id="customer_table" class="table-responsive" *ngIf="customers && customers.length">
+                <table class="table table-hover table-bordered table-sm">
+                    <tr>
+                        <!-- <th>#</th> -->
+                        <th>AN.</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Last Activity</th>
+                        <th class="hmtrading-text-center">Installments</th>
+                        <th class="hmtrading-text-center">Transactions</th>
+                        <th class="hmtrading-text-center">Action</th>
+                    </tr>
+
+                    <tr *ngFor="let customer of customers">
+                        <!-- <td>{{customer.customer_id}}</td> -->
+                        <td>{{customer.account_number}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td><a href="tel:{{customer.phone}}">{{customer.phone}}</a></td>
+                        <td [hidden]="customer.last_installment_paid_date">
+                            <button class="btn btn-warning btn-sm" disabled>
+                                <!-- {{customer.account_created_date | date: 'dd MMM, yyyy'}} -->
+                                <!-- {{_appService.GetWordFormattedDate(customer.account_created_date)}} -->
+                                {{customer.account_created_date}}
+                            </button>
+                        </td>
+                        <td *ngIf="customer.last_installment_paid_date">
+                            <button class="btn btn-light btn-sm" disabled>
+                                <!-- {{customer.last_installment_paid_date | date: 'dd MMM, yyyy'}} -->
+                                <!-- {{_appService.GetWordFormattedDate(customer.last_installment_paid_date)}} -->
+                                {{customer.last_installment_paid_date}}
+                            </button></td>
+
+                        <td align="center">
+                            <button class="btn btn-secondary btn-sm" (click)="viewInstallments(customer)">
+                                <span class="glyphicon glyphicon-calendar"></span> View
+                            </button>
+                        </td>
+
+                        <!-- Transactions -->
+                        <td align="center">
+                          <button class="btn btn-secondary btn-sm" (click)="transactions(customer.customer_id)">
+                            <span class="glyphicon glyphicon-calendar"></span> View
+                          </button>
+                        </td>
+
+                        <!-- Actions -->
+                        <td align="center">
+                          <button class="btn btn-info btn-sm" (click)="sendNotification(customer)" >Send Notification</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer" *ngIf="customers && customers.length">
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12 col-sm-12">
+                      <!-- Pagination -->
+                      <ngb-pagination [collectionSize]="pagination.size" [(page)]="pagination.page" [maxSize]="5" [pageSize]="limit"
+                      [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-12 col-sm-12">
+                        <select class="form-control" [(ngModel)]="limit" (change)="ngOnInit()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
+                    <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- No result found message -->
+    <div class="alert alert-danger" role="alert" *ngIf="customers && !customers.length">
+        <strong>No result found!</strong>
+    </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

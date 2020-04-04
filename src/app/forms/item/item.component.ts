@@ -1,4 +1,4 @@
-import { DrawService } from './../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from 'src/app/app.service';

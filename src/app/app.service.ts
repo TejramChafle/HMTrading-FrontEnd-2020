@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators';
 
-// import { AppService } from '../../app.service';
+// import { AppService } from 'src/app/app.service';
 import { baseUrl } from './app.config';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from './components/alert/alert.component';
@@ -26,14 +26,92 @@ export class AppService {
     agents: Array<any>;
     items: Array<any>;
     isDrawDashboard: Boolean = true;
-
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     // tslint:disable-next-line: variable-name
+
+    printContentHeader: string;
+    printContentFooter: string;
+
     constructor(private _http: HttpClient, private _modelService: NgbModal, private _router: Router) {
+        this.printContentHeader = `
+        <html>
+            <head>
+                <title></title>
+                <!-- Bootstrap 3.0 -->
+                <!-- Latest compiled and minified CSS -->
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                <style>
+                    @media all {
+                        table, td, th {
+                            border: 1px gray;
+                            border-collapse: collapse;
+                        }
+                        .bg-dark{ background-color: gray!important; color: #ebdef0 !important}
+                        /* Print Page CSS */
+                        .print-footer, .print-header {
+                            border: 1px solid #76d7c4;
+                        }
+
+                        .header-trapezoid {
+                            border-bottom: 175px solid #76d7c4;
+                            height: 175px;
+                            border-left: 60px solid transparent;
+                            width: 50%;
+                            display: inline-block;
+                            color: white;
+                        }
+
+                        .header-trapezoid > h1 {
+                            line-height: 175px;
+                        }
+
+                        .footer-trapezoid {
+                            border-bottom: 60px solid #76d7c4;
+                            height: 60px;
+                            border-left: 25px solid transparent;
+                            width: 50%;
+                            display: inline-block;
+                            color: white;
+                        }
+
+                        .footer-trapezoid > p {
+                            color: white;
+                            line-height: 50px;
+                        }
+
+                        .print-terms {
+                            padding-left: 15px;
+                            width: 50%;
+                            height: 60px;
+                            text-align: left;
+                            word-wrap: break-word;
+                            display: inline-block;
+                        }
+
+                        .biller-info {
+                            padding: 5px 0 0 15px;
+                            width: 50%;
+                            height: 175px;
+                            text-align: left;
+                            word-wrap: break-word;
+                            display: inline-block;
+                        }
+                        .hmtrading-text-right {
+                            text-align: right !important;
+                        }
+                    }
+                </style>
+            </head>
+            <body onload='window.print();window.close()'>`;
+        this.printContentFooter = `</body></html>`;    
     }
 
     login(credential): Observable<any> {
         return this._http.post(baseUrl + 'Login/signIn', credential, httpOptions).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -53,11 +131,15 @@ export class AppService {
     }
 
     handleError(error) {
-
+        // console.log(error);
         if (error.status === 500) {
             const modelRef = this._modelService.open(AlertComponent, { size: 'lg' });
             modelRef.componentInstance.error = error.error;
             modelRef.componentInstance.type = error.type || 'Error!';
+        } else if (error.status == 200) {
+            const modelRef = this._modelService.open(AlertComponent, { size: 'lg', centered: true });
+            modelRef.componentInstance.error = error.error.text;
+            modelRef.componentInstance.type = error.error.message || 'Error!';
         } else {
             const modelRef = this._modelService.open(AlertComponent, { centered: true, size: 'sm' });
             modelRef.componentInstance.message = error.message;
@@ -102,15 +184,35 @@ export class AppService {
         return str;
     }
 
-    capitalizeFirstLetter(string): String {
+    capitalizeFirstLetter(string): string {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    GetFormattedDate(date) {
+    GetFormattedDate(date): string {
         var todayTime = new Date(date);
         var month = todayTime.getMonth() + 1;
         var day = todayTime.getDate();
         var year = todayTime.getFullYear();
-        return day + "/" + month + "/" + year;
+        let result =  day.toString() + "/" + month.toString() + "/" + year.toString();
+        return result.toString();
+    }
+
+    GetWordFormattedDate(date): string {
+        var todayTime = new Date(date.replace(' ', 'T'));
+        var month = todayTime.getMonth() + 1;
+        var day = todayTime.getDate();
+        var year = todayTime.getFullYear();
+        let daystr = day <=9 ? '0'+day.toString() : day.toString();
+        let result = daystr + " " + this.months[month-1] + ", " + year.toString();
+        return result.toString();
+    }
+
+    GetWordFormattedMonth(date): String {
+        var todayTime = new Date(date.replace(' ', 'T'));
+        var month = todayTime.getMonth() + 1;
+        var year = todayTime.getFullYear();
+        let result = this.months[month-1] + ", " + year.toString();
+        // console.log(result, result.toString());
+        return result.toString();
     }
 }

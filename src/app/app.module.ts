@@ -25,6 +25,9 @@ import { CustomerInstallmentPrintComponent } from './components/customer-install
 import { DrawCustomersPrintComponent } from './components/draw-customers-print/draw-customers-print.component';
 import { DrawAgentCustomerPrintComponent } from './components/draw-agent-customer-print/draw-agent-customer-print.component';
 
+import { PrintHeaderComponent } from './components/print-header/print-header.component';
+import { PrintFooterComponent } from './components/print-footer/print-footer.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -40,7 +43,9 @@ import { DrawAgentCustomerPrintComponent } from './components/draw-agent-custome
         CustomerInstallmentPrintComponent,
         DrawCustomersPrintComponent,
         DrawAgentCustomerPrintComponent,
-        DrawSchemeComponent
+        DrawSchemeComponent,
+        PrintHeaderComponent,
+        PrintFooterComponent
     ],
     imports: [
         BrowserModule,
@@ -62,7 +67,9 @@ import { DrawAgentCustomerPrintComponent } from './components/draw-agent-custome
         CustomerInstallmentPrintComponent,
         DrawCustomersPrintComponent,
         DrawAgentCustomerPrintComponent,
-        DrawSchemeComponent
+        DrawSchemeComponent,
+        PrintHeaderComponent,
+        PrintFooterComponent
     ],
     providers: [NgbActiveModal],
     bootstrap: [AppComponent]

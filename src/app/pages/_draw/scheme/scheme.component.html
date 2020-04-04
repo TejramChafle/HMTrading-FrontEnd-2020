@@ -88,7 +88,10 @@
                             <td>{{index+1}}</td>
                             <!-- <td>{{inst.scheme.name}}</td> -->
                             <td>{{inst.month}}</td>
-                            <td>{{inst.installment_date | date}}</td>
+                            <td>
+                                <!-- {{inst.installment_date | date}} -->
+                                {{_appService.GetWordFormattedDate(inst.installment_date)}}
+                            </td>
                             <td>&#8377; {{inst.installment_price}}</td>
                             <td>&#8377; {{inst.fine}}</td>
                             <!-- <td>{{inst.comment}}</td> -->

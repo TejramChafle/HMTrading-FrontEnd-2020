@@ -6,7 +6,7 @@
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span>
                     <span *ngIf="!id && !loading">Transactions ({{pagination?.size}})</span>
-                    <span *ngIf="id && !loading">Showing transactions ({{pagination?.size}}) of <b>{{customer.name}}</b></span>
+                    <span *ngIf="id && !loading">Showing transactions <span *ngIf="pagination">({{pagination?.size}}) </span>of <b>{{customer.name}}</b></span>
                 </div>
                 <!-- Add item -->
                 <!-- <div class="col col-lg-2 col-md-2" align="right">
@@ -143,7 +143,10 @@
                         <button class="btn btn-sm btn-info" disabled *ngIf="pay.type == 'Saving'">{{pay.type}}</button>
                         <button class="btn btn-sm btn-warning" disabled *ngIf="pay.type == 'Loan'">{{pay.type}}</button>
                     </td>
-                    <td align="right">{{pay.created_date | date}}</td>
+                    <td align="right">
+                        <!-- {{pay.created_date | date: 'dd MMM, yyyy'}} -->
+                        {{_appService.GetWordFormattedDate(pay.created_date)}}
+                    </td>
                     <td align="right" *ngIf="!id">{{pay.account_id}}</td>
                     <td *ngIf="!id">{{pay.customer ? pay.customer.name : ''}}</td>
                     <td align="right">&#8377; {{pay.amount | number : '1.2-2'}}</td>

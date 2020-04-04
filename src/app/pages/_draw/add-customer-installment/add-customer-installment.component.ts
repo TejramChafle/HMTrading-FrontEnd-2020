@@ -1,10 +1,10 @@
-import { PrintComponent } from './../../../components/print/print.component';
-import { AppService } from './../../../app.service';
+import { PrintComponent } from 'src/app/components/print/print.component';
+import { AppService } from 'src/app/app.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerInstallmentPrintComponent } from '../../../components/customer-installment-print/customer-installment-print.component';
+import { CustomerInstallmentPrintComponent } from 'src/app/components/customer-installment-print/customer-installment-print.component';
 
 @Component({
     selector: 'app-add-customer-installment',
@@ -216,7 +216,7 @@ export class AddCustomerInstallmentComponent implements OnInit {
                                     month: inst['month']
                                 }
 
-                                if (new Date(inst['installment_date']) < new Date()) {
+                                if (new Date(inst['installment_date'].replace(' ', 'T')) < new Date()) {
                                     par['fine'] = inst['fine']
                                 }
 
@@ -258,7 +258,7 @@ export class AddCustomerInstallmentComponent implements OnInit {
                     par['month'] = this.customer['installment_month']
                 }
 
-                if (new Date(this.customer['installment_date']) < new Date()) {
+                if (new Date(this.customer['installment_date'].replace(' ', 'T')) < new Date()) {
                     par['fine'] = this.customer.fine;
                 }
 

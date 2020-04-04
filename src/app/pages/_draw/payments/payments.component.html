@@ -121,7 +121,10 @@
                 <tr *ngFor="let pay of payments; let index = index;">
                     <!-- <td>{{index+1}}</td> -->
                     <td>{{pay.receipt_id}}</td>
-                    <td align="right">{{pay.receipt_date | date}}</td>
+                    <td align="right">
+                        <!-- {{pay.receipt_date | date}} -->
+                        {{_appService.GetWordFormattedDate(pay.receipt_date)}}
+                    </td>
                     <td>
                         <button class="btn btn-sm btn-info" disabled *ngIf="pay.is_agent == '1'">Agent</button>
                         <button class="btn btn-sm btn-warning" disabled *ngIf="pay.is_agent == '0'">Customer</button>

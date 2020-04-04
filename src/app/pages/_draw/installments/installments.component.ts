@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { AppService } from 'src/app/app.service';
 import { PrintComponent } from 'src/app/components/print/print.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DrawAgentCustomerPrintComponent } from '../../../components/draw-agent-customer-print/draw-agent-customer-print.component';
+import { DrawAgentCustomerPrintComponent } from 'src/app/components/draw-agent-customer-print/draw-agent-customer-print.component';
 
 @Component({
     selector: 'app-installments',
@@ -206,7 +206,7 @@ export class InstallmentsComponent implements OnInit {
                                         month: inst['month']
                                     }
 
-                                    if (new Date(inst['installment_date']) < new Date()) {
+                                    if (new Date(inst['installment_date'].replace(' ', 'T')) < new Date()) {
                                         par['fine'] = inst['fine']
                                     }
 
@@ -255,7 +255,7 @@ export class InstallmentsComponent implements OnInit {
                             par['month'] = element['installment_month']
                         }
 
-                        if (new Date(element['installment_date']) < new Date()) {
+                        if (new Date(element['installment_date'].replace(' ', 'T')) < new Date()) {
                             par['fine'] = element.installment_fine;
                         }
 
@@ -463,7 +463,9 @@ export class InstallmentsComponent implements OnInit {
     onChangeSelection() {
         if (this.selectAll) {
             this.installments.forEach((element) => {
-                element.checked = true;
+                if (element.item) {
+                    element.checked = true;
+                }
             });
         } else {
             this.installments.forEach((element) => {

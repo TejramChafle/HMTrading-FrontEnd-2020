@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 
@@ -200,45 +200,10 @@ export class LuckDrawComponent implements OnInit {
 
 
     print() {
-
         let popupWin = window.open('_blank');
         let printContents = document.getElementById('lucky_draw_table').innerHTML;
-
         popupWin.document.open();
-        popupWin.document.write(`
-            <html>
-            <head>
-                <title></title>
-                <!-- Bootstrap 3.0 -->
-                <!-- Latest compiled and minified CSS -->
-                <link rel="stylesheet" type="text/css" media='all' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" media="all">
-                <style>
-                    @media all {
-                        table, td, th {
-                            border: 1px solid black;
-                            border-collapse: collapse;
-                        }
-
-                        .bg-dark{ background-color: gray!important; color: #ebdef0 !important}
-                    }
-                </style>
-            </head>
-        <body onload="window.print();window.close()">
-        <div align="center">
-        <br><br>
-            <b><u>H.M. TRADING</u></b><br>
-            House No. 1, Behind Petrol Pump, Kandri- 441401<br>
-            Pro: Pramod Ingole<br>
-            Office: 8806091880, 9960566547 <br>
-            Email: contact@hmtrading.biz<br>
-            www.hmtrading.biz
-        </div>
-        <br>
-        ${printContents}
-        </body>
-            </html>`
-        );
-
+        popupWin.document.write(this._appService.printContentHeader + printContents + this._appService.printContentFooter);
         popupWin.document.close();
     }
 

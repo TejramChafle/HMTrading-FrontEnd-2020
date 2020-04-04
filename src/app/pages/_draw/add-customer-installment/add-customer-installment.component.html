@@ -65,7 +65,10 @@
                     <td *ngIf="selectingMonth"><input type="checkbox" [(ngModel)]="inst.checked"></td>
 
                     <td>{{inst.month}}</td>
-                    <td>{{inst.installment_date | date}}</td>
+                    <td>
+                        <!-- {{inst.installment_date | date}} -->
+                        {{inst.installment_date}}
+                    </td>
                     <!-- <td >&#8377; {{inst.installment_price}}</td> -->
                     <!-- <td >&#8377; {{inst.fine}}</td> -->
 
@@ -75,7 +78,10 @@
                     <td *ngIf="!inst.edit">{{inst.paid_fine ? '&#8377; ' + inst.paid_fine : ''}}</td>
                     <td *ngIf="inst.edit"><input type="number" class="form-control" [(ngModel)]="inst.paid_fine"></td>
 
-                    <td>{{inst.paid_date | date}}</td>
+                    <td>
+                        <!-- {{inst.paid_date | date}} -->
+                        {{_appService.GetWordFormattedDate(inst.paid_date)}}
+                    </td>
 
                     <!-- <td *ngIf="!inst.edit">{{inst.comment}}</td> -->
                     <!-- <td *ngIf="inst.edit"><input type="text" class="form-control" [(ngModel)]="inst.comment"></td> -->

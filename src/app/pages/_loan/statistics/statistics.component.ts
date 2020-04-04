@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { Router, ActivatedRoute } from '@angular/router';
 
-import { LoanService } from './../../../services/loan.service';
+import { LoanService } from 'src/app/services/loan.service';
 import { AppService } from 'src/app/app.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { AppService } from 'src/app/app.service';
 export class StatisticsComponent implements OnInit {
 
     public loading = false;
-    statistics: Array<any>;
+    // statistics: Array<any>;
     items: Array<any>;
     data: any = {};
     search: Boolean = false;
@@ -58,44 +58,12 @@ export class StatisticsComponent implements OnInit {
             data => {
                 this.loading = false;
                 console.log(data);
-                this.statistics = data;
-
-                this.disbursement = data.loan.disbursement;
-                this.savings = data.loan.saving;
-                this.loan = data.loan.loan;
-
-                // Disbursment
-                this.totalLoanDisbursed = 0;
-                this.disbursement.forEach((data)=> {
-                    this.totalLoanDisbursed += parseInt(data.loan_disbursed);
-                });
-
-                // Loan
-                this.totalInstallmentReceived = 0;
-                this.totalInterestPaid = 0;
-                this.totalLoanFinePaid = 0;
-                this.loan.forEach((data)=> {
-                    this.totalInstallmentReceived += parseInt(data.installment_received);
-                    this.totalInterestPaid += parseInt(data.interest_paid);
-                    this.totalLoanFinePaid += parseInt(data.fine_paid);
-                });
-
-                // Savings
-                this.totalSavingReceived  = 0;
-                this.totalSavingFinePaid = 0;
-                this.savings.forEach((data)=> {
-                    this.totalSavingReceived  += parseInt(data.saving_received);
-                    this.totalSavingFinePaid += parseInt(data.fine_paid);
-                });
-
-                console.log('--------------------------------------------------------');
-                console.log('STATISTICS');
-                console.log(this.statistics);
-                console.log('--------------------------------------------------------');
+                this.calculateStatistics(data);
+                localStorage.setItem('statistics', JSON.stringify(data));
             },
             error => {
                 this.loading = false;
-                this._appService.notify('Oops! Unable to get the statistics information.', 'Error!');
+                // this._appService.notify('Oops! Unable to get the statistics information.', 'Error!');
                 console.log('--------------------------------------------------------');
                 console.log('ERROR IN STATISTICS');
                 console.log(error);
@@ -152,5 +120,35 @@ export class StatisticsComponent implements OnInit {
     /* viewInstallments(id) {
         this.router.navigate(['loan-installments', id]);
     } */
+
+    calculateStatistics(data) {
+        this.disbursement = data.loan.disbursement;
+        this.savings = data.loan.saving;
+        this.loan = data.loan.loan;
+
+        // Disbursment
+        this.totalLoanDisbursed = 0;
+        this.disbursement.forEach((data)=> {
+            this.totalLoanDisbursed += parseInt(data.loan_disbursed);
+        });
+
+        // Loan
+        this.totalInstallmentReceived = 0;
+        this.totalInterestPaid = 0;
+        this.totalLoanFinePaid = 0;
+        this.loan.forEach((data)=> {
+            this.totalInstallmentReceived += parseInt(data.installment_received);
+            this.totalInterestPaid += parseInt(data.interest_paid);
+            this.totalLoanFinePaid += parseInt(data.fine_paid);
+        });
+
+        // Savings
+        this.totalSavingReceived  = 0;
+        this.totalSavingFinePaid = 0;
+        this.savings.forEach((data)=> {
+            this.totalSavingReceived  += parseInt(data.saving_received);
+            this.totalSavingFinePaid += parseInt(data.fine_paid);
+        });
+    }
 
 }

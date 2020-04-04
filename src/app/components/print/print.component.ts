@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { AppService } from '../../app.service';
+import { AppService } from 'src/app/app.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -42,7 +42,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
             let today = new Date();
             this.billingDate = this._appService.GetFormattedDate(today);
         } else {
-            let today = new Date(localStorage.getItem('billingDate'));
+            let today = new Date(localStorage.getItem('billingDate').replace(' ', 'T'));
             this.billingDate = this._appService.GetFormattedDate(today);
         }
 
@@ -111,83 +111,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
         printContents = document.getElementById('print-page').innerHTML;
 
         popupWin.document.open();
-        popupWin.document.write(`
-            <html>
-                <head>
-                    <title></title>
-                    <!-- Bootstrap 3.0 -->
-                    <!-- Latest compiled and minified CSS -->
-                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-                    <style>
-                        @media all {
-                            table, td, th {
-                                border: 1px gray;
-                                border-collapse: collapse;
-                            }
-                            .bg-dark{ background-color: gray!important; color: #ebdef0 !important}
-                            /* Print Page CSS */
-                            .print-footer, .print-header {
-                                border: 1px solid #76d7c4;
-                            }
-
-                            .header-trapezoid {
-                                border-bottom: 175px solid #76d7c4;
-                                height: 175px;
-                                border-left: 60px solid transparent;
-                                width: 50%;
-                                display: inline-block;
-                                color: white;
-                            }
-
-                            .header-trapezoid > h1 {
-                                line-height: 175px;
-                            }
-
-                            .footer-trapezoid {
-                                border-bottom: 60px solid #76d7c4;
-                                height: 60px;
-                                border-left: 25px solid transparent;
-                                width: 50%;
-                                display: inline-block;
-                                color: white;
-                            }
-
-                            .footer-trapezoid > p {
-                                color: white;
-                                line-height: 50px;
-                            }
-
-                            .print-terms {
-                                padding-left: 15px;
-                                width: 50%;
-                                height: 60px;
-                                text-align: left;
-                                word-wrap: break-word;
-                                display: inline-block;
-                            }
-
-                            .biller-info {
-                                padding: 5px 0 0 15px;
-                                width: 50%;
-                                height: 175px;
-                                text-align: left;
-                                word-wrap: break-word;
-                                display: inline-block;
-                            }
-                            .hmtrading-text-right {
-                                text-align: right !important;
-                            }
-                        }
-                    </style>
-                </head>
-                <body onload='window.print();window.close()'>
-                ${printContents}
-                </body>
-            </html>`
-        );
+        popupWin.document.write(this._appService.printContentHeader + printContents + this._appService.printContentFooter);
         popupWin.document.close();
     }
 }

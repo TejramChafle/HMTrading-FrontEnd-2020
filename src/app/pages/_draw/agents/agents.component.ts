@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AgentComponent } from '../../../forms/agent/agent.component';
-import { AppService } from '../../../app.service';
-import { DrawService } from '../../../services/draw.service';
+import { AgentComponent } from 'src/app/forms/agent/agent.component';
+import { AppService } from 'src/app/app.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { limit } from 'src/app/app.config';
-import { ConfirmComponent } from '../../../components/confirm/confirm.component';
+import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
 
 @Component({
     selector: 'app-agents',

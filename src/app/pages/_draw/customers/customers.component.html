@@ -10,7 +10,7 @@
                 <!-- Add customer -->
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
-                    <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
+                    <!-- <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span> -->
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>
@@ -108,7 +108,7 @@
 
             <!-- Responsive Table -->
             <div id="customer_table" class="table-responsive" *ngIf="customers && customers.length">
-                <table class="table table-hover table-bordered table-sm table-striped">
+                <table class="table table-hover table-bordered table-sm table-striped" >
                     <tr>
                         <!-- <th>#</th> -->
                         <th>Card</th>
@@ -129,7 +129,7 @@
                     <tr *ngFor="let customer of customers;">
                         <!-- <td>{{customer.customer_id}}</td> -->
                         <td>{{customer.card_number}}</td>
-                        <td><p [class]="customer.is_agent_too == 1 ? 'is-agent' : 'not-agent'">{{customer.name}}</p></td>
+                        <td><span [class]="customer.is_agent_too == 1 ? 'is-agent' : 'not-agent'">{{customer.name}}</span></td>
                         <td [hidden]="printing">{{customer.agent ? customer.agent.name : ''}}</td>
                         <td>{{customer.address}}</td>
                         <td><a href="tel:{{customer.mobile_number}}">{{customer.mobile_number}}</a></td>
@@ -142,21 +142,9 @@
 
                         <!-- <td>{{customer.is_agent_too == 1 ? 'Yes' : 'No'}}</td> -->
                         <!-- <td [hidden]="printing"><span [class]="customer.status === 'Active' ? 'bg-success' : 'bg-danger'">{{customer.status}}</span></td> -->
-                        <td [hidden]="printing" align="center">
-                            <button class="btn btn-info btn-sm" (click)="editInstallment(customer.customer_id)">
-                                Installments
-                            </button>
-                        </td>
-                        <td [hidden]="printing" align="center">
-                            <button class="btn btn-info btn-sm" (click)="addCustomer(customer)" >
-                                Edit
-                            </button>
-                        </td>
-                        <td [hidden]="printing" align="center">
-                            <button class="btn btn-danger btn-sm" (click)="deleteCustomer(customer)" >
-                                Delete
-                            </button>
-                        </td>
+                        <td [hidden]="printing" align="center"><button class="btn btn-info btn-sm" (click)="editInstallment(customer.customer_id)">Installments</button></td>
+                        <td [hidden]="printing" align="center"><button class="btn btn-info btn-sm" (click)="addCustomer(customer)" >Edit</button></td>
+                        <td [hidden]="printing" align="center"><button class="btn btn-danger btn-sm" (click)="deleteCustomer(customer)" >Delete</button></td>
                     </tr>
                 </table>
             </div>
@@ -187,7 +175,7 @@
                 <!-- Add customer -->
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
-                    <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
+                    <!-- <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span> -->
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>

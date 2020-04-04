@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry, delay } from 'rxjs/operators';
 
 import { AppService } from '../app.service';
 import { baseUrl } from '../app.config';
+import { promise } from 'protractor';
 
 const options = {
     headers: new HttpHeaders({
@@ -25,8 +26,8 @@ export class LoanService {
 
     // get the all the loan customers from sever
     public getLoanCustomers(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Customer/get_loan_customers', params, options).pipe(
+            delay(3000),
             retry(3),
             map((response) => {
                 return response;
@@ -41,8 +42,8 @@ export class LoanService {
 
     // get the customer on sever for specified id
     public getLoanCustomer(id): Observable<any> {
-
         return this._http.get(baseUrl + 'Customer/get_loan_customer_detail?customer_id=' + id, options).pipe(
+            delay(3000),
             retry(3),
             map((response) => {
                 return response;
@@ -57,9 +58,8 @@ export class LoanService {
 
     // Add the add customer form data and create the new customer on sever
     public addLoanCustomer(data): Observable<any> {
-
         return this._http.post(baseUrl + 'Customer/add_loan_customer', data, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -72,9 +72,8 @@ export class LoanService {
 
     // Delete the loan customer form data
     public deleteLoanCustomer(data): Observable<any> {
-
         return this._http.post(baseUrl + 'Customer/delete_loan_customer', data, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -90,8 +89,8 @@ export class LoanService {
     -------------------------------------------------------------------------------------------  */
 
     public getTransactions(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Transactions/get_loan_transactions/', params, options).pipe(
+            delay(3000),
             retry(3),
             map((response) => {
                 return response;
@@ -106,9 +105,8 @@ export class LoanService {
 
 
     public addLoanInstallment(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Transactions/add_loan_installment', params, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -121,9 +119,8 @@ export class LoanService {
 
 
     public createLoanAccount(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Transactions/create_loan_account', params, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -136,8 +133,8 @@ export class LoanService {
 
 
     public getLoanInstallments(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Installments/get_loan_installments', params, options).pipe(
+            delay(3000),
             retry(3),
             map((response) => {
                 return response;
@@ -150,9 +147,8 @@ export class LoanService {
     }
 
     public saveLoanInterest(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Transactions/save_loan_interest', params, options).pipe(
-            retry(3),
+            // retry(3),
             map((response) => {
                 return response;
             }),
@@ -165,8 +161,8 @@ export class LoanService {
 
 
     public getStatistics(params): Observable<any> {
-
         return this._http.post(baseUrl + 'Transactions/reports', params, options).pipe(
+            delay(3000),
             retry(3),
             map((response) => {
                 return response;
@@ -178,9 +174,27 @@ export class LoanService {
         );
     }
 
-    public getInstallmentHistory(params): Observable<any> {
 
+    // GET the installment history of the customer which include both Saving and Loan accounts
+    public getInstallmentHistory(params): Observable<any> {
         return this._http.post(baseUrl + 'Installments/get_installment_history', params, options).pipe(
+            delay(3000),
+            retry(3),
+            map((response) => {
+                return response;
+            }),
+            catchError(error => {
+                this._appService.notify(JSON.stringify(error));
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        );
+    }
+
+    // GET the list of loan customers with the pending installments for more than month
+    public getPendingLoanInstallmentCustomers(params): Observable<any> {
+        return this._http.post(baseUrl + 'Installments/get_pending_loan_installment_customers', params, options).pipe(
+            delay(2000),
             retry(3),
             map((response) => {
                 return response;

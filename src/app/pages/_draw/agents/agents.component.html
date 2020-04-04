@@ -5,7 +5,8 @@
             <div class="row">
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Agents ({{pagination?.size}})</span>
-                    <span *ngIf="!loading && _appService.agent">Showing agent under agent {{_appService.agent.name}}</span></div>
+                    <span *ngIf="!loading && _appService.agent">Showing agent under agent {{_appService.agent.name}}</span>
+                </div>
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button class="btn btn-success" (click)="addAgent()" >Add Agent</button> &nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()"> <span class="glyphicon glyphicon-refresh"></span> Refresh</button>

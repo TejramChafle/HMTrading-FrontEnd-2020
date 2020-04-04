@@ -1,9 +1,9 @@
-import { AppService } from './../../../app.service';
+import { AppService } from 'src/app/app.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DrawService } from '../../../services/draw.service';
+import { DrawService } from 'src/app/services/draw.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PrintComponent } from '../../../components/print/print.component';
+import { PrintComponent } from 'src/app/components/print/print.component';
 import { limit } from 'src/app/app.config';
 
 @Component({

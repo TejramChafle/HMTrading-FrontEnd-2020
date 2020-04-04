@@ -1,7 +1,20 @@
 <div class="container-fluid">
     <div class="card card-default bg-dark">
         <div class="card-body text-white" style="padding-bottom: 5px;">
-            <div class="card-title">Showing installment history for customer <b>{{customer.name}}</b></div>
+
+            <div class="row">
+                <div class="col col-lg-9 col-md-6 col-12 col-sm-12">
+                    <span *ngIf="loading">Loading..</span> <span *ngIf="!loading">
+                        <div class="card-title">Showing installment history for customer <b>{{customer.name}}</b></div>
+                    </span>
+                </div>
+                <!-- Add customer -->
+                <div class="col col-lg-3 col-md-6 col-12 col-sm-12" align="right">
+                    <button class="btn btn-light" data-toggle="modal" data-target="#addLoanModal">
+                        Create Loan Account
+                      </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -13,50 +26,72 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col col-lg-8 col-md-8 col-12 col-sm-12">
-                        <button class="btn btn-info" disabled *ngIf="account.account.type == 'Saving'">{{account.account.type}}</button>
-                        <button class="btn btn-warning" disabled *ngIf="account.account.type == 'Loan'">{{account.account.type}}</button>
-                        <button class="btn btn-secondary" disabled>&#8377; {{account.account.amount | number : '1.2-2'}}</button>
-                        <button class="btn btn-secondary" disabled>&#8377; {{account.account.interest_fine | number : '1.2-2'}}</button>
-                        <button class="btn btn-secondary" disabled>{{account.account.created_date | date: 'dd MMM, yyyy'}}</button>
+                        <button class="btn btn-info" disabled
+                            *ngIf="account.account.type == 'Saving'">{{account.account.type}}</button>
+                        <button class="btn btn-warning" disabled
+                            *ngIf="account.account.type == 'Loan'">{{account.account.type}}</button>
+                        <button class="btn btn-secondary" disabled>&#8377;
+                            {{account.account.amount | number : '1.2-2'}}</button>
+                        <button class="btn btn-secondary" disabled>&#8377;
+                            {{account.account.interest_fine | number : '1.2-2'}}</button>
+                        <button class="btn btn-secondary"disabled>
+                            <!-- {{account.account.created_date | date: 'dd MMM, yyyy'}} -->
+                            {{_appService.GetWordFormattedDate(account.account.created_date)}}
+                        </button>
                     </div>
                     <div class="col col-lg-4 col-md-4 col-12 col-sm-12" align="right">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal" (click)="calculateEMI(account)"> Add Installment</button>
-                        <span *ngIf="customer && account.transactions && account.transactions.length">&nbsp;<button class="btn btn-secondary" (click)="print(account.account.account_id)"> Print</button></span>
+                        <span *ngIf="customer && account.transactions && !account.transactions.length">&nbsp;
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal"
+                                (click)="calculateEMI(account)"> Add Installment</button>
+                        </span>
+                        <span
+                            *ngIf="customer && account.transactions && account.transactions.length && account.transactions[account.transactions.length-1].balance != '0'">&nbsp;
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addInstallmentModal"
+                                (click)="calculateEMI(account)"> Add Installment</button>
+                        </span>
+                        <span *ngIf="customer && account.transactions && account.transactions.length">&nbsp;<button
+                                class="btn btn-secondary" (click)="print(account.account.account_id)">
+                                Print</button></span>
                     </div>
                 </div>
             </div>
             <div class="card-body table-responsive" [id]="account.account.account_id">
                 <!-- Table -->
-                <table class="table table-hover table-bordered table-sm table-striped" *ngIf="account.transactions && account.transactions.length">
+                <table class="table table-hover table-bordered table-sm table-striped"
+                    *ngIf="account.transactions && account.transactions.length">
                     <tr>
                         <th>#</th>
                         <!-- <th>Type</th> -->
-                        <th>Previous Balance</th>
-                        <th>Amount Paid</th>
-                        <th>Interest Paid </th>
-                        <th>Fine Paid</th>
-                        <th>Total</th>
-                        <th>Balance Amount</th>
-                        <th>Paid On</th>
+                        <th class="hmtrading-text-right">Previous Balance</th>
+                        <th class="hmtrading-text-right">Amount Paid</th>
+                        <th class="hmtrading-text-right">Interest Paid </th>
+                        <th class="hmtrading-text-right">Fine Paid</th>
+                        <th class="hmtrading-text-right">Total</th>
+                        <th class="hmtrading-text-right">Balance Amount</th>
+                        <th class="hmtrading-text-right">Paid On</th>
                         <!-- <th>Action</th> -->
                     </tr>
                     <tr *ngFor="let insta of account.transactions; let index = index;">
                         <td>{{index+1}}</td>
                         <!-- <td>{{insta.type}}</td> -->
-                        <td>&#8377; {{insta.previous_balance | number : '1.2-2'}}</td>
-                        <td>&#8377; {{insta.amount | number : '1.2-2'}}</td>
-                        <td>&#8377; {{insta.interest_paid | number : '1.2-2'}}</td>
-                        <td>&#8377; {{insta.fine_paid | number : '1.2-2'}}</td>
-                        <td>&#8377; {{insta.total | number : '1.2-2'}}</td>
-                        <td>&#8377; {{insta.balance | number : '1.2-2'}}</td>
-                        <td>{{insta.created_date | date: 'dd MMM, yyyy'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.previous_balance | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.amount | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.interest_paid | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.fine_paid | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.total | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">&#8377; {{insta.balance | number : '1.2-2'}}</td>
+                        <td class="hmtrading-text-right">
+                            <!-- {{insta.created_date | date: 'dd MMM, yyyy'}} -->
+                            {{_appService.GetWordFormattedDate(insta.created_date)}}
+                        </td>
                         <!-- <td><a data-toggle="modal" data-target="#accountInfo" (click)="onIdClick(insta.account_id)">{{insta.account_id}}</a></td> -->
                         <!-- <td><button class="btn btn-secondary" data-toggle="modal" data-target="#accountInfo" (click)="onIdClick(insta.account_id)" >Detail</button></td> -->
                     </tr>
                 </table>
 
 
-                <div class="alert alert-danger" role="alert" *ngIf="!account.transactions || !account.transactions.length">
+                <div class="alert alert-danger" role="alert"
+                    *ngIf="!account.transactions || !account.transactions.length">
                     <strong>No installment history found!</strong>
                 </div>
             </div>
@@ -72,13 +107,13 @@
         aria-labelledby="addInstallmentModalLabel">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="addInstallmentModalLabel">Add Installment</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+                <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addInstallmentModalLabel">Add Installment</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="type">Account</label>
                             <select class="form-control" id="type" name="type" [(ngModel)]="data.account_type"
@@ -96,8 +131,10 @@
                             <!-- <div *ngIf="f.submitted && !principal.valid" class="help-block">Principal is required</div> -->
                         </div>
 
+                        <!-- <small *ngIf="data.account_type=='Loan'"><strong>Interest for last {{data.pending_months}} pending months</strong></small> -->
                         <div class="form-group" *ngIf="data.account_type=='Loan'">
-                            <label for="interest">Interest</label>
+                            <label for="interest">Interest <strong>(3%<span *ngIf="data.pending_months">of
+                                        {{data.pending_months}} pending months</span>)</strong></label>
                             <input type="number" class="form-control" name="interest" [(ngModel)]="data.interest"
                                 #interest="ngModel" disabled>
                             <!-- <div *ngIf="f.submitted && !principal.valid" class="help-block">Principal is required</div> -->
@@ -123,16 +160,49 @@
                                 #fine="ngModel" required>
                             <div *ngIf="f.submitted && !fine.valid" class="help-block">Fine is required</div>
                         </div>
-
-                        <hr>
+                    </div>
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" data-dismiss="modal"
                             (click)="addInstallment()">Save</button>
-                    </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Loan amount -->
+    <div class="modal fade" id="addLoanModal" tabindex="-1" role="dialog" aria-labelledby="addLoanModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addLoanModalLabel">Add Loan Amount</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Loan Amount</label><br>
+                        <input type="number" class="form-control" name="amount" [(ngModel)]="data.amount"
+                            #amount="ngModel">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label><br>
+                        <input type="date" class="form-control" name="date" [(ngModel)]="data.created_date"
+                            #date="ngModel">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        (click)="createLoanAccount()">Create Loan Account</button>
                 </div>
             </div>
         </div>
     </div>
-      <!-- Loader -->
-      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
-  </div>
+
+    <!-- Loader -->
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0px', fullScreenBackdrop : true }"></ngx-loading>
+</div>

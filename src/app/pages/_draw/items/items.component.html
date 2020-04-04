@@ -1,51 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
-            <div class="card mb-3 home-card">
-                <div class="card-header">
-                    <div class="page-header-message">
-                        <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Item Distribution</span>
-                    </div>
-                </div>
-                <div class="card-body table-responsive" style="padding: 0px;" *ngIf="distribution && distribution.length">
-                    <!-- Table -->
-                    <table class="table table-hover table-bordered table-sm table-striped">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <!-- <th>Exchangeable</th> -->
-                            <th class="hmtrading-text-center">Count</th>
-                        </tr>
-
-                        <tr *ngFor="let record of distribution; let index = index;">
-                            <td>{{index + 1}}</td>
-                            <td>{{record.item.name}}</td>
-                            <td>{{record.item.description}}</td>
-                            <td class="text-center">{{record.total}}</td>
-                        </tr>
-                    </table>
-                </div>
-                <br>
-                <!-- No result found message -->
-                <div class="alert alert-danger" role="alert" *ngIf="items && !items.length">
-                    <strong>No result found!</strong>
-                </div>
-            </div>
-        </div>
-
-        <div class="col col-lg-6 col-md-6 col-12 col-sm-12">
+        <div class="col col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card card-default">
-                <!-- Default card contents -->
                 <div class="card-header">
                     <div class="row">
                         <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message"><span *ngIf="loading">Loading..</span>
                             <span *ngIf="!loading">Items ({{pagination?.size}})</span></div>
                         <!-- Add item -->
                         <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
-                            <!-- <a routerLink="/add-item">
-                                <button class="btn btn-secondary" > <span class="glyphicon glyphicon-plus-sign"></span> Add Item</button>
-                            </a> -->
                             <button class="btn btn-success" (click)="addItem()">Add Item</button>
                         </div>
                         <!-- Search item -->
@@ -65,28 +27,24 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <!-- <th>Scheme</th> -->
                             <th>Description</th>
-                            <!-- <th>Price</th> -->
                             <th>Exchangeable</th>
-                            <!-- <th>Status</th> -->
+                            <th class="hmtrading-text-center">Card Count</th>
+                            <th class="hmtrading-text-center">Draw Count</th>
+                            <th class="hmtrading-text-center">Total</th>
                             <th colspan="2" class="hmtrading-text-center">Actions</th>
                         </tr>
 
                         <tr *ngFor="let item of items; let index = index;">
-                            <!-- <td>{{item.item_id}}</td> -->
                             <td>{{index + 1}}</td>
                             <td>{{item.name}}</td>
-                            <!-- <td>{{item.scheme ? item.scheme.name : ''}}</td> -->
                             <td>{{item.description}}</td>
-                            <!-- <td>{{item.price}}</td> -->
                             <td>{{item.is_exchangeable == 1 ? 'Yes' : 'No'}}</td>
-                            <!-- <td><span [class]="item.status === 'Available' ? 'bg-success' : 'bg-danger'" style="padding: 2px 5px; color:whitesmoke;">{{item.status}}</span></td> -->
-                            <!-- <td align="center"><button class="btn btn-info btn-sm" (click)="editItem(item)" >Edit</button></td> -->
-                            <td align="center"><button class="btn btn-info btn-sm" (click)="addItem(item)">Edit</button>
-                            </td>
-                            <td align="center"><button class="btn btn-danger btn-sm"
-                                    (click)="deleteItem(item)">Delete</button></td>
+                            <td class="text-center">{{item.card_item_total}}</td>
+                            <td class="text-center">{{item.draw_item_total}}</td>
+                            <td class="text-center">{{item.total}}</td>
+                            <td align="center"><button class="btn btn-info btn-sm" (click)="addItem(item)">Edit</button></td>
+                            <td align="center"><button class="btn btn-danger btn-sm"(click)="deleteItem(item)">Delete</button></td>
                         </tr>
                     </table>
                 </div>
@@ -121,10 +79,6 @@
                         </div>
                         <!-- Add Item -->
                         <div class="col col-lg-3 col-md-3 col-12 col-sm-12" align="right">
-                            <!-- <a routerLink="/add-item">
-                                <button class="btn btn-secondary"> <span class="glyphicon glyphicon-plus-sign"></span>
-                                    Add Item</button>
-                            </a> -->
                             <button class="btn btn-success" (click)="addItem()">Add Item</button>
                         </div>
                     </div>
