@@ -183,10 +183,10 @@ export class CustomersComponent implements OnInit {
         params.card_number = this.data.card_number && this.data.card_number.length ? this.data.card_number : undefined;
         params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
         params.item_id = this.data.item_id || undefined;
-
-        params.limit = 10;
-        params.offset = 0;
+        
         params.page = 1;
+        params.limit = this.limit;
+        params.offset = this.limit * (parseInt(params.page, 10) - 1);
         console.log(params);
         console.log('------------------------------------------------');
         // this.getCustomers(params);
@@ -218,6 +218,11 @@ export class CustomersComponent implements OnInit {
             params.mobile_number = this.data.mobile_number && this.data.mobile_number.length ? this.data.mobile_number : undefined;
             params.item_id = this.data.item_id || undefined;
         }
+
+        if (this.agent) {
+            params.agent_id = this.agent.customer_id
+        }
+
         // this.getCustomers(params);
         this.getInstallments(params);
     }

@@ -21,6 +21,7 @@ import { TransactionsComponent } from './pages/_loan/transactions/transactions.c
 import { InstallmentHistoryComponent } from './pages/_loan/installment-history/installment-history.component';
 import { StatisticsComponent } from './pages/_loan/statistics/statistics.component';
 import { PendingInstallmentsComponent } from './pages/_loan/pending-installments/pending-installments.component';
+import { ReportsComponent } from './pages/_draw/reports/reports.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ConfGuard } from './guards/conf.guard';
@@ -93,6 +94,8 @@ export const routingComponents = [
     StatisticsComponent,
     InstallmentHistoryComponent,
     PendingInstallmentsComponent,
+
+    ReportsComponent,
 
     PageNotFoundComponent
 ]

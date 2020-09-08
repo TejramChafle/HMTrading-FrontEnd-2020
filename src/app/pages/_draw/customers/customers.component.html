@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12 page-header-message">
                     <span *ngIf="loading">Loading..</span>
-                    <span *ngIf="agent && !loading">Showing customers ({{pagination?.size}}) of agent <b>{{agent.name}}</b></span>
-                    <span *ngIf="!agent && !loading">Customers ({{pagination?.size}})</span>
+                    <span *ngIf="agent && !loading">Showing customers ({{customers.length + '/' + pagination?.size}}) of agent <b>{{agent.name}}</b></span>
+                    <span *ngIf="!agent && !loading">Customers ({{customers.length + '/' + pagination?.size}})</span>
                 </div>
                 <!-- Add customer -->
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
-                    <!-- <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span> -->
+                    <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>
@@ -175,7 +175,7 @@
                 <!-- Add customer -->
                 <div class="col col-lg-6 col-md-6 col-12 col-sm-12" align="right">
                     <button type="button" class="btn btn-success" (click)="addCustomer()" >Add Customer</button>&nbsp;
-                    <!-- <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span> -->
+                    <span *ngIf="agent"><button type="button" class="btn btn-secondary" (click)="print()">Print</button>&nbsp;</span>
                     <button type="submit" class="btn btn-info" (click)="search=!search">Search</button>&nbsp;
                     <button type="submit" class="btn btn-secondary" (click)="ngOnInit()">Refresh</button>
                 </div>

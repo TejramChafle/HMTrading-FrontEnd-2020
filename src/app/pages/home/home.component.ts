@@ -50,23 +50,27 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.itemDistribution({ limit: 100, offset: 0, page: 1 });
+        
         this.initDashboard();
 
-        // Get the loan statistics details from StatisticsComponent
-        this.statistics.getStatistics({ year: 2018 });
+        if (this._appService.isDrawDashboard) {
+            this.itemDistribution({ limit: 100, offset: 0, page: 1 });
+        } else {
+            // Get the loan statistics details from StatisticsComponent
+            this.statistics.getStatistics({ year: 2018 });
 
-        // Total pending savings installments
-        this._loanService.getPendingLoanInstallmentCustomers({ limit: 100, offset: 0, page: 1, type: 'Saving' }).subscribe((result)=>{
-            this.pendingSavingInstallments = result.records.length;
-            localStorage.setItem('pendingSavingInstallments', this.pendingSavingInstallments.toString());
-        });
-        
-        // Total pending loan installments
-        this._loanService.getPendingLoanInstallmentCustomers({ limit: 100, offset: 0, page: 1, type: 'Loan' }).subscribe((result)=>{
-            this.pendingLoanInstallments = result.records.length;
-            localStorage.setItem('pendingLoanInstallments', this.pendingLoanInstallments.toString());
-        });
+            // Total pending savings installments
+            this._loanService.getPendingLoanInstallmentCustomers({ limit: 100, offset: 0, page: 1, type: 'Saving' }).subscribe((result)=>{
+                this.pendingSavingInstallments = result.records.length;
+                localStorage.setItem('pendingSavingInstallments', this.pendingSavingInstallments.toString());
+            });
+            
+            // Total pending loan installments
+            this._loanService.getPendingLoanInstallmentCustomers({ limit: 100, offset: 0, page: 1, type: 'Loan' }).subscribe((result)=>{
+                this.pendingLoanInstallments = result.records.length;
+                localStorage.setItem('pendingLoanInstallments', this.pendingLoanInstallments.toString());
+            });
+        }
     }
 
     navigate(path) {

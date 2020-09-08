@@ -50,11 +50,11 @@ export class DrawCustomersPrintComponent implements OnInit, AfterViewInit {
 
         this.totalPaid = 0;
         this.customers.forEach((inst) => {
-            if (inst.installments.length > 1) {
+            if (inst.installment.length > 1) {
                 let months = [];
                 let amount = 0;
                 let fine = 0;
-                inst.installments.forEach((installment) => {
+                inst.installment.forEach((installment) => {
                     months.push(installment.month);
                     amount += parseInt(installment.amount, 10);
                     fine += installment.fine ? parseInt(installment.fine, 10) : 0;
@@ -65,9 +65,9 @@ export class DrawCustomersPrintComponent implements OnInit, AfterViewInit {
                 inst.last_paid_total = parseInt(inst.last_paid_amount, 10) + parseInt(inst.last_paid_fine, 10);
                 this.totalPaid += parseInt(inst.last_paid_total, 10);
             } else {
-                inst.last_paid_month = inst.installments[0].month.toString();
-                inst.last_paid_amount = inst.installments[0].amount;
-                inst.last_paid_fine = inst.installments[0].fine ? inst.installments[0].fine : 0;
+                inst.last_paid_month = inst.installment[0].month.toString();
+                inst.last_paid_amount = inst.installment[0].amount;
+                inst.last_paid_fine = inst.installment[0].fine ? inst.installment[0].fine : 0;
                 inst.last_paid_total = parseInt(inst.last_paid_amount, 10) + parseInt(inst.last_paid_fine, 10);
                 this.totalPaid += parseInt(inst.last_paid_total, 10);
             }

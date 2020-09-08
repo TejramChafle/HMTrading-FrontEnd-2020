@@ -57,8 +57,8 @@
 }
 
 .header-trapezoid {
-	border-bottom: 175px solid #76d7c4;
-    height: 175px;
+	border-bottom: 210px solid #76d7c4;
+    height: 210px;
 	border-left: 60px solid transparent;
 	width: 50%;
     display: inline-block;
@@ -66,7 +66,7 @@
 }
 
 .header-trapezoid > h1 {
-    line-height: 175px;
+    line-height: 210px;
 }
 
 .footer-trapezoid {
@@ -93,9 +93,9 @@
 }
 
 .biller-info {
-    padding: 5px 0 0 15px;
+    padding: 20px 0 0 20px;
     width: 50%;
-    height: 175px;
+    height: 210px;
     text-align: left;
     word-wrap: break-word;
     display: inline-block;

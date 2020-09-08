@@ -124,7 +124,7 @@
 
 
 
-                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngIf="statistics.totalLoanDisbursed">
                     <div class="card text-white text-center bg-success mb-3 home-card" (click)="navigate('transactions')">
                         <div class="card-body">
                             <h1 class="card-title">&#8377; {{statistics.totalLoanDisbursed | number}}</h1>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngIf="statistics.totalSavingReceived">
                     <div class="card text-white text-center bg-danger mb-3 home-card" (click)="navigate('transactions')">
                         <div class="card-body">
                             <h1 class="card-title">&#8377; {{statistics.totalSavingReceived | number}}</h1>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngIf="statistics.totalInstallmentReceived">
                     <div class="card text-white text-center bg-primary mb-3 home-card" (click)="navigate('transactions')">
                         <div class="card-body">
                             <h1 class="card-title">&#8377; {{statistics.totalInstallmentReceived | number}}</h1>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
 
-                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="col col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngIf="statistics.totalInterestPaid">
                     <div class="card text-white text-center bg-primary mb-3 home-card" (click)="navigate('transactions')">
                         <div class="card-body">
                             <h1 class="card-title">&#8377; {{statistics.totalInterestPaid | number}}</h1>

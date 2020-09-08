@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col col-lg-4 col-md-4 col-12 col-sm-12 page-header-message">
-                    <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Installments ({{pagination?.size}})</span>
+                    <span *ngIf="loading">Loading..</span><span *ngIf="!loading">Installments ({{installments.length + '/' + pagination?.size}})</span>
                     <span *ngIf="showingForAgent && !loading">showing for agent <strong>{{_appService.agent?.name}}</strong></span>
                 </div>
 

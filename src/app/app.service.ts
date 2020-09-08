@@ -54,20 +54,20 @@ export class AppService {
                         .print-footer, .print-header {
                             border: 1px solid #76d7c4;
                         }
-
+                        
                         .header-trapezoid {
-                            border-bottom: 175px solid #76d7c4;
-                            height: 175px;
+                            border-bottom: 210px solid #76d7c4;
+                            height: 210px;
                             border-left: 60px solid transparent;
                             width: 50%;
                             display: inline-block;
                             color: white;
                         }
-
+                        
                         .header-trapezoid > h1 {
-                            line-height: 175px;
+                            line-height: 210px;
                         }
-
+                        
                         .footer-trapezoid {
                             border-bottom: 60px solid #76d7c4;
                             height: 60px;
@@ -76,12 +76,12 @@ export class AppService {
                             display: inline-block;
                             color: white;
                         }
-
+                        
                         .footer-trapezoid > p {
                             color: white;
                             line-height: 50px;
                         }
-
+                        
                         .print-terms {
                             padding-left: 15px;
                             width: 50%;
@@ -90,17 +90,48 @@ export class AppService {
                             word-wrap: break-word;
                             display: inline-block;
                         }
-
+                        
                         .biller-info {
-                            padding: 5px 0 0 15px;
+                            padding: 20px 0 0 20px;
                             width: 50%;
-                            height: 175px;
+                            height: 210px;
                             text-align: left;
                             word-wrap: break-word;
                             display: inline-block;
                         }
+                        
+                        .print-page {
+                            width: 100%;
+                            /* overflow-y:scroll; */
+                            padding: 25px;
+                            /* overflow-x: auto; */
+                        }
+                        
+                        .modal-lg {
+                            /* max-width: 1000px !important; */
+                            max-width: 80% !important;
+                        }
+                        
+                        
+                        .page-header-message > span {
+                            display: inline-block;
+                            padding: .375rem .75rem;
+                            font-size: 1rem;
+                            line-height: 1.5;
+                            font-weight: bold;
+                            background: #76d7c4;
+                            vertical-align: middle;
+                        }
+                        
+                        .hm-trading-message {
+                            color: #76d7c4;
+                        }
                         .hmtrading-text-right {
                             text-align: right !important;
+                        }
+
+                        .print-logo {
+                            float: left; height: 150px; margin-right: 20px;
                         }
                     }
                 </style>
@@ -133,9 +164,9 @@ export class AppService {
     handleError(error) {
         // console.log(error);
         if (error.status === 500) {
-            const modelRef = this._modelService.open(AlertComponent, { size: 'lg' });
-            modelRef.componentInstance.error = error.error;
-            modelRef.componentInstance.type = error.type || 'Error!';
+            // const modelRef = this._modelService.open(AlertComponent, { size: 'lg' });
+            // modelRef.componentInstance.error = error.error;
+            // modelRef.componentInstance.type = error.type || 'Error!';
         } else if (error.status == 200) {
             const modelRef = this._modelService.open(AlertComponent, { size: 'lg', centered: true });
             modelRef.componentInstance.error = error.error.text;
